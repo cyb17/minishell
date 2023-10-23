@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/10/20 16:54:03 by nap              ###   ########.fr       */
+/*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
+/*   Updated: 2023/10/23 10:29:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <termios.h>
+#include <curses.h>
+#include <dirent.h>
+#include <sys/ioctl.h>
+#include <pwd.h>
+#include <errno.h>
 
 enum tokens_type
 {
@@ -23,7 +39,7 @@ enum tokens_type
 	APPEN = 6,
 	HEREDOC = 7,
 	SPACE = 8
-}
+};
 
 typedef struct s_tokens
 {
@@ -31,15 +47,15 @@ typedef struct s_tokens
 	int				type;
 	char 			*value;
 	struct s_tokens	*next_tokens;
-}				t_tokens;
+}					t_tokens;
 
 typedef struct s_process
 {
-    char		**section_cmd;
-	int			section_cmd_id;
-	t_tokens	*list_tokens;
-	pid_t		pid;
-}               t_process;
-
+    char				**section_cmd;
+	int					section_cmd_id;
+	t_tokens			*list_tokens;
+	pid_t				pid;
+	struct s_process	*next_process;
+}						t_process;
 
 #endif
