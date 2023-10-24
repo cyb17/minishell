@@ -70,9 +70,12 @@ Shows the current directory as an absolute path.
 -------------------------
 Accepts argument name.
 Removes the variable name from the environment.
+remarque :
+si l'argument a supprimer n'existe pas, unset ne signale pas d'erreur,
+et se termine normalement
 
 ==================================================================
-Tests effectues sous bash :
+Tests deja effectues (sous bash) :
 
 => echo :
 
@@ -88,7 +91,10 @@ BingdeMBP:srcs bing$ echo -n hello
 helloBingdeMBP:srcs bing$ echo -n hello world
 hello worldBingdeMBP:srcs bing$ 
 	
+=> env :
 
+valgrind env -i env
+valgrind env
 
 ==================================================================
 Pour ignorer les leaks causes par readline et add_history :

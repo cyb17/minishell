@@ -6,28 +6,30 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/23 10:29:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/24 10:42:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <termios.h>
-#include <curses.h>
-#include <dirent.h>
-#include <sys/ioctl.h>
-#include <pwd.h>
-#include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <termios.h>
+# include <curses.h>
+# include <dirent.h>
+# include <sys/ioctl.h>
+# include <pwd.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include "../libft/libft.h"
 
 enum tokens_type
 {
@@ -38,7 +40,7 @@ enum tokens_type
 	REDIR_OUT = 5,
 	APPEN = 6,
 	HEREDOC = 7,
-	SPACE = 8
+	SPACEE = 8
 };
 
 typedef struct s_tokens

@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    MAKEFILE                                           :+:      :+:    :+:    #
+#    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
+#    By: yachen <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/23 10:12:10 by yachen            #+#    #+#              #
-#    Updated: 2023/10/23 10:12:27 by yachen           ###   ########.fr        #
+#    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
+#    Updated: 2023/10/24 14:54:02 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ CC = cc
 
 CFLAGS =  -Wall -Wextra -Werror -g
 
+LIBFTDIR = ./libft
+
 RM = rm -rf
 
-SRC = 
+SRC = srcs/builtins.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -26,9 +28,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		@echo "\033[32m\n==================================="
-		@make -C ./libft
+		@make -C $(LIBFTDIR) bonus
 		@echo "\033[32mCompiling minishell-----------------"
-		@$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJ) $(LIBFTDIR)/libft.a -o $(NAME)
 		@echo "\033[32m----created with success : minishell"
 		@echo "\033[32m===================================\n"
 
@@ -40,7 +42,7 @@ clean:
 	@echo "\033[32mCleaning minishell----"
 	@$(RM) $(OBJ)
 	@echo "\033[32m------minishell Cleaned"
-	@make clean -C ./libft
+	@make clean -C $(LIBFTDIR)
 	@echo "\033[32m=====================\n"
 
 fclean:
@@ -49,7 +51,7 @@ fclean:
 	@$(RM) $(OBJ)
 	@echo "\033[32m------minishell Cleaned"
 	@$(RM) $(NAME)
-	@make fclean -C ./libft
+	@make fclean -C $(LIBFTDIR)
 	@echo "\033[32m=====================\n"
 
 re: fclean all
