@@ -6,7 +6,7 @@
 #    By: yachen <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/10/24 14:54:02 by yachen           ###   ########.fr        #
+#    Updated: 2023/10/25 10:59:57 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,32 +27,32 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		@echo "\033[32m\n==================================="
+		@echo "\e[32m\n==================================="
 		@make -C $(LIBFTDIR) bonus
-		@echo "\033[32mCompiling minishell-----------------"
+		@echo "\e[32mCompiling minishell-----------------"
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFTDIR)/libft.a -o $(NAME)
-		@echo "\033[32m----created with success : minishell"
-		@echo "\033[32m===================================\n"
+		@echo "\e[32m----created with success : minishell"
+		@echo "\e[32m===================================\n\e[0m"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "\033[32m\n====================="
-	@echo "\033[32mCleaning minishell----"
+	@echo "\e[32m\n====================="
+	@echo "\e[32mCleaning minishell----"
 	@$(RM) $(OBJ)
-	@echo "\033[32m------minishell Cleaned"
+	@echo "\e[32m------minishell Cleaned"
 	@make clean -C $(LIBFTDIR)
-	@echo "\033[32m=====================\n"
+	@echo "\e[32m=====================\n\e[0m"
 
 fclean:
-	@echo "\033[32m\n====================="
-	@echo "\033[32mCleaning minishell----"
+	@echo "\e[32m\n====================="
+	@echo "\e[32mCleaning minishell----"
 	@$(RM) $(OBJ)
-	@echo "\033[32m------minishell Cleaned"
+	@echo "\e[32m------minishell Cleaned"
 	@$(RM) $(NAME)
 	@make fclean -C $(LIBFTDIR)
-	@echo "\033[32m=====================\n"
+	@echo "\e[32m=====================\n\e[0m"
 
 re: fclean all
 

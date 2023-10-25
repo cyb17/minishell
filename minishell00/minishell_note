@@ -61,6 +61,10 @@ Accepts optional argument n, which sets the exit status to n.
 Accepts arguments name[=value].
 Adds name to the environment. Set's value of name to value.
 If no argument is given, displays list of exported variables.
+remarque : 
+export test -> ajoute test dans la liste d'export MAIS pas d'env
+export test= -> ajoute test dans la liste d'export ET d'env
+donc seule une variable definit suivi de "=" avec ou sans valeur(meme si vide)
 
 =>pwd : with no options
 -----------------------
@@ -71,14 +75,15 @@ Shows the current directory as an absolute path.
 Accepts argument name.
 Removes the variable name from the environment.
 remarque :
-si l'argument a supprimer n'existe pas, unset ne signale pas d'erreur,
-et se termine normalement
+si l'argument a supprimer n'existe pas unset ne signale pas d'erreur,
+et se termine normalement.
+Si l'argument est "name=", name ne sera pas supprimer et unset ne signale pas d'erreur.
+
 
 ==================================================================
 Tests deja effectues (sous bash) :
 
 => echo :
-
 BingdeMBP:srcs bing$ echo
 
 BingdeMBP:srcs bing$ echo -n
@@ -92,9 +97,17 @@ helloBingdeMBP:srcs bing$ echo -n hello world
 hello worldBingdeMBP:srcs bing$ 
 	
 => env :
-
 valgrind env -i env
 valgrind env
+
+=> unset :
+unset HOME
+unset HOME=
+
+=> export :
+export (sans argument)
+export HOME=valeur
+export HOME
 
 ==================================================================
 Pour ignorer les leaks causes par readline et add_history :
