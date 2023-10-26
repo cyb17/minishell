@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/25 17:36:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/26 17:48:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	clear_lst(t_list **lst)
 	}
 }
 
+// fonction transforme le tableau d'env en liste chaine
 t_list	*env_to_envlist(char **env)
 {
 	int		i;
@@ -66,70 +67,101 @@ void	ft_env(t_list *envlist)
 	}
 }
 
-int	str_cmp(char *model, char *str_tocmp)
-{
-	int	i;
-
-	i = 0;
-	while (model[i] && model[i - 1] != '=')
-	{
-		if (str_tocmp[i] != model[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	find_equal(char *str, char equal)
+// fonction retourne l'indice du caractere trouve
+int	find_caracter(char *str, char c)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == equal)
+		if (str[i] == c)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
-t_list	*ft_unset(t_list *envlist, char *varto_unset)
+int	stringncmp(char *model, char *str, int n)
+{
+	int	i;
+
+	i = 0;
+	while (((model[i]) || (str[i])) && i <= n)
+	{
+		if (model[i] != str[i])
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
+/* fonction retourne la place de la variable a ajouter dans la liste
+si il la trouve */
+int	find_var(char *var, t_list *list)
+{
+	t_list	*current;
+	int		i;
+	int		n;
+
+	current = list;
+	i = 0;
+	n = find_caracter(var, '=');
+	if (n < 0)
+		n = ft_strlen(var);
+	while (current)
+	{
+		if (stringncmp(var, current->content, n) == 1)
+			return (i);
+		i++;
+		current = current->next;
+	}
+	return (-1);
+}
+
+void	replace(t_list *list, t_list *new_var, int old_var)
 {
 	t_list	*current;
 	t_list	*tmp;
+	int		j;
 
-	if ((!varto_unset) || (find_equal(varto_unset, '=')) > 0)
-		return (envlist);
-	current = envlist;
-	if (str_cmp(varto_unset, current->content) == 1 && current->next == NULL)
+	current = list;
+	j = 0;
+	if (old_var == 0)
 	{
+		new_var->next = list->next;
+		list = new_var;
 		free(current);
-		return (NULL);
+		return ;
 	}
-	tmp = NULL;
-	while (current)
-	{
-		if (str_cmp(varto_unset, current->content) == 1)
-		{
-			tmp->next = current->next;
-			free(current);
-			if (tmp->content == NULL)
-				return (tmp->next);
-			return (tmp);
-		}
-		tmp = current;
+	while (j++ < old_var - 1)
 		current = current->next;
-	}
-	return (envlist);
+	tmp = current->next;
+	new_var->next = tmp->next;
+	current->next = new_var;
+	free(tmp);
+}
+
+void	add_to_list(char *exp_content, t_list *list, t_list *new_var)
+{
+	int		i;
+
+	i = 0;
+	i = find_var(exp_content, list);
+	if (i == -1)
+		ft_lstadd_back(&list, new_var);
+	else
+		replace(list, new_var, i);
 }
 
 int	ft_export(t_list *envlist, t_list *explist, char *exp_content)
 {
 	t_list	*new_var;
-	t_list	*current;
-	t_list	*tmp;
-	
+	int		equal;
+	int		i;
+
+	equal = 0;
+	i = 0;
 	if (!exp_content)
 	{
 		ft_env(explist);
@@ -141,25 +173,70 @@ int	ft_export(t_list *envlist, t_list *explist, char *exp_content)
 		write(2, "export: new_var: malloc failed", 32);
 		return (1);
 	}
+	equal = find_caracter(exp_content, '=');
+	if (equal != -1)
+		add_to_list(exp_content, envlist, new_var);
+	if (find_var(exp_content, explist) == -1)
+		add_to_list(exp_content, explist, new_var);
+	return (0);
+}
+
+/*void	ft_unset(t_list *envlist, char *varto_unset)
+{
+	t_list	*current;
+	t_list	*tmp;
+
+	if ((!varto_unset) || (find_equal(varto_unset, '=')) > 0)
+		return ;
+	current = NULL;
 	current = envlist;
-	if (find_equal(exp_content, '=') > 0)
+	printf("%s\n", (char *)current->content);
+	if (str_cmp(varto_unset, current->content) == 1 && current->next == NULL)
 	{
-		while (current)
-		{
-			if(str_cmp(exp_content, current->content) == 1)
-			{
-				new_var->next = current->next;
-				tmp->next = new_var;
-				free(current);
-				break ;
-			}
-			tmp = current;
-			current = current->next;
-		}
-		if (!current)
-			ft_lstadd_back(&envlist, new_var);
+		envlist = NULL;
+		free(current);
+		return ;
 	}
-	ft_lstadd_back(&explist, new_var);
+	tmp = NULL;
+	while (current)
+	{
+		if (str_cmp(varto_unset, current->content) == 1
+			&& find_equal(current->content, '=') == 0)
+		{
+			tmp->next = current->next;
+			if (tmp->content == NULL)
+				envlist = tmp->next;
+			else
+				envlist = tmp;
+			free(current);
+			return ;
+		}
+		tmp = current;
+		current = current->next;
+	}
+}*/
+
+int	main(int argc, char **argv, char **env)
+{
+	t_list	*envlist;
+	t_list	*explist;
+	int		i;
+
+	i = 0;
+	printf("teste : %d %s\n", argc, argv[0]);
+	envlist = env_to_envlist(env);
+	explist = env_to_envlist(env);
+
+	printf("print env list : \n");
+	ft_env(envlist);
+	printf("\n\n");
+	ft_export(envlist, explist, "test=valeur");
+	printf("\n\n");
+	ft_export(envlist, explist, "test1=");
+	ft_export(envlist, explist, "test2");
+	ft_env(envlist);
+	printf("\n\n");
+	ft_env(explist);
 	return (0);
 }
 
@@ -205,30 +282,3 @@ int	ft_cd(char *path)
 	pwd = get_envpwd(oldpwd);
 	return (0);
 }*/
-
-int	main(int argc, char **argv, char **env)
-{
-	t_list	*envlist;
-	t_list	*explist;
-
-	printf("teste : %d %s\n", argc, argv[0]);
-	envlist = env_to_envlist(env);
-	explist = env_to_envlist(env);
-	/*printf("print env list : \n\n");
-	ft_env(envlist);
-	printf("---------------------------------------------");
-	printf("\n");
-	printf("print env with unset SHELL\n\n");
-*/	envlist = ft_unset(envlist, "SHELL");
-	ft_env(envlist);
-//	printf("---------------------------------------------");
-//	printf("\n");
-/*	ft_export(envlist, explist, "HOME=valeur");
-	ft_env(envlist);
-	printf("print env list with export HOME=valeur\n");
-	printf("---------------------");
-	printf("\n");
-	printf("print env list with export ""\n");
-	ft_export(envlist, explist, NULL);
-*/	return (0);
-}
