@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/10/27 14:20:30 by yachen           ###   ########.fr        #
+#    Updated: 2023/10/27 16:23:02 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ LIBFTDIR = ./libft
 
 RM = rm -rf
 
-SRC = srcs/execution.c #srcs/builtins/export.c srcs/builtins/echo.c srcs/builtins/env.c
+SRC = srcs/builtins/export.c srcs/builtins/echo.c srcs/builtins/env.c \
+	  srcs/builtins/unset.c \
 
 OBJ = $(SRC:.c=.o)
 

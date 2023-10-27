@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/27 12:40:17 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:25:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ typedef struct s_process
 	struct s_process	*next_process;
 }						t_process;
 
+typedef struct s_var
+{
+	t_list	*oldvar;
+	t_list	*newvar;
+	int		oldvar_i;
+}			t_var;
+
 // builtins
 void	ft_echo(char *op, char *str);
 
@@ -67,8 +74,11 @@ void	clear_lst(t_list **lst);
 t_list	*env_to_envlist(char **env);
 void	ft_env(t_list *envlist);
 
-int	stringcmp(char *model, char *str);
+int		find_caracter(char *str, char c);
+int		stringcmp(char *model, char *str);
 t_list	*find_oldvar(char *var, t_list *list, int *i);
-t_list	*create_newvar(char *arg);
+void	replace(t_list *list, t_list *newvar, int oldvar_i);
+
+void	ft_unset(t_list *envlist, t_list *explist, char *arg);
 
 #endif

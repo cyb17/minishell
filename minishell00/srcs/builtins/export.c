@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/27 14:01:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:24:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,69 +83,95 @@ void	replace(t_list *list, t_list *newvar, int oldvar_i)
 	free(current);
 }
 
-t_list	*create_newvar(char *arg)
+static void	initialize_var(t_var *export, t_var *env)
 {
-	t_list	*newvar;
-
-	newvar = ft_lstnew(arg);
-	if (!newvar)
-	{
-		free(newvar);
-		write(2, "export: create_newvar: malloc failed", 31);
-		return (NULL);
-	}
-	return (newvar);
+	export->oldvar = NULL;
+	export->newvar = NULL;
+	export->oldvar_i = 0;
+	env->oldvar = NULL;
+	env->newvar = NULL;
+	env->oldvar_i = 0;
 }
 
-int	ft_export(t_list *envlist, t_list *explist, char *arg)
+static void	print_explist(t_list *explist)
 {
-	t_list	*newvar_exp;
-	t_list	*newvar_env;
-	t_list	*oldvar_env;
-	t_list	*oldvar_exp;
-	int		oldvarenv_i;
-	int		oldvarexp_i;
+	t_list	*tmp;
+	
+	tmp = explist;
+	while (tmp)
+	{
+		printf("export : %s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+}
 
-	oldvarenv_i = 0;
-	oldvarexp_i = 0;
-	if (!arg)
+static int	create_newvar(char *arg, t_var *env, t_var *export)
+{
+	export->newvar = ft_lstnew(arg);
+	if (!export->newvar)
 	{
-		ft_env(explist);
-		return (0);
+		write(2, "export: create_newvar: malloc failed", 31);
+		return (-1);
 	}
-	newvar_exp = create_newvar(arg);
-	if (!newvar_exp)
-		return (1);
-	newvar_env = create_newvar(arg);
-	if (!newvar_env)
+	env->newvar = ft_lstnew(arg);
+	if (!env->newvar)
 	{
-		free(newvar_exp);
-		return (1);
-	}
-	oldvar_exp = find_oldvar(arg, explist, &oldvarexp_i);
-	if (!oldvar_exp)
-	{	
-		ft_lstadd_back(&explist, newvar_exp);
-		if (find_caracter(arg, '=') >= 0)
-			ft_lstadd_back(&envlist, newvar_env);
-		else
-			free(newvar_env);
-	}
-	else if (oldvar_exp && find_caracter(arg, '=') >= 0)
-	{
-		oldvar_env = find_oldvar(arg, envlist, &oldvarenv_i);
-		replace(envlist, newvar_env, oldvarenv_i);
-		replace(explist, newvar_exp, oldvarexp_i);
-	}
-	else
-	{
-		free(newvar_exp);
-		free(newvar_env);
+		free(export->newvar);
+		write(2, "export: create_newvar: malloc failed", 31);
+		return (-1);
 	}
 	return (0);
 }
 
-/*int	main(int argc, char **argv, char **env)
+static void	free_var(t_var *export, t_var *env)
+{
+	free(export->newvar);
+	free(env->newvar);
+}
+
+static void	add_tolist(t_list *envlist, t_var *env, char *arg)
+{
+	if (find_caracter(arg, '=') >= 0)
+		ft_lstadd_back(&envlist, env->newvar);
+	else
+		free(env->newvar);
+}
+static void	replace_var(t_list *envlst, t_list *explst, t_var *env, t_var *exp)
+{
+	replace(envlst, env->newvar, env->oldvar_i);
+	replace(explst, exp->newvar, exp->oldvar_i);
+}
+
+int	ft_export(t_list *envlist, t_list *explist, char *arg)
+{
+	t_var	export;
+	t_var	env;
+	
+	initialize_var(&export, &env);
+	if (!arg)
+		print_explist(explist);
+	else
+	{
+		if (create_newvar(arg, &export, &env) == -1)
+			return (1);
+		export.oldvar = find_oldvar(arg, explist, &export.oldvar_i);
+		if (!export.oldvar)
+		{	
+			ft_lstadd_back(&explist, export.newvar);
+			add_tolist(envlist, &env, arg);
+		}
+		else if (export.oldvar && find_caracter(arg, '=') >= 0)
+		{
+			env.oldvar = find_oldvar(arg, envlist, &env.oldvar_i);
+			replace_var(envlist, explist, &env, &export);
+		}
+		else
+			free_var(&export, &env);
+	}
+	return (0);
+}
+
+int	main(int argc, char **argv, char **env)
 {
 	t_list	*envlist;
 	t_list	*explist;
@@ -164,13 +190,14 @@ int	ft_export(t_list *envlist, t_list *explist, char *arg)
 	ft_export(envlist, explist, "LSCOLORS=valeur");
 	ft_export(envlist, explist, "test");
 	ft_export(envlist, explist, "test3=");
+	ft_unset(envlist, explist, "test");
 	ft_env(envlist);
 	printf("\n\n");
 	ft_env(explist);
 	free(envlist);
 	free(explist);
 	return (0);
-}*/
+}
 
 /*void	ft_unset(t_list *envlist, char *varto_unset)
 {
