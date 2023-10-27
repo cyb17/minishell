@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/27 16:24:54 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/27 20:06:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,11 @@ int	main(int argc, char **argv, char **env)
 	ft_export(envlist, explist, "test1=");
 	ft_export(envlist, explist, "test2");
 	ft_export(envlist, explist, "LSCOLORS=valeur");
-	ft_export(envlist, explist, "test");
+	ft_export(envlist, explist, "SHELL=valeur");
 	ft_export(envlist, explist, "test3=");
 	ft_unset(envlist, explist, "test");
+	ft_unset(envlist, explist, "test1=");
+	ft_unset(envlist, explist, "te");
 	ft_env(envlist);
 	printf("\n\n");
 	ft_env(explist);

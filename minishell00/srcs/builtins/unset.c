@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/27 16:25:17 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/27 20:04:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_unset(t_list *envlist, t_list *explist, char *arg)
 	
 	oldvar_i[0] = 0;
 	oldvar_i[1] = 0;
+	env_oldvar = NULL;
+	exp_oldvar = NULL;
 	if (find_caracter(arg, '=') >= 0)
 		env_oldvar = find_oldvar(arg, envlist, oldvar_i + 1);
 	exp_oldvar = find_oldvar(arg, explist, oldvar_i + 0);
