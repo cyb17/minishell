@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/24 10:42:38 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/27 12:40:17 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,16 @@ typedef struct s_process
 	pid_t				pid;
 	struct s_process	*next_process;
 }						t_process;
+
+// builtins
+void	ft_echo(char *op, char *str);
+
+void	clear_lst(t_list **lst);
+t_list	*env_to_envlist(char **env);
+void	ft_env(t_list *envlist);
+
+int	stringcmp(char *model, char *str);
+t_list	*find_oldvar(char *var, t_list *list, int *i);
+t_list	*create_newvar(char *arg);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yachen <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/10/25 10:59:57 by yachen           ###   ########.fr        #
+#    Updated: 2023/10/27 14:20:30 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFTDIR = ./libft
 
 RM = rm -rf
 
-SRC = srcs/builtins.c
+SRC = srcs/execution.c #srcs/builtins/export.c srcs/builtins/echo.c srcs/builtins/env.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJ)
 		@echo "\e[32m\n==================================="
 		@make -C $(LIBFTDIR) bonus
 		@echo "\e[32mCompiling minishell-----------------"
-		@$(CC) $(CFLAGS) $(OBJ) $(LIBFTDIR)/libft.a -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJ) $(LIBFTDIR)/libft.a -o $(NAME) -lreadline
 		@echo "\e[32m----created with success : minishell"
 		@echo "\e[32m===================================\n\e[0m"
 

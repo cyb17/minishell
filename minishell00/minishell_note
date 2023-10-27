@@ -66,6 +66,8 @@ export test -> ajoute test dans la liste d'export MAIS pas d'env
 export test= -> ajoute test dans la liste d'export ET d'env
 donc seule une variable definit suivi de "=" avec ou sans valeur(meme si vide)
 
+!bug pas encore regle: segfault si on enleve SHELL.
+
 =>pwd : with no options
 -----------------------
 Shows the current directory as an absolute path.
@@ -131,4 +133,6 @@ lors de l'execution du programme :
 executer 	valgrind --suppressions=ignoreleak.supp ./leProgramme
 
 ==================================================================
+Execution :
+
 
