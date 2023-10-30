@@ -1,12 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/10/20 16:12:49 by nap              ###   ########.fr       */
+/*   Created: 2023/10/27 14:02:06 by yachen            #+#    #+#             */
+/*   Updated: 2023/10/30 15:55:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
+
+int	main(int argc, char **argv, char **env)
+{
+	while (1)
+	{
+		printf("argc :%d  argv :%s env:%s\n", argc, argv[0], env[0]);
+		readline("\e[32;1mminishell>\e[0m");
+	}
+}

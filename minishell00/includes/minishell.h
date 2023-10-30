@@ -6,17 +6,14 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/27 16:25:27 by yachen           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:29:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -29,7 +26,8 @@
 # include <pwd.h>
 # include <errno.h>
 # include <readline/readline.h>
-# include "../libft/libft.h"
+# include "../srcs/builtins/builtins.h"
+
 
 enum tokens_type
 {
@@ -59,26 +57,5 @@ typedef struct s_process
 	pid_t				pid;
 	struct s_process	*next_process;
 }						t_process;
-
-typedef struct s_var
-{
-	t_list	*oldvar;
-	t_list	*newvar;
-	int		oldvar_i;
-}			t_var;
-
-// builtins
-void	ft_echo(char *op, char *str);
-
-void	clear_lst(t_list **lst);
-t_list	*env_to_envlist(char **env);
-void	ft_env(t_list *envlist);
-
-int		find_caracter(char *str, char c);
-int		stringcmp(char *model, char *str);
-t_list	*find_oldvar(char *var, t_list *list, int *i);
-void	replace(t_list *list, t_list *newvar, int oldvar_i);
-
-void	ft_unset(t_list *envlist, t_list *explist, char *arg);
 
 #endif
