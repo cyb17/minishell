@@ -26,12 +26,12 @@ Command	Description :
 --------------------------------------------
 Changes the working directory of the current shell execution environment and updates the environment variables PWD and OLDPWD.
 Without arguments it change the working directory to the home directory.
-- changes the directory to the OLDPWD. (une doute si l'option est vraiment a gere)
+il faut gerer '-' le tiret <=> cd "$OLDPWD" && pwd
 remarque :
 OLDPWD n'existe pas au debut, il est cree au moment de la 1er utilistion du cd. OLDPWD prends la valeur du PWD et La valeur de PWD se met a jour.
-remarque : code de sortie de echo
-0 -> succes
->0 -> erreur
+. | ././././ <=> dossier courant
+../ <=> dossier parent du dossier courant
+/ <=> dossier racine 
 
 =>echo : with option -n
 -----------------------
@@ -55,6 +55,7 @@ remarque: code de sortie de env
 ------------------------
 Terminates the shell.
 Accepts optional argument n, which sets the exit status to n.
+le code de sortie va de 0-255
 
 =>export : with no options
 --------------------------
@@ -71,6 +72,11 @@ donc seule une variable definit suivi de "=" avec ou sans valeur(meme si vide)
 =>pwd : with no options
 -----------------------
 Shows the current directory as an absolute path.
+pwd suivi de d'autres cmd ou mots, le chemin s'affiche quand meme ET pas msg d'erreur
+ex: pwd pwd ls : le chemin s'affiche qu'une seule fois 
+remarque : 
+si on unset la var d'env PWD, le chemin s'affiche quand meme
+
 
 =>unset : with no options
 -------------------------
@@ -164,4 +170,28 @@ executer 	valgrind --suppressions=ignoreleak.supp ./leProgramme
 ==================================================================
 Execution :
 
+
+==================================================================
+Parsing :
+
+-traiter les quotes.
+-remplacer $(var) par sa valeur
+-verifier la syntaxe des variable d'env :
+	 elles ne peuvent commencer soit par des LETTRES soit le TIRET DU BAS,
+	 les caracteres ALPHANUMERIQUE sont autorises a utiliser.
+-$(var) : is var n'existe pas, une chaine vide sera envoye.
+-En Bash, le point d'exclamation est réservé pour les événements (history expansion)
+	et provoque l'interprétation de l'expression qui suit comme une référence à un 
+	événement de l'historique
+
+$? Code de sortie souvent apparu :
+
+0 : execution qui se termine normalement sans erreur
+1 : erreur generique sans preciser sa nature
+2 : syntax error
+126 : le système d'exploitation n'a pas pu trouver l'exécutable spécifié ou n'a pas pu le lancer en raison de restrictions de sécurité
+127 : command not found 
+130 : termine en raison de l'interruption de l'utilisateur (ctrl+c)
+131 : termine en raison de l'interruption de signal (ctrl+v)
+$? = exit_code % 256
 
