@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:18:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 17:03:41 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/01 11:31:12 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **env)
 	envlist = env_to_envlist(env);
 	explist = env_to_envlist(env);
 
-	printf("print env list : \n");
+	/*printf("print env list : \n");
 	ft_env(envlist);
 	printf("\n\n");
 	ft_export(&envlist, &explist, "test");
@@ -57,7 +57,8 @@ int	main(int argc, char **argv, char **env)
 	ft_env(envlist);
 	printf("\n\n");
 	ft_unset(&envlist, &explist, NULL);
-	ft_export(&envlist, &explist, NULL);
+	ft_export(&envlist, &explist, NULL);*/
+	ft_pwd();
 	free_list(&envlist);
 	free_list(&explist);
 	return (0);

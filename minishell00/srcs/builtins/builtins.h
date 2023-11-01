@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:28:24 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/01 11:35:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
+
+# define GETCWD_SIZE 4096
 
 typedef struct s_var
 {
@@ -51,5 +54,7 @@ int		ft_export(t_list **envlist, t_list **explist, char *arg);
 // unset
 void	ft_unset(t_list **envlist, t_list **explist, char *arg);
 
+// pwd
+int		ft_pwd(void);
 
 #endif

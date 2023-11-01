@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:29:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/01 11:08:12 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <dirent.h>
 # include <sys/ioctl.h>
 # include <pwd.h>
-# include <errno.h>
 # include <readline/readline.h>
 # include "../srcs/builtins/builtins.h"
 

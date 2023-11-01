@@ -6,13 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:29:44 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/01 12:09:43 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
-char	*get_envhome(void)
+/*char	*get_envhome(void)
 {
 	char	*home;
 
@@ -53,4 +53,30 @@ int	ft_cd(char *path)
 	}
 	pwd = get_envpwd(oldpwd);
 	return (0);
+}*/
+int	chdir_home(t_list *envlist)
+{
+	
+}
+
+int	ft_cd(t_list **envlist, char *arg)
+{	
+	char	*home;
+	int		home_indice;
+	
+	home_indice = 0;
+	if (!arg)
+	{
+		home = find_oldvar("HOME", *envlist, &home_indice);
+		if (!home)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set");
+			return (-1);
+		}
+		if (chdir(home) == -1)
+		{
+			perror("minishell: chdir");
+			return (-1);
+		}
+	}
 }

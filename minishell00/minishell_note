@@ -28,7 +28,7 @@ Changes the working directory of the current shell execution environment and upd
 Without arguments it change the working directory to the home directory.
 il faut gerer '-' le tiret <=> cd "$OLDPWD" && pwd
 remarque :
-OLDPWD n'existe pas au debut, il est cree au moment de la 1er utilistion du cd. OLDPWD prends la valeur du PWD et La valeur de PWD se met a jour.
+tout au debut $HOME = $PWD = $OLDPWD
 . | ././././ <=> dossier courant
 ../ <=> dossier parent du dossier courant
 / <=> dossier racine 
