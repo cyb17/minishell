@@ -6,19 +6,41 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/01 16:44:11 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:21:44 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	check_quotes(char *input, char c, int i)
+{
+	bool inside_quote;
+	int j;
+
+	inside_quote = false;
+	j = i;
+	i++;
+    while (input[i] && i <= (int)strlen(input))
+	{
+        if (input[i] == c) 
+		{
+            if (inside_quote == false)
+			{
+                inside_quote = true;
+				return (i);
+			}
+        }
+		i++;
+	}
+	return (j);
+}
 	
 int	between_quotes(char *l, int i)
 {
 	int		j;
 
 	j = 0;
-	while (l[j] && j <= (int)ft_strlen(l) && j < i)
+	while (l[j] && j <= (int)strlen(l) && j < i)
 	{
 		if (l[j] == '"' || l[j] == '\'') 
 		{
@@ -29,7 +51,7 @@ int	between_quotes(char *l, int i)
         }
 		j++;
 	}
-	printf("ici %d\n", i);
+	//printf("ici %d\n", i);
 	return (i);
 }
 /* between_quotes returns the position of the second quote, after i, 
@@ -54,3 +76,17 @@ char	*ft_strdup_section(char *s, int start, int end)
 	return (str);
 }
 
+void	ft_procsadd_back(t_process **lst, t_process *new)
+{
+	t_process	*tmp;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp -> next_process != NULL)
+		tmp = tmp -> next_process;
+	tmp -> next_process = new;
+}

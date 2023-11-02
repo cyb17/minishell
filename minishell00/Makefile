@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nap <nap@student.42.fr>                    +#+  +:+       +#+         #
+#    By: achevala <achevala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 10:12:10 by yachen            #+#    #+#              #
-#    Updated: 2023/10/29 22:03:00 by nap              ###   ########.fr        #
+#    Updated: 2023/11/02 12:33:44 by achevala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ READLINE = -lreadline
 RM = rm -rf
 
 SRC = ./srcs/main.c ./srcs/parsing.c ./srcs/init.c ./srcs/utils_parsing.c\
+	./srcs/split_input.c\
 
 OBJ = $(SRC:.c=.o)
 
