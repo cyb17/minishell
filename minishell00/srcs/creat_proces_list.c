@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:19:46 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/01 17:52:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/02 10:56:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,4 @@ t_proces	**make_proces_list(char *line)
 		i++;
 	}
 	return (list_proces);
-}
+}3

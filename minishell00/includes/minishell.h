@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/01 11:08:12 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/02 15:22:35 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@
 
 enum tokens_type
 {
+	CMD = 0
 	WORD = 1,
 	INFILE = 2,
 	OUTFILE = 3,
 	REDIR_IN = 4,
 	REDIR_OUT = 5,
 	APPEN = 6,
-	HEREDOC = 7,
-	SPACEE = 8
+	HEREDOC = 7
 };
 
 typedef struct s_tokens

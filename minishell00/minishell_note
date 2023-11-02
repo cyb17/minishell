@@ -195,3 +195,14 @@ $? Code de sortie souvent apparu :
 131 : termine en raison de l'interruption de signal (ctrl+v)
 $? = exit_code % 256
 
+==================================================================
+bash man : note
+
+-le code de retour de bash est celui de la derniere commande executee, il sera stocke dans $?.
+-bash attend la fin de toutes les commandes avant d'envoyer une valeur.
+-Chaque commande du pipeline est exécutée comme un processus indépendant (c'est-à-dire dans un sous-shell).
+-Les expansions sont appliquées à la ligne de commande après qu'elle ait été divisée en mots.
+-Les fonctions interne renvoient zéro (vrai) si elles réussissent et une valeur non nulle (faux)
+ si une erreur se produit durant leur exécution. Toutes les fonctions internes renvoient 2 en cas d'erreur de syntaxe.
+
+
