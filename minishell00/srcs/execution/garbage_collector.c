@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 12:23:50 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:18:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 void	clear_process(t_list *process)
 {
-	if (process->section_cmd != NULL)
-		free_tab(section_cmd);
-	if (list_tokens != NULL)
-		clear_lst(&list_tokens);
+	t_tokens	**tokenslist;
+	t_tokens	*tmp;
+	
+	*tokenslist = process->list_tokens;
+	tmp = NULL;
+	free_tab(section_cmd);
+	while (*tokenslist != NULL)
+	{
+		tmp = (*tokenslist)->next;
+		if ((*tokenslist)->value != NULL)
+			free((*tokenslist)->value);
+		free(*tokenslist);
+		*tokenslist = tmp;
+	}
 }
 
 void	garbage_collector(t_process **process_list)
