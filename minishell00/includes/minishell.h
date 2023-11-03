@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/02 15:22:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/03 12:26:55 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@
 
 enum tokens_type
 {
-	CMD = 0
-	WORD = 1,
-	INFILE = 2,
-	OUTFILE = 3,
-	REDIR_IN = 4,
-	REDIR_OUT = 5,
-	APPEN = 6,
-	HEREDOC = 7
+	CMD = 1,
+	WORD = 2,
+	INFILE = 3,
+	OUTFILE = 4,
+	REDIR_IN = 5,
+	REDIR_OUT = 6,
+	APPEN = 7,
+	HEREDOC = 8
 };
 
 typedef struct s_tokens
@@ -56,5 +56,16 @@ typedef struct s_process
 	pid_t				pid;
 	struct s_process	*next_process;
 }						t_process;
+
+
+/* EXECUTION*/
+
+//utils
+int		ft_compare(char *limiter, char *str);
+
+//garbage_collector
+void	clear_process(t_list *process);
+void	garbage_collector(t_process **process_list);
+
 
 #endif
