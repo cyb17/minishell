@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/02 18:43:35 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:32:15 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_process	**make_proces_list(char *line)
 	return (list_process);
 }
 
-void	make_token_list(t_process process)
+void	make_token_list(t_process *process)
 {
 	t_tokens	**list_token;
 	t_tokens	**new_token;
@@ -68,9 +68,9 @@ void	make_token_list(t_process process)
 	list_token = NULL;
 	new_token = NULL;
 	id = 0;
-	while(process.next_process)
+	while(process->next_process)
 	{
-		words = split_minishell(process.section_cmd);
+		words = split_minishell(process->section_cmd);
 		while (words)
 		{
 			if ()
@@ -81,3 +81,24 @@ void	make_token_list(t_process process)
 		}
 	}
 }
+
+char	*ft_strdup(const char *s)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	str = malloc((i + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}	

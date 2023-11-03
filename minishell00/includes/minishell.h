@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/02 18:02:07 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:11:07 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 }						t_data;
 
 /* main.c */
-int		main(int ac, char **av, char **env);
+//int		main(int ac, char **av, char **env);
 
 /* parsing.c */
 int		ft_parse(char *line, t_process **process);
