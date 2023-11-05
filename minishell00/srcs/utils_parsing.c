@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/02 17:21:44 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:25:17 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ char	*ft_strdup_section(char *s, int start, int end)
 	char	*str;
 	int		i;
 
-	i = start;
-	str = malloc((end - start) * sizeof(char));
+	i = 0;
+	str = malloc((end - start + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	while (s[i] && i < end)
+	while (s[start] && start < end)
 	{
-		str[i] = s[i];
+		str[i] = s[start];
+		start++;
 		i++;
 	}
 	str[i] = '\0';

@@ -6,21 +6,32 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/03 17:27:42 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:01:01 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *expand_value(char *tmp)
-{
-	char	**var;
-	char	*expanded;
+char	*get_var_to_exp(char *s);
 
-	tmp++;
-	var = ft_split(tmp, ' ');
-	expanded = getenv(var[0]);
-	freetab(var);
+char *expand_value(char *s, int i)
+{
+	char	*to_expand;
+	char	*expanded;
+	char 	*tmp;
+	int 	j;
+
+	j = 0;
+	tmp = s;
+	while (j <= i)
+	{
+		tmp++;
+		j++;
+	}
+	//tmp++;
+	to_expand = get_var_to_exp(tmp);
+	expanded = getenv(to_expand);
+	free(to_expand);
 	return (expanded);
 }
 
@@ -29,20 +40,45 @@ char    *clean_word(char *s)
     int     len;
     int     i;
     char    *tmp;
-    char    *exp; 
+    char    *cpy;
 
     len = strlen(s);
     i = 0;
-    if (s[i] == '"' && s[len] == '"')
-    {
-        tmp = ft_strrchr(s, '$');
-        if (tmp == NULL)
-            return (ft_strdup_section(s, 1, len - 1));
-        else
-            exp = expand_value(tmp);
-        printf("exp : %s\n", exp);
+	cpy = NULL;
+    // if (s[i] == '"' && s[len] == '"')
+    // {
+	// 	len = len - 1;
+	// 	i++;
+        while (i <= len)
+        {
+			// if (tmp)
+			// 	free(tmp);
+			if (s[i] != '$')
+			{
+				if (cpy == NULL)
+					cpy = ft_strdup_section(s, i, i + 1);
+				else
+				{
+					tmp = ft_strdup_section(s, i, i + 1);
+					cpy = ft_strjoin(cpy, tmp);
+//					free(tmp);
+				}
+				i++;
+			}
+			if (s[i] == '$')
+			{
+            	tmp = expand_value(s, i);
+				cpy = ft_strjoin(cpy, tmp);
+				i++;
+//				free(tmp);
+				while (s[i] >= '0' && s[i] <= '9' || s[i] >= 'A' && s[i] <= 'Z' 
+				|| s[i] >= 'a' && s[i] <= 'z' || s[i] == '_')
+					i++;
+			}
+		}
+        printf("cpy : %s\n", cpy);
     }  
-}
+//}
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -60,37 +96,28 @@ char	*ft_strrchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		i;
-	int		j;
-	char	*str;
+// int	*ft_strrchr_pos(const char *s, int c)
+// {
+// 	int	i;
 
-	i = 0;
-	j = 0;
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
-		return (NULL);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j] && i < (int)(ft_strlen(s1) + ft_strlen(s2)))
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	str[i + j] = '\0';
-	return (str);
-}	
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	while (i >= 0)
+// 	{
+// 		if (s[i] == (unsigned char)c)
+// 			return ((char *)&s[i]);
+// 		i--;
+// 	}
+// 	return (NULL);
+// }
 
 size_t	ft_strlen(const char *s)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
@@ -104,7 +131,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	//process_init(&process);
-    input = "coucou  $USER hello";
+    input = "coucou  $USER $PWD hello";
 	s = clean_word(input);
     return (0);
 }
