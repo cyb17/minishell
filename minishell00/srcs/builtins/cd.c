@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/01 12:09:43 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 18:28:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,8 @@ int	ft_cd(char *path)
 	pwd = get_envpwd(oldpwd);
 	return (0);
 }*/
-int	chdir_home(t_list *envlist)
-{
-	
-}
 
-int	ft_cd(t_list **envlist, char *arg)
+/*int	ft_cd(t_list **envlist, char *arg)
 {	
 	char	*home;
 	int		home_indice;
@@ -78,5 +74,13 @@ int	ft_cd(t_list **envlist, char *arg)
 			perror("minishell: chdir");
 			return (-1);
 		}
+	}
+}*/
+
+int	ft_cd_part1(char *pwd, char *oldpwd, t_list **envlist, char **arg)
+{
+	if (arg[1] == NULL)
+	{
+		
 	}
 }

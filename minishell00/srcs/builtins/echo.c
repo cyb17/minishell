@@ -6,16 +6,88 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/02 14:30:00 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:37:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
-void	ft_echo(char *op, char *str)
+static int	is_op(char *str)
 {
-	if (str)
-		printf("%s", str);
-	if (!op)
-		printf("\n");
+	if (*str == '-')
+	{	
+		str++;
+		while (*str)
+		{
+			if (*str != 'n')
+				return (0);
+			str++;
+		}
+	}
+	else
+		return (0);
+	return (1);
 }
+
+static int	print_newline()
+{
+	if (printf("\n") == -1)
+	{
+		perror("Error: echo: ");
+		return (1);
+	}
+	return (0);
+}
+
+static int	print_echo_arg(char **arg, int i, int op_flag)
+{
+	while (arg[i + 1])
+	{
+		if (printf("%s ", arg[i]) < 0)
+		{
+			perror("Error: echo: print_echo_arg: ");
+			return (1);
+		}
+		i++;
+	}
+	if (printf("%s", arg[i]) < 0)
+	{
+		perror("Error: echo: print_echo_arg: ");
+			return (1);
+	}
+	if (op_flag == 0)
+	{
+		if (print_newline() == 1)
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_echo(char **arg)
+{
+	int	i;
+	int	op_flag;
+
+	i = 1;
+	op_flag = 0;
+	if (arg[i] == NULL)
+	{
+		if (print_newline() == 1)
+			return (1);
+		return (0);
+	}
+	while (arg[i] && is_op(arg[i]) == 1)
+	{
+		op_flag = 1;
+		i++;
+	}
+	if (print_echo_arg(arg, i, op_flag) == 1)
+		return (1);
+	return (0);
+}
+
+/*int	main(int argc, char **argv)
+{
+	argc = argc + 1;
+	ft_echo(argv);
+}*/

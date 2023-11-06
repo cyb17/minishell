@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 12:26:55 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:46:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_process
 
 //utils
 int		ft_compare(char *limiter, char *str);
+void	ft_error(char *where, char *what);
 
 //garbage_collector
 void	clear_process(t_list *process);

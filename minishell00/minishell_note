@@ -75,7 +75,7 @@ Shows the current directory as an absolute path.
 pwd suivi de d'autres cmd ou mots, le chemin s'affiche quand meme ET pas msg d'erreur
 ex: pwd pwd ls : le chemin s'affiche qu'une seule fois 
 remarque : 
-si on unset la var d'env PWD, le chemin s'affiche quand meme
+si on unset la var d'env PWD et on execute pwd, le chemin s'affiche quand meme
 
 
 =>unset : with no options
@@ -169,6 +169,8 @@ executer 	valgrind --suppressions=ignoreleak.supp ./leProgramme
 
 ==================================================================
 Execution :
+
+
 
 
 ==================================================================

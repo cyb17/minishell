@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/02 14:29:51 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:43:18 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
+# include <string.h>
 
 # define GETCWD_SIZE 4096
 
@@ -28,7 +29,7 @@ typedef struct s_var
 	int		oldvar_i;
 }			t_var;
 
-// utils1
+// builtins_utils1
 void	clear_lst(t_list **lst);
 t_list	*env_to_envlist(char **env);
 int		find_caracter(char *str, char c);
@@ -36,10 +37,10 @@ int		stringcmp(char *model, char *str);
 t_list	*find_oldvar(char *var, t_list *list, int *i);
 
 // echo
-void	ft_echo(char *op, char *str);
+int		ft_echo(char **arg);
 
 // env
-void	ft_env(t_list *envlist);
+int		ft_env(char **arg, t_list *envlist);
 
 // export
 void	initialize_var(t_var *export, t_var *env);

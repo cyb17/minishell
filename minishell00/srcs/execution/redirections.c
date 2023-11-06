@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 11:54:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:55:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	redirect_in(char *infile)
 	fdin = open(infile, O_RDONLY);
 	if (fdin == -1)
 	{
-		printf("Error: %s: %s", infile, strerror(errno));
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(infile, 2);
+		perror(" ");
 		return (-1);
 	}
 	return (fdin);
@@ -40,7 +42,9 @@ int	redirect_out(char *outfile, char mode)
 		fdout = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fdout == -1)
 	{
-		printf("Error: %s: %s", outfile, strerror(errno));
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(outfile, 2);
+		perror(" ");
 		return (-1);
 	}
 	return (fdout);
@@ -135,11 +139,11 @@ int	main(void)
 	char	buffer[10];
 	char	*infile;
 	
-	infile = ft_here_doc("end");
+	infile = "./test";//ft_here_doc("end");
 
 	read(redirect_in(infile), buffer, 5);
 	printf("%s\n", buffer);
 	//ft_putstr_fd("\ntest\n", redirect_out("test", 'A'));
-	free(infile);
+	//free(infile);
 	return (0);
 }*/

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:30:11 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:15:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	print_explist(t_list *explist)
 	tmp = explist;
 	while (tmp)
 	{
-		printf("export : %s\n", (char *)tmp->content);
+		if (printf("export : %s\n", (char *)tmp->content) < 0)
+		{
+			ft_error("Error: export: print_explist ", strerror(errno));
+			return ;
+		}	
 		tmp = tmp->next;
 	}
 }
@@ -79,3 +83,42 @@ int	ft_export(t_list **envlist, t_list **explist, char *arg)
 	}
 	return (0);
 }
+
+/*int	main(int argc, char **argv, char **env)
+{
+	t_list	*envlist;
+	t_list	*explist;
+
+	envlist = NULL;
+	explist = NULL;
+	printf("teste : %d %s\n", argc, argv[0]);
+	envlist = env_to_envlist(env);
+	explist = env_to_envlist(env);
+
+	printf("print env list : \n");
+	ft_env(envlist);
+	printf("\n\n");
+	ft_export(&envlist, &explist, "test");
+	printf("\n\n");
+	ft_export(&envlist, &explist, "test1=");
+	ft_export(&envlist, &explist, "test2");
+	ft_export(&envlist, &explist, "LSCOLORS=test");
+	ft_export(&envlist, &explist, "USER=test");
+	ft_export(&envlist, &explist, "SHELL=test");
+	ft_export(&envlist, &explist, "LOGNAME=test");
+	ft_export(&envlist, &explist, "TERM_PROGRAM=");
+	ft_export(&envlist, &explist, "test3=");
+	ft_export(&envlist, &explist, "test");
+	ft_unset(&envlist, &explist, "test");
+	ft_unset(&envlist, &explist, "test1=");
+	ft_unset(&envlist, &explist, "te");
+	ft_unset(&envlist, &explist, "SHELL");
+	ft_env(envlist);
+	printf("\n\n");
+	ft_unset(&envlist, &explist, NULL);
+	ft_export(&envlist, &explist, NULL);
+	ft_pwd();
+	clear_lst(&envlist);
+	clear_lst(&explist);
+	return (0);
+}*/

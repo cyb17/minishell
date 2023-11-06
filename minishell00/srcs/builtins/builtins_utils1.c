@@ -6,21 +6,22 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:08:10 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:12:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
-void	clear_lst(t_list **lst)
+void	clear_lst(t_list **list)
 {
-	t_list	*tmp;
-
-	while (*lst != NULL)
+	t_list *current;
+	
+	current = NULL;
+	while (*list)
 	{
-		tmp = (*lst)->next;
-		free(*lst);
-		*lst = tmp;
+		current = *list;
+		*list = (*list)->next;
+		free(current);
 	}
 }
 

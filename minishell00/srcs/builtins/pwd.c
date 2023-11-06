@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 10:44:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/01 11:58:11 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/06 17:58:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,8 @@ int	ft_pwd(void)
 	printf("%s\n", current_path);
 	return (0);
 }
+
+/*int	main(void)
+{
+	ft_pwd();
+}*/
