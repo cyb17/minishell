@@ -6,13 +6,15 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/05 21:01:01 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:51:37 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 char	*get_var_to_exp(char *s);
+char	*my_strjoin(char const *s1, char const *s2);
+
 
 char *expand_value(char *s, int i)
 {
@@ -28,19 +30,21 @@ char *expand_value(char *s, int i)
 		tmp++;
 		j++;
 	}
-	//tmp++;
 	to_expand = get_var_to_exp(tmp);
 	expanded = getenv(to_expand);
 	free(to_expand);
+	if (!expanded)
+		return (NULL);
 	return (expanded);
 }
 
-char    *clean_word(char *s)
+char    *clean_word(char *s, )
 {
     int     len;
     int     i;
     char    *tmp;
     char    *cpy;
+	char	*cpy2;
 
     len = strlen(s);
     i = 0;
@@ -51,8 +55,6 @@ char    *clean_word(char *s)
 	// 	i++;
         while (i <= len)
         {
-			// if (tmp)
-			// 	free(tmp);
 			if (s[i] != '$')
 			{
 				if (cpy == NULL)
@@ -60,25 +62,35 @@ char    *clean_word(char *s)
 				else
 				{
 					tmp = ft_strdup_section(s, i, i + 1);
-					cpy = ft_strjoin(cpy, tmp);
-//					free(tmp);
+					cpy2 = cpy;
+					cpy = my_strjoin(cpy2, tmp);
+					if (cpy2)
+						free(cpy2);
+					if (tmp != NULL)
+						free(tmp);
 				}
 				i++;
 			}
 			if (s[i] == '$')
 			{
             	tmp = expand_value(s, i);
-				cpy = ft_strjoin(cpy, tmp);
-				i++;
-//				free(tmp);
+				if (tmp != NULL);
+				{
+					cpy2 = cpy;
+					cpy = my_strjoin(cpy2, tmp);
+					if (cpy2)
+						free(cpy2);
+					i++;
+				}
 				while (s[i] >= '0' && s[i] <= '9' || s[i] >= 'A' && s[i] <= 'Z' 
 				|| s[i] >= 'a' && s[i] <= 'z' || s[i] == '_')
 					i++;
 			}
 		}
         printf("cpy : %s\n", cpy);
-    }  
-//}
+		return (cpy);
+    // }  
+}
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -117,6 +129,8 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -127,11 +141,15 @@ int main(int ac, char **av, char **env)
 	char 		*input;
 	//t_process	**process;
     char        *s;
+	t_list		*envlist;
+
 	(void)ac;
 	(void)av;
-	(void)env;
 	//process_init(&process);
-    input = "coucou  $USER $PWD hello";
-	s = clean_word(input);
+	envlist = env_to_envlist(env);
+    input = "coucou  '$US'ER' $PWD hello";
+	s = clean_word(input, envlist);
+	free(s);
     return (0);
 }
+
