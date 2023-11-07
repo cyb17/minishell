@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/11/07 18:02:13 by yachen           ###   ########.fr        #
+#    Updated: 2023/11/07 18:07:27 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ RM = rm -rf
 SRC = srcs/builtins/export_part1.c srcs/builtins/export_part2.c srcs/builtins/echo.c \
 	  srcs/builtins/env.c srcs/builtins/unset.c srcs/builtins/builtins_utils1.c \
 	  srcs/builtins/pwd.c srcs/builtins/cd.c srcs/builtins/env.c \
-	  srcs/execution/redirections.c srcs/execution/utils.c srcs/execution/garbage_collector.c \
+	  srcs/execution/redirections.c srcs/execution/utils.c srcs/execution/garbage.c \
 	  #srcs/builtins/main.c \
 	  
 OBJ = $(SRC:.c=.o)
