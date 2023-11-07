@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/03 16:11:07 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:07:43 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 }						t_data;
 
 /* main.c */
-//int		main(int ac, char **av, char **env);
+int		main(int ac, char **av, char **env);
 
 /* parsing.c */
 int		ft_parse(char *line, t_process **process);
@@ -84,10 +84,35 @@ void	ft_procsadd_back(t_process **lst, t_process *new);
 
 /* init.c */
 void	process_init(t_process *process);
-void	*data_init(t_data *data, char *line);
+//void	*data_init(t_data *data, char *line);
 
-/*split_input.c*/
+/* split_input.c */
 t_process	**make_proces_list(char *line);
 t_process	*create_process(char *start, int end, int id);
+void	make_token_list(t_process *process);
+
+/* expand .c */
+bool	varcmp(char *model, char *str);
+char	*find_var(char *var, t_list *list);
+char	*my_getenv(char *var, t_list *list);
+char	*expand_value(char *s, int i, t_list **envlist);
+char	*get_var_to_exp(char *s);
+
+/* clean_words.c */
+char	*clean_word(char *s, t_list **envlist);
+size_t	my_strlen(const char *s);
+
+/* ft_split_minishell.c */
+int		nb_words(char *s, char c);
+int		size_words(char *s, char c);
+char	**write_in(char **tab, char *s, char c);
+void	freetab(char **tab);
+char	**ft_split_minishell(char	*s, char c);
+t_list	*env_to_envlist(char **env);
+
+/* utils_cleaning.c */
+char	*ft_strdup_checking(char *s, int start, int end);
+char	*my_strjoin(char *s1, char *s2);
+bool	is_ok(char c);
 
 #endif

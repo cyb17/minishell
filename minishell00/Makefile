@@ -6,7 +6,7 @@
 #    By: achevala <achevala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 10:12:10 by yachen            #+#    #+#              #
-#    Updated: 2023/11/02 12:33:44 by achevala         ###   ########.fr        #
+#    Updated: 2023/11/07 19:09:51 by achevala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ READLINE = -lreadline
 RM = rm -rf
 
 SRC = ./srcs/main.c ./srcs/parsing.c ./srcs/init.c ./srcs/utils_parsing.c\
-	./srcs/split_input.c\
+	./srcs/ft_split_minishell.c ./srcs/utils_cleaning.c\
+	./srcs/split_input.c ./srcs/expand/expand.c ./srcs/clean_words.c\
+	./srcs/utils_double.c\
 
 OBJ = $(SRC:.c=.o)
 
