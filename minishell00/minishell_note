@@ -28,6 +28,7 @@ Changes the working directory of the current shell execution environment and upd
 Without arguments it change the working directory to the home directory.
 il faut gerer '-' le tiret <=> cd "$OLDPWD" && pwd
 remarque :
+s'il y a plus d'1 arguments => bash: cd: too many arguments + $? = 1
 tout au debut $HOME = $PWD = $OLDPWD
 . | ././././ <=> dossier courant
 ../ <=> dossier parent du dossier courant

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   builtins_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 15:12:46 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/07 16:44:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ t_list	*find_oldvar(char *var, t_list *list, int *i)
 	{
 		if (stringcmp(var, current->content) == 1)
 			return (current);
-		(*i)++;
+		if (i)
+			(*i)++;
 		current = current->next;
 	}
 	return (NULL);
