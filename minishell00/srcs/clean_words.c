@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/08 12:56:43 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:44:10 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char    *clean_word(char *s, t_list **envlist)
     char    *cpy;
 	char	*cpy2;
 
-    len = strlen(s);
+    len = my_strlen(s);
     i = 0;
 	cpy = NULL;
     if (s[i] == '"' && s[len] == '"')
@@ -77,7 +77,64 @@ char    *clean_word(char *s, t_list **envlist)
 			}
 		}
         printf("cpy : %s\n", cpy);
-    }  
+    }
+	else if (s[i] == '\'' && s[len] == '\'')
+	{
+		i++;
+        while (i < (len - 1))
+        {
+			if (cpy == NULL)
+				cpy = ft_strdup_section(s, i, i + 1);
+			else
+			{
+				tmp = ft_strdup_section(s, i, i + 1);
+				cpy2 = cpy;
+				cpy = my_strjoin(cpy2, tmp);
+				if (cpy2)
+					free(cpy2);
+				if (tmp != NULL)
+					free(tmp);
+			}
+			i++;
+		}
+		return (cpy);
+	} 
+	else
+	{
+		while (i < (len))
+		{
+			if (s[i] == '$')
+			{
+            	tmp = expand_value(s, i, envlist);
+				if (tmp != NULL)
+				{
+					cpy2 = cpy;
+					cpy = my_strjoin(cpy2, tmp);
+					if (cpy2)
+						free(cpy2);
+					i++;
+				}
+				while ((s[i] >= '0' && s[i] <= '9')|| s[i] == '_'
+				|| (s[i] >= 'a' && s[i] <= 'z') 
+				|| (s[i] >= 'A' && s[i] <= 'Z'))
+					i++;
+			}
+			if (cpy == NULL)
+				cpy = ft_strdup_section(s, i, i + 1);
+			else
+			{
+				tmp = ft_strdup_section(s, i, i + 1);
+				cpy2 = cpy;
+				cpy = my_strjoin(cpy2, tmp);
+				if (cpy2)
+					free(cpy2);
+				if (tmp != NULL)
+					free(tmp);
+			}
+			i++;
+		}
+		return (cpy);
+	}
 	return (cpy);
 }
 
