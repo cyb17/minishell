@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:08:27 by yachen            #+#    #+#             */
-/*   Updated: 2023/09/09 14:17:52 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "./pipex_bonus.h"
 
 pid_t	procs_fdin(int i, t_tab *tab, char **env, char *argv_value)
 {

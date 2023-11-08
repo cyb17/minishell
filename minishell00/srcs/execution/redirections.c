@@ -6,48 +6,44 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:55:51 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 14:01:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	redirect_in(char *infile)
+void	redirect_in(int *fdin, char *infile)
 {
-	int	fdin;
-
-	fdin = 0;
-	fdin = open(infile, O_RDONLY);
-	if (fdin == -1)
+	if (*fdin != 0)
+		close(*fdin);
+	*fdin = open(infile, O_RDONLY);
+	if (*fdin == -1)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(infile, 2);
 		perror(" ");
-		return (-1);
+		return ;
 	}
-	return (fdin);
 }
 
 // cette fontion possede 2 mode :
 // T pour O_TRUNC pour >
 // A pour O_APPEND pour >>
-int	redirect_out(char *outfile, char mode)
+void	redirect_out(int *fdout, char *outfile, char mode)
 {
-	int	fdout;
-
-	fdout = 0;
+	if (*fdout != 0)
+		close(*fdout);
 	if (mode == 'T')
-		fdout = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		*fdout = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (mode == 'A')
-		fdout = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (fdout == -1)
+		*fdout = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (*fdout == -1)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(outfile, 2);
 		perror(" ");
-		return (-1);
+		return ;
 	}
-	return (fdout);
 }
 
 // /dev/urandom est un fichier qui est genere avec un contenu aleatoire

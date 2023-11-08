@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_cmd.c                                      :+:      :+:    :+:   */
+/*   parsing_cmd_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 16:30:30 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "./pipex_bonus.h"
 
 /* split cmd and options in char **
 return NULL if ft_split failed */

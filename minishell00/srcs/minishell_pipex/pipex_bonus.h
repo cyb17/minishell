@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:28:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 16:52:27 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 10:29:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include "../../libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_tab
 {

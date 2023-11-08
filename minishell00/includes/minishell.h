@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:46:27 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 16:21:33 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/ioctl.h>
 # include <pwd.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include "../srcs/builtins/builtins.h"
 
 
@@ -45,7 +46,7 @@ typedef struct s_tokens
 	int				token_id;
 	int				type;
 	char 			*value;
-	struct s_tokens	*next_tokens;
+	struct s_tokens	*next;
 }					t_tokens;
 
 typedef struct s_process
@@ -54,9 +55,16 @@ typedef struct s_process
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
-	struct s_process	*next_process;
+	struct s_process	*next;
 }						t_process;
 
+typedef struct s_tab
+{
+	int		fdin;
+	int		fdout;
+	int		nb_pipe;
+	int		**pipefd;
+}			t_tab;
 
 /* EXECUTION*/
 
@@ -65,7 +73,7 @@ int		ft_compare(char *limiter, char *str);
 void	ft_error(char *where, char *what);
 
 //garbage_collector
-void	clear_process(t_list *process);
+void	clear_process(t_process *process);
 void	garbage_collector(t_process **process_list);
 
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1_bonus.c                                     :+:      :+:    :+:   */
+/*   redirection_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 10:55:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 16:34:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "./pipex_bonus.h"
 
 int	ft_compare(char *limiter, char *str)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialization.c                                   :+:      :+:    :+:   */
+/*   initialization_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:33:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/03 16:52:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "./pipex_bonus.h"
 
 int	creat_pipefd(int i, int argc, int **pipefd)
 {
