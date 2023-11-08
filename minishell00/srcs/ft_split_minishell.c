@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/02 17:22:58 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:00:48 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ int	nb_words(char *s, char c)
 		if (between_quotes(s, i) == i && *s0)
 		{
 			while (*s0 == c && *s0 != '\0')
+			{
 				s0++;
 				i++;
+			}
 			if (*s0 != c && *s0 != '\0')
 				m++;
 			while (*s0 != '\0' && *s0 != c)
+			{
 				s0++;
 				i++;
+			}
 		}
 		if (between_quotes(s, i) > i)
 		{

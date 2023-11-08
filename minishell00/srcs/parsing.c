@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/11/02 18:26:04 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:18:18 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	first_readind(char *input)
 	i = 0;
 	// if (is_valid(input) == false)
 	// 	return (false);
-	while (input[i] && i <= (int)ft_strlen(input))
+	while (input[i] && i <= (int)my_strlen(input))
 	{
 		if (input[i] == '\'' || input[i] == '"')
 		{
@@ -54,7 +54,7 @@ bool	first_readind(char *input)
 // 	return (true);
 // }
 
-int	ft_parse(char *line, t_process **process)
+int	ft_parse(char *line, t_process **process, t_list *envlist)
 {
 	if (first_readind(line) == false)
 	{
@@ -62,6 +62,6 @@ int	ft_parse(char *line, t_process **process)
 		return (1);
 	}
 	process = make_proces_list(line);
-	make_token_list(process);
+	make_token_list(*process, envlist);
 	return (0);
 }

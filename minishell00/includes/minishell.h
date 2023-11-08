@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/07 19:07:43 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:47:28 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ enum 	e_tokens_type
 	HEREDOC = 8
 };
 
+
 typedef struct s_tokens
 {
 	int				token_id;
 	int				type;
 	char 			*value;
-	struct s_tokens	*next_tokens; 
+	struct s_tokens	*next; 
 }					t_tokens;
 
 typedef struct s_process
@@ -58,7 +59,7 @@ typedef struct s_process
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
-	struct s_process	*next_process;
+	struct s_process	*next;
 }						t_process;
 
 typedef struct s_data
@@ -72,7 +73,7 @@ typedef struct s_data
 int		main(int ac, char **av, char **env);
 
 /* parsing.c */
-int		ft_parse(char *line, t_process **process);
+int		ft_parse(char *line, t_process **process, t_list *envlist);
 // bool	is_valid(char *l);
 bool	first_readind(char *input);
 
@@ -81,15 +82,18 @@ int		check_quotes(char *input, char c, int i);
 int		between_quotes(char *l, int i);
 char	*ft_strdup_section(char *s, int start, int end);
 void	ft_procsadd_back(t_process **lst, t_process *new);
+void	ft_tokenadd_back(t_tokens **lst, t_tokens *new);
+//t_process	*ft_proclast(t_process *lst);
 
 /* init.c */
 void	process_init(t_process *process);
 //void	*data_init(t_data *data, char *line);
+void	token_init(t_tokens *tokens);
 
 /* split_input.c */
 t_process	**make_proces_list(char *line);
-t_process	*create_process(char *start, int end, int id);
-void	make_token_list(t_process *process);
+t_process	*create_process(char *s, int start, int end, int id);
+void		make_token_list(t_process *process, t_list *envlist);
 
 /* expand .c */
 bool	varcmp(char *model, char *str);
@@ -107,7 +111,9 @@ int		nb_words(char *s, char c);
 int		size_words(char *s, char c);
 char	**write_in(char **tab, char *s, char c);
 void	freetab(char **tab);
-char	**ft_split_minishell(char	*s, char c);
+char	**ft_split_minishell(char *s, char c);
+
+/* utils_double.c */
 t_list	*env_to_envlist(char **env);
 
 /* utils_cleaning.c */

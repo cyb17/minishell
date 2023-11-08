@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/05 20:25:17 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:20:03 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_quotes(char *input, char c, int i)
 	inside_quote = false;
 	j = i;
 	i++;
-    while (input[i] && i <= (int)strlen(input))
+    while (input[i] && i <= (int)my_strlen(input))
 	{
         if (input[i] == c) 
 		{
@@ -40,7 +40,7 @@ int	between_quotes(char *l, int i)
 	int		j;
 
 	j = 0;
-	while (l[j] && j <= (int)strlen(l) && j < i)
+	while (l[j] && j <= (int)my_strlen(l) && j < i)
 	{
 		if (l[j] == '"' || l[j] == '\'') 
 		{
@@ -83,11 +83,53 @@ void	ft_procsadd_back(t_process **lst, t_process *new)
 
 	if (*lst == NULL)
 	{
+		printf("10 %s: \n", new->section_cmd);
 		*lst = new;
 		return ;
 	}
 	tmp = *lst;
-	while (tmp -> next_process != NULL)
-		tmp = tmp -> next_process;
-	tmp -> next_process = new;
+	printf("9 %s: \n", new->section_cmd);
+	while (tmp -> next != NULL)
+		tmp = tmp -> next;
+	tmp->next= new;
+}
+
+// void	ft_procsadd_back(t_process **lst, t_process *new)
+// {
+// 	t_process	*search;
+
+// 	if (!*lst)
+// 	{
+// 		*lst = new;
+// 		return ;
+// 	}
+// 	search = ft_proclast(*lst);
+// 	search->next = new;
+// }
+
+// t_process	*ft_proclast(t_process *lst)
+// {
+// 	while (lst)
+// 	{
+// 		if (!(lst -> next))
+// 			return (lst);
+// 		lst = lst -> next;
+// 	}
+// 	return (lst);
+// }
+
+void	ft_tokenadd_back(t_tokens **lst, t_tokens *new)
+{
+	t_tokens	*tmp;
+
+	tmp = NULL;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp -> next != NULL)
+		tmp = tmp -> next;
+	tmp -> next = new;
 }

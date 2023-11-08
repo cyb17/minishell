@@ -6,7 +6,7 @@
 #    By: achevala <achevala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 10:12:10 by yachen            #+#    #+#              #
-#    Updated: 2023/11/07 19:09:51 by achevala         ###   ########.fr        #
+#    Updated: 2023/11/08 16:27:54 by achevala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc 
 
-CFLAGS =  -Wall -Wextra -Werror -g 
+CFLAGS =  -Wall -Wextra -Werror -g3
 
 READLINE = -lreadline
 
