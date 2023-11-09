@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 14:01:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:55:56 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*create_hdname(void)
 	char	tmp[6];
 	char	name[6];
 	char	*here_doc;
-	
+
 	urandom_fd = 0;
 	ft_strlcpy(tmp, "/tmp/", 6);
 	urandom_fd = open("/dev/urandom", O_RDONLY);
@@ -109,7 +109,7 @@ char	*ft_here_doc(char *limiter)
 	int		here_doc;
 
 	hd_path = create_hdname();
-	if(!hd_path)
+	if (!hd_path)
 	{
 		ft_putstr_fd("Error: ft_here_doc: creat_hdname", 2);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/07 16:44:16 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:51:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	clear_lst(t_list **list)
 {
-	t_list *current;
-	
+	t_list	*current;
+
 	current = NULL;
 	while (*list)
 	{

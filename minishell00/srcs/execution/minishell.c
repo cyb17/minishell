@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 15:01:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:56:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char		*input;
 	t_process	**process;
+	char		*input;
 	t_tab		tab;
+	t_builtins	builtins;
 
-	process = NULL;
-	tab.fdin = 0;
-	tab.fdout = 0;
 	while (1)
 	{
 		input = readline("minishell > ");
-	//	ft_parse(input, process);
-		printf("%s\n", input);
-		if (make_inoutfile(&tab.fdin, &tab.fdout, *process) == -1)
+		ft_parse(input, process);
+		if (init_tab(&tab, *process) == -1
+			|| init_builtins(&builtins, env) == -1
+			|| pipex(&builtins, &tab, *process, env) == -1)
 		{
-			if (input)
-				free(input);
+			free(input);
+			garbage_collector(process, &tab, &builtins);
 			return (1);
 		}
-		pipex();
-		if (input)
-			free(input);
 	}
 	return (0);
 }

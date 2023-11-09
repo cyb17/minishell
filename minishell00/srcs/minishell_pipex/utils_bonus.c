@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 12:02:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:33:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	free_tab_int(t_tab *tab)
 		free(tab->pipefd);
 }
 
-void	ft_perror(char *str, int indice)
+/*void	ft_perror(char *str, int indice)
 {
 	if (indice == 1)
 		perror("Error");
 	if (str)
 		ft_printf(": %s\n", str);
 	exit(EXIT_FAILURE);
-}
+}*/
 
 void	close_pipefd(int **pipefd, int nb_pipe, int i)
 {
@@ -60,12 +60,16 @@ void	clean_all(t_tab *tab, int i, int indice)
 		free_tab_int(tab);
 }
 
-void	wait_proces(int j, int *pid, int nb_proces)
+void	wait_proces(int *pid, int nb_proces)
 {
 	int	i;
 	int	status;
 
 	i = 0;
-	while (i < nb_proces && i < j)
-		waitpid(pid[i++], &status, 0);
+	while (i < nb_proces)
+	{
+		if (pid[i] != 0)
+			waitpid(pid[i], &status, 0);
+		i++;
+	}
 }

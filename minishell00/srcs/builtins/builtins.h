@@ -6,12 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:43:18 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:53:11 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
-#define BUILTINS_H
+# define BUILTINS_H
 
 # include "../libft/libft.h"
 # include <stdio.h>
@@ -53,7 +53,7 @@ void	replace_var(t_list **envlst, t_list **explst, t_var *env, t_var *exp);
 int		ft_export(t_list **envlist, t_list **explist, char *arg);
 
 // unset
-void	ft_unset(t_list **envlist, t_list **explist, char *arg);
+int		ft_unset(t_list **envlist, t_list **explist, char *arg);
 
 // pwd
 int		ft_pwd(void);

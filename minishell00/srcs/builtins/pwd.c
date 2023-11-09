@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 10:44:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:58:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 12:04:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_pwd(void)
 	if (!current_path)
 	{
 		perror("minishell: pwd");
-		return (-1);
+		return (1);
 	}
 	printf("%s\n", current_path);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/07 17:37:38 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:52:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	go_to(t_list **envlist, char *var_name)
 {
 	t_list	*var;
-	
+
 	var = find_oldvar(var_name, *envlist, NULL);
 	if (!var)
 	{
@@ -42,7 +42,7 @@ static int	check_arg(char **arg)
 	if (i > 2)
 	{
 		ft_putstr_fd("minishell: cd: too any arguments", 2);
-		return(-1);
+		return (-1);
 	}
 	return (0);
 }
@@ -77,7 +77,7 @@ static void	update_path(t_list **list)
 	pwd_found->content = ft_getcwd();
 }
 
-int	ft_cd(t_list **envlist,t_list **explist, char **arg)
+int	ft_cd(t_list **envlist, t_list **explist, char **arg)
 {
 	if (check_arg(arg) == -1)
 		return (1);
@@ -101,7 +101,7 @@ int	ft_cd(t_list **envlist,t_list **explist, char **arg)
 	}
 	update_path(envlist);
 	update_path(explist);
-	return(0);
+	return (0);
 }
 
 /*int	main(int argc, char **argv, char **env)

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:37:24 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:53:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_op(char *str)
 	return (1);
 }
 
-static int	print_newline()
+static int	print_newline(void)
 {
 	if (printf("\n") == -1)
 	{
@@ -53,7 +53,7 @@ static int	print_echo_arg(char **arg, int i, int op_flag)
 	if (printf("%s", arg[i]) < 0)
 	{
 		perror("Error: echo: print_echo_arg: ");
-			return (1);
+		return (1);
 	}
 	if (op_flag == 0)
 	{

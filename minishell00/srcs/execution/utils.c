@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:57:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:45:25 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:37:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_compare(char *limiter, char *str)
 	return (0);
 }
 
-void	ft_error(char *where, char *what)
+/*void	ft_error(char *where, char *what)
 {
 	char	*tmp;
 	char	*err;
@@ -53,7 +53,7 @@ void	ft_error(char *where, char *what)
 	free(tmp);
 	ft_putstr_fd(err, 2);
 	free(err);
-}
+}*/
 
 /*
 int main(void)

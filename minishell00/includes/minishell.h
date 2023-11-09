@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 16:21:33 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 16:14:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,20 @@ typedef struct s_process
 	struct s_process	*next;
 }						t_process;
 
+typedef struct s_builtins
+{
+	t_list	**envlist;
+	t_list	**explist;
+	char	**arg;
+}				t_builtins
+
 typedef struct s_tab
 {
 	int		fdin;
 	int		fdout;
 	int		nb_pipe;
 	int		**pipefd;
+	pid_t	*tab_pid;
 }			t_tab;
 
 /* EXECUTION*/

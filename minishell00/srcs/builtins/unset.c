@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 17:02:51 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/09 12:05:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	delete_var(t_list **list, int oldvar_i)
 	free(current);
 }
 
-void	ft_unset(t_list **envlist, t_list **explist, char *arg)
+int	ft_unset(t_list **envlist, t_list **explist, char *arg)
 {
 	t_list	*env_oldvar;
 	t_list	*exp_oldvar;
@@ -51,10 +51,10 @@ void	ft_unset(t_list **envlist, t_list **explist, char *arg)
 	env_oldvar = NULL;
 	exp_oldvar = NULL;
 	if (!arg)
-		return;
+		return (0);
 	exp_oldvar = find_oldvar(arg, *explist, oldvar_i + 0);
 	if (!exp_oldvar)
-		return ;
+		return (0);
 	else
 	{
 		delete_var(explist, oldvar_i[0]);
@@ -62,4 +62,5 @@ void	ft_unset(t_list **envlist, t_list **explist, char *arg)
 		if (env_oldvar)
 			delete_var(envlist, oldvar_i[1]);
 	}
+	return (0);
 }
