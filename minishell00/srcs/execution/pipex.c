@@ -6,31 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 14:50:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 16:32:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*join_cmd_and_option(char *s1, char *s2)
-{
-	char	*tmp;
-	char	*cmd;
-
-	tmp = NULL;
-	cmd = NULL;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	tmp = ft_strjoin(s1, " ");
-	cmd = ft_strjoin(tmp, s2);
-	if (tmp)
-		free(tmp);
-	return (cmd);
-}
 
 int	isnot_builtins(char *str)
 {
@@ -55,7 +35,27 @@ int	find_nb_process(t_process *process)
 	return (nb_process);
 }
 
-char	*find_cmd(t_tokens *tokens)
+static char	*join_cmd_and_option(char *s1, char *s2)
+{
+	char	*tmp;
+	char	*cmd;
+
+	tmp = NULL;
+	cmd = NULL;
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	tmp = ft_strjoin(s1, " ");
+	cmd = ft_strjoin(tmp, s2);
+	if (tmp)
+		free(tmp);
+	return (cmd);
+}
+
+char	*make_cmdtk_to_arg(t_tokens *tokens)
 {
 	char		*tmp;
 	char		*cmd;
@@ -115,7 +115,7 @@ int	make_child_process(t_tokens *cmd_tk, t_tab *tab, int i, char **env)
 	}
 	else if (tab->pid[i] == 0)
 	{
-		arg = fin_cmd(cmd_tk);
+		arg = make_cmdtk_to_arg(cmd_tk);
 		path = child_procs_part_1(tab, env, arg);
 		child_procs_part_2(i, tab, input, output)
 		child_procs_part_3(tab, path, arg);
@@ -166,8 +166,8 @@ void	which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
 		*rlt = ft_unset(builtins->envlist, builtins->explist, builtins->arg[0]);
 	else if (strcmp("pwd", cmd_tk->value) == 1)
 		*rlt = ft_pwd();
-	//else if (strcmp("exit", cmd_tk->value) == 1)
-	//	*rsl = ft_exit();
+	else if (strcmp("exit", cmd_tk->value) == 1)
+		ft_exit();
 	free_tab(builtins->arg);
 	builtins->arg = NULL;
 }
@@ -225,7 +225,6 @@ int	setup_in_out(int *fdin, int *fdout, t_tokens *tokens)
 int	pipex(t_builtins *builtins, t_tab *tab, t_process *process, char **env)
 {
 	int		i;
-	int		rslt;
 
 	i = 0;
 	rslt = 0;
@@ -405,3 +404,4 @@ int	fill_builtins(t_builtins *builtins, char **env)
 	tab_cmd[i] = NULL;
 	return (tab_cmd);
 }*/
+//////////////////////////////////////////////////////////////////////////////////////

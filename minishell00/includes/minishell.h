@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 14:49:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 15:56:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_tab
 	t_process	*process;
 	t_builtins	*builtins;
 	char		*input;
+	int			exit_code;
 }			t_tab;
 
 /* EXECUTION*/
