@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/09 17:21:16 by nap              ###   ########.fr       */
+/*   Updated: 2023/11/10 19:38:33 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,30 @@ t_process	**make_proces_list(char *line)
 	new_process = NULL;
 	i = 0;
 	start = 0;
-	id = 0;
+	id = 1;
 	while (line[i] && i <= (int)my_strlen(line))
 	{
 		if (line[i] == '|')
 		{
 			if (between_quotes(line, i) == i)
 			{
-				id++;
 				new_process = create_process(line, start, i, id);
 				ft_procsadd_back(list_process, new_process);
 				start = i + 1;
 			}
+			id++;
 		}
 		i++;
 	}
 	if (id == 0)
 	{
+		printf("ici 10\n");
 		new_process = create_process(line, 0, my_strlen(line), 1);
 		ft_procsadd_back(list_process, new_process);
 	}
-	if (i == (int)ft_strlen(line))
+	else 
 	{
+		printf("ici 11\n");
 		new_process = create_process(line, start, (int)my_strlen(line), id + 1);
 		ft_procsadd_back(list_process, new_process);
 	}
@@ -114,10 +116,12 @@ void	make_token_list(t_process *process, t_list *envlist)
 	new_token = NULL;
 	id = 0;
 	printf("ici 1\n");
-	while(process->next != NULL)
+	while(process != NULL)
 	{
 		i = 0;
+		printf("ici 2\n");
 		words = ft_split_minishell(process->section_cmd, ' ');
+		printf("ici 3\n");
 		print_tab(words);
 		while (words[i] != NULL)
 		{
@@ -132,18 +136,19 @@ void	make_token_list(t_process *process, t_list *envlist)
 		freetab(words);
 		process = process->next;
 	}
-	i = 0;
-	words = ft_split_minishell(process->section_cmd, ' ');
-	print_tab(words);
-	while (words[i])
-	{
-		id++;
-		cleaned = clean_word(words[i], &envlist);
-		new_token = create_tokens(cleaned, id);
-		ft_tokenadd_back(list_token, new_token);
-		i++;
-	}
-	freetab(words);
+	// printf("ici 4\n");
+	// i = 0;
+	// words = ft_split_minishell(process->section_cmd, ' ');
+	// print_tab(words);
+	// while (words[i])
+	// {
+	// 	id++;
+	// 	cleaned = clean_word(words[i], &envlist);
+	// 	new_token = create_tokens(cleaned, id);
+	// 	ft_tokenadd_back(list_token, new_token);
+	// 	i++;
+	// }
+	// freetab(words);
 }
 
 char	*ft_strdup(const char *s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/10/30 11:39:27 by nap              ###   ########.fr       */
+/*   Updated: 2023/11/10 14:38:51 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	**write_in(char **tab, char const *s, char c)
 		tab[i][j] = '\0';
 		i++;
 	}
-	tab[i] = 0;
+	tab[i] = NULL;
 	return (tab);
 }
 

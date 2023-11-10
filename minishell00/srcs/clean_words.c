@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/09 16:02:10 by nap              ###   ########.fr       */
+/*   Updated: 2023/11/10 21:05:07 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char    *clean_word(char *s, t_list **envlist)
     	len = my_strlen(s);
     i = 0;
 	cpy = NULL;
-    if (s && s[i] == '"' && s[len] == '"')
+    if (s && (s[i] == '"' && s[len - 1] == '"'))
     {
 		i++;
-        while (i < (len - 1))
+        while (i < (len - 2))
         {
 			if (s[i] != '$')
 			{
@@ -77,9 +77,9 @@ char    *clean_word(char *s, t_list **envlist)
 					i++;
 			}
 		}
-        printf("cpy : %s\n", cpy);
+        return (cpy);
     }
-	else if (s && s[i] == '\'' && s[len] == '\'')
+	if (s && (s[i] == '\'' && s[len - 1] == '\''))
 	{
 		i++;
         while (i < (len - 1))
@@ -100,7 +100,7 @@ char    *clean_word(char *s, t_list **envlist)
 		}
 		return (cpy);
 	} 
-	else if (s)
+	if (s)
 	{
 		while (i < len)
 		{

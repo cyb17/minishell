@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/02 17:21:44 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:57:07 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_quotes(char *input, char c, int i)
 int	between_quotes(char *l, int i)
 {
 	int		j;
-
+	printf("tchao\n");
 	j = 0;
 	while (l[j] && j <= (int)strlen(l) && j < i)
 	{
