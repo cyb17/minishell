@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/07 19:00:48 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/10 00:56:35 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,33 @@ int	nb_words(char *s, char c)
 	i = 0;
 	while (*s0 && *s0 != '\0')
 	{
-		if (between_quotes(s, i) == i && *s0)
+		while (between_quotes(s, i) == i && *s0)
 		{
-			while (*s0 == c && *s0 != '\0')
-			{
-				s0++;
-				i++;
-			}
-			if (*s0 != c && *s0 != '\0')
-				m++;
-			while (*s0 != '\0' && *s0 != c)
-			{
-				s0++;
-				i++;
-			}
+				while (*s0 == c && *s0 != '\0')
+				{
+					if (between_quotes(s, i) > i)
+						break;
+					s0++;
+					i++;
+				}
+				if (*s0 != c && *s0 != '\0' 
+				&& (between_quotes(s, i - 1) == i - 1))
+					m++;
+				while (*s0 != '\0' && *s0 != c)
+				{
+					if (between_quotes(s, i) > i)
+						break;
+					s0++;
+					i++;
+				}
 		}
-		if (between_quotes(s, i) > i)
+		while (between_quotes(s, i) > i)
 		{
-			m++;
+			//m++;
 			while (*s0 != '\0')
 			{
+				if (between_quotes(s, i) == i)
+						break;
 				s0++;
 				i++;
 			}
@@ -61,19 +68,26 @@ int	size_words(char *s, char c)
 	if (*s1 == '\'' || *s1 == '"')
 	{
 		s1++;
-		while (between_quotes(s, l) > l && *s1 != '\0')
+		l++;
+		if (between_quotes(s, l) > l && *s1 != '\0')
 		{
-			l++;
-			s1++;
+			while (between_quotes(s, l) > l && *s1 != '\0')
+			{
+				l++;
+				s1++;
+			}
 		}
 	}
-	else 
+	else
 	{
-		while (*s1 != '\0' && *s1 != c && between_quotes(s, l) == l)
+		// if (*s1 != '\0' && *s1 != c && between_quotes(s, l) == l)
 		{
-			l++;
-			s1++;
-		}	
+			while (*s1 != '\0' && *s1 != c && between_quotes(s, l) == l)
+			{
+				l++;
+				s1++;
+			}
+		}
 	}
 	l++;
 	return (l);
@@ -85,23 +99,56 @@ char	**write_in(char **tab, char *s, char c)
 	int		j;
 	char	*s2;
 	int		max;
+	int	k;
 
 	i = 0;
+	j = 0;
+	k = 0;
 	s2 = s;
 	max = nb_words(s, c);
-	while (*s2 && *s2 != '\0' && i < max)
+	while (*s2 && *s2 != '\0' && i <= max)
 	{
-		j = 0;
-		while (*s2 == c && *s2 != '\0')
-			s2++;
-		while (*s2 != '\0' && *s2 != c)
+		while (between_quotes(s, j) == j && *s2 == c && *s2) // PASSE LES ESPACES PAS ENTRE COTES
 		{
-			tab[i][j] = *s2;
-			j++;
+			if (s[j - 1] != c && s[j - 1])
+			{
+				tab[i][k] = '\0';
+				i++;
+				k = 0;
+			}
 			s2++;
+			j++;
+			k++;
 		}
-		tab[i][j] = '\0';
-		i++;
+		while (between_quotes(s, j) > j && *s2) // RECOPIE LES CHARS ENTRE COTE
+		{
+			tab[i][k] = *s2;
+			s2++;
+			j++;
+			k++;
+		}
+		while (*s2 != '\0' && *s2 != c && between_quotes(s, j) == j) // RECOPIE LES CHARS PAS ENTRE COTE
+		{
+			if (between_quotes(s, j) > j)
+				break;
+			tab[i][k] = *s2;
+			s2++;
+			j++;
+			k++;
+		}
+		// }
+		// while (between_quotes(s, j) > j)
+		// {
+		// 	//m++;
+		// 	while (*s2 != '\0')
+		// 	{
+		// 		if (between_quotes(s, j) == j)
+		// 				break;
+		// 		tab[i][j] = *s2;
+		// 		s2++;
+		// 		j++;
+		// 	}
+		// }
 	}
 	tab[i] = 0;
 	return (tab);
@@ -128,10 +175,12 @@ void	freetab(char **tab)
 char	**ft_split_minishell(char	*s, char c)
 {
 	int			i;
+	int			l;
 	char		**tab;
 	char 		*s3;
 
 	i = 0;
+	l = 0;
 	s3 = s;
 	tab = malloc(sizeof(char *) * (nb_words(s, c) + 1));
 	if (!tab || s == 0)
@@ -139,48 +188,79 @@ char	**ft_split_minishell(char	*s, char c)
 	while (*s3)
 	{
 		while (*s3 == c && *s3 != '\0')
+		{
 			s3++;
+			l++;
+		}
 		if (*s3 != c && *s3 != '\0')
 		{
-			tab[i] = malloc(sizeof(char) * size_words(s3, c));
+			tab[i] = malloc(sizeof(char) * size_words(s3, c) + 1);
 			if (!tab[i])
 				return (NULL);
 			i++;
 		}
-		while (*s3 != c && *s3 != '\0')
-			s3++;
+		if (between_quotes(s, l) == l && *s3 != c && *s3 != '\0')
+		{
+			while (between_quotes(s, l) == l && *s3 != c && *s3 != '\0')
+			{
+				s3++;
+				l++;
+			}
+		}
+		else if (between_quotes(s, l) > l && *s3 != c && *s3 != '\0')
+		{
+			while (between_quotes(s, l) > l && *s3 != c && *s3 != '\0')
+			{
+				s3++;
+				l++;
+			}
+		}
 	}
 	return (write_in(tab, s, c));
 }
-// void print_tab(char **tab)
-// {
-// 	int	i;
 
-// 	i = 0;
-// 	if (tab != NULL)
-// 	{
-// 		while (tab[i])
-// 		{
-// 			printf("%s -> len = %ld\n", tab[i], strlen(tab[i]));
-// 			i++;
-// 		}
-// 	}
-// }
-// int	main()
-// {
-// 	char	*s;
-// 	char	c;
-// 	char  **res;
-// 	int		m;
+void print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab != NULL)
+	{
+		while (tab[i])
+		{
+			printf("%s -> len = %ld\n", tab[i], strlen(tab[i]));
+			i++;
+		}
+	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	// char	*s;
+	// char	c;
+	char  **res;
+	int		m;
+	char c;
+	char 		*input;
+	//t_list		*envlist;
 	
-// 	c = ' ';
-// 	s =  " echo  pouet '''c''ouc' 'ou'iho ";
-// 	m = nb_words(s, c);
-// 	res = ft_split_minishell(s, c);
-// 	print_tab(res);
-// 	printf("nb mots = %d\n", m);
-// 	return (0);
-// }
+	(void)ac;
+	(void)av;
+	(void)env;
+	while (1)
+	{  
+        // envlist = NULL;
+	    // envlist = env_to_envlist(env);
+		input = readline("minishell > ");
+		c = ' ';
+		m = nb_words(input, c);
+		res = ft_split_minishell(input, c);
+		print_tab(res);
+		freetab(res);
+		printf("nb mots = %d\n", m);
+	}
+	return (0);
+}
 
 /*
 s: La chaîne de caractères à découper.

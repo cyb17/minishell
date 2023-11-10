@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/08 17:47:28 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:18:05 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		size_words(char *s, char c);
 char	**write_in(char **tab, char *s, char c);
 void	freetab(char **tab);
 char	**ft_split_minishell(char *s, char c);
+void print_tab(char **tab);
 
 /* utils_double.c */
 t_list	*env_to_envlist(char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/08 18:20:03 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:42:46 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,29 +94,6 @@ void	ft_procsadd_back(t_process **lst, t_process *new)
 	tmp->next= new;
 }
 
-// void	ft_procsadd_back(t_process **lst, t_process *new)
-// {
-// 	t_process	*search;
-
-// 	if (!*lst)
-// 	{
-// 		*lst = new;
-// 		return ;
-// 	}
-// 	search = ft_proclast(*lst);
-// 	search->next = new;
-// }
-
-// t_process	*ft_proclast(t_process *lst)
-// {
-// 	while (lst)
-// 	{
-// 		if (!(lst -> next))
-// 			return (lst);
-// 		lst = lst -> next;
-// 	}
-// 	return (lst);
-// }
 
 void	ft_tokenadd_back(t_tokens **lst, t_tokens *new)
 {

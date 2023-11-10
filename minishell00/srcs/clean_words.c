@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/08 19:44:10 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:02:10 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ char    *clean_word(char *s, t_list **envlist)
     char    *cpy;
 	char	*cpy2;
 
-    len = my_strlen(s);
+	if (s)
+    	len = my_strlen(s);
     i = 0;
 	cpy = NULL;
-    if (s[i] == '"' && s[len] == '"')
+    if (s && s[i] == '"' && s[len] == '"')
     {
 		i++;
         while (i < (len - 1))
@@ -78,7 +79,7 @@ char    *clean_word(char *s, t_list **envlist)
 		}
         printf("cpy : %s\n", cpy);
     }
-	else if (s[i] == '\'' && s[len] == '\'')
+	else if (s && s[i] == '\'' && s[len] == '\'')
 	{
 		i++;
         while (i < (len - 1))
@@ -99,9 +100,9 @@ char    *clean_word(char *s, t_list **envlist)
 		}
 		return (cpy);
 	} 
-	else
+	else if (s)
 	{
-		while (i < (len))
+		while (i < len)
 		{
 			if (s[i] == '$')
 			{
@@ -181,22 +182,4 @@ size_t	my_strlen(const char *s)
 		i++;
 	return (i);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	char 		*input;
-// 	//t_process	**process;
-//     char        *s;
-// 	t_list		*envlist;
-
-// 	(void)ac;
-// 	(void)av;
-// 	//process_init(&process);
-// 	envlist = NULL;
-// 	envlist = env_to_envlist(env);
-//     input = "coucou  '$US'ER' $PWD hello";
-// 	s = clean_word(input, &envlist);
-// 	free(s);
-//     return (0);
-// }
 
