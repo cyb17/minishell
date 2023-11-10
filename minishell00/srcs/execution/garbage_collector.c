@@ -6,13 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:54:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:39:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	clear_process(t_process *process)
+static void	clear_process(t_process *process)
 {
 	t_tokens	**tokenslist;
 	t_tokens	*tmp;
@@ -30,20 +30,26 @@ void	clear_process(t_process *process)
 	}
 }
 
-void	garbage_collector(t_process **proces, t_tab *tab, t_builtins *builtins)
+void	garbage_collector(t_process **pc, t_tab *tb, t_builtins *b, char *inpt)
 {
 	t_process	*tmp;
 
 	tmp = NULL;
-	while (proces != NULL)
+	while (pc)
 	{
-		tmp = (*proces)->next;
-		clear_process(*proces);
-		*proces = tmp;
+		tmp = (*pc)->next;
+		clear_process(*pc);
+		*pc = tmp;
 	}
-	free_pipefd(tab->pipefd);
-	free(tab->tab_pid);
-	clear_lst(builtins->envlist);
-	clear_lst(builtins->explist);
+	if (b->envlist)
+		clear_lst(b->envlist);
+	if (b->explist)
+		clear_lst(builtins->explist);
 	free_tab(arg);
+	if (inpt)
+		free(inpt);
+	if (tb->pipefd)
+		free_pipefd(tb->pipefd);
+	if (tb->tab_pid)
+		free(tb->tb_pid);
 }

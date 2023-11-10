@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:08:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:24:22 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:30:42 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value)
 	path = parsing_cmd(env, argv_value, env_exev);
 	if (!path)
 	{
-		clean_all(tab, tab->nb_pipe, 1);
+		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
+		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
 		free(argv_value);
-		exit(1);
+		exit (1);
 	}
 	return (path);
 }
@@ -34,19 +35,26 @@ void	child_procs_part_2(t_tab *tab, int input, int output, char *arg)
 {
 	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
 	{
-		clean_all(tab, tab->nb_pipe, 1);
-		perror("dup2");
+		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
+		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
 		free(arg);
-		exit(1);
+		exit (1);
 	}
-	clean_all(tab, tab->nb_pipe, 0);
+	close_allfd(tab);
 }
 
-void	child_procs_part_3(char *path, char *argv_value)
+void	child_procs_part_3(t_tab *tab, char *path, char *argv_value)
 {
 	char	**cmd;
 
 	cmd = make_cmd(argv_value);
 	if (execve(path, cmd, NULL) == -1)
+	{
 		perror("Error: execve");
+		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
+		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
+		free(path);
+		free(argv_value);
+		exit (1);
+	}
 }

@@ -6,12 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:28:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 10:29:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:37:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef MINISHELL_PIPEX_H
+# define MINISHELL_PIPEX_H
 
 # include <fcntl.h>
 # include <stdio.h>

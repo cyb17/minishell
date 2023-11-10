@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:57:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:37:10 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:43:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,35 @@ int	ft_compare(char *limiter, char *str)
 	if (limiter[i] == '\0' && str[i] == '\n')
 		return (1);
 	return (0);
+}
+
+void	close_allfd(t_tab *tab)
+{
+	int	i;
+
+	i = 0;
+	close(tab->fdin);
+	close(tab->fdout);
+	while (i < tab->nb_pipe)
+	{
+		close(pipefd[i][0]);
+		close(pipefd[i][1]);
+		i++;
+	}
+}
+
+void	wait_proces(int *pid, int nb_proces)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < nb_proces)
+	{
+		if (pid[i] != 0)
+			waitpid(pid[i], &status, 0);
+		i++;
+	}
 }
 
 /*void	ft_error(char *where, char *what)

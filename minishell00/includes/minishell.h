@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:14:13 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:49:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../srcs/builtins/builtins.h"
-
 
 enum tokens_type
 {
@@ -63,26 +62,48 @@ typedef struct s_builtins
 	t_list	**envlist;
 	t_list	**explist;
 	char	**arg;
-}				t_builtins
+}				t_builtins;
 
 typedef struct s_tab
 {
-	int		fdin;
-	int		fdout;
-	int		nb_pipe;
-	int		**pipefd;
-	pid_t	*tab_pid;
+	int			fdin;
+	int			fdout;
+	int			nb_pipe;
+	int			**pipefd;
+	pid_t		*tab_pid;
+	t_process	*process;
+	t_builtins	*builtins;
+	char		*input;
 }			t_tab;
 
 /* EXECUTION*/
 
 //utils
 int		ft_compare(char *limiter, char *str);
-void	ft_error(char *where, char *what);
+void	close_allfd(t_tab *tab);
+void	wait_proces(int *pid, int nb_proces);
 
 //garbage_collector
-void	clear_process(t_process *process);
-void	garbage_collector(t_process **process_list);
+void	garbage_collector(t_process **pc, t_tab *tb, t_builtins *b, char *inpt)
 
+// redirections
+void	redirect_in(int *fdin, char *infile);
+void	redirect_out(int *fdout, char *outfile, char mode);
+char	*ft_here_doc(char *limiter);
+
+// pipex_parsing_cmd
+char	**make_cmd(char *str);
+int		check_cmd(char *cmd);
+char	*sub_parsing_cmd1(char **split_cmd);
+char	*sub_parsing_cmd2(char **env_main, char **env_exev, char *cmd);
+char	*parsing_cmd(char **env_main, char *cmd, char **env_exev);
+
+// pipex_find_path
+char	**find_path(char **env, char *cmd);
+
+// pipex_child_proces_step
+char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value);
+void	child_procs_part_2(t_tab *tab, int input, int output, char *arg);
+void	child_procs_part_3(t_tab *tab, char *path, char *argv_value);
 
 #endif

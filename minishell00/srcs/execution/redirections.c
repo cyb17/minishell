@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:55:56 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:43:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	redirect_out(int *fdout, char *outfile, char mode)
 
 // /dev/urandom est un fichier qui est genere avec un contenu aleatoire
 // le choix du nom de fichier here_doc se fait a partir de ce fichier. 
-char	*create_hdname(void)
+static char	*create_hdname(void)
 {
 	int		urandom_fd;
 	char	tmp[6];
@@ -60,7 +60,7 @@ char	*create_hdname(void)
 	urandom_fd = open("/dev/urandom", O_RDONLY);
 	if (urandom_fd == -1)
 	{
-		perror("Error: create_hdname");
+		perror("Error: create_hdname: open");
 		return (NULL);
 	}
 	if (read(urandom_fd, name, 5) == -1)
@@ -75,7 +75,7 @@ char	*create_hdname(void)
 
 // cette fonction lit l'entree std et
 // ecrit e contenu dans here_doc.
-int	write_to_hd(int here_doc, char *limiter)
+static int	write_to_hd(int here_doc, char *limiter)
 {
 	char	*line;
 
@@ -101,8 +101,8 @@ int	write_to_hd(int here_doc, char *limiter)
 	return (0);
 }
 
-// la fonction retourne le path du fichier
-// here_doc a ouvrir en cas de reussite si non NULL.
+// la fonction retourne le path du fichier here_doc a ouvrir en cas
+// de reussite si non NULL.
 char	*ft_here_doc(char *limiter)
 {
 	char	*hd_path;

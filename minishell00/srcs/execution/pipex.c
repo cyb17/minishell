@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:50:10 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/10 14:50:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,17 @@ int	isnot_builtins(char *str)
 	return (1);
 }
 
-int	find_nb_cmd(t_process *process)
+int	find_nb_process(t_process *process)
 {
-	int	nb_cmd;
+	int	nb_process;
 
-	nb_cmd = 0;
+	nb_process = 0;
 	while (process)
 	{
-		while (process->list_tokens)
-		{
-			if (process->list_tokens->type == CMD)
-			{
-				nb_cmd++;
-				break;
-			}
-			process->list_tokens = process->list_tokens->next;
-		}
+		nb_process++;
 		process = process->next;
 	}
-	return (nb_cmd);
+	return (nb_process);
 }
 
 char	*find_cmd(t_tokens *tokens)
@@ -98,6 +90,12 @@ void	fixe_in_output(int *intput, int *output, t_tab *tab, int i)
 		*output = tab->pipefd[i][1];
 }
 
+static void	ft_close(int *input, int *output)
+{
+	close(*input);
+	close(*output);
+}
+
 int	make_child_process(t_tokens *cmd_tk, t_tab *tab, int i, char **env)
 {
 	int	input;
@@ -108,7 +106,7 @@ int	make_child_process(t_tokens *cmd_tk, t_tab *tab, int i, char **env)
 	input = 0;
 	output = 0;
 	fixe_in_output(&input, &output, tab, i);
-	arg = fin_cmd(cmd_tk);
+	arg = NULL;
 	tab->pid[i] = fork();
 	if (tab->pid[i] == -1)
 	{
@@ -117,15 +115,13 @@ int	make_child_process(t_tokens *cmd_tk, t_tab *tab, int i, char **env)
 	}
 	else if (tab->pid[i] == 0)
 	{
+		arg = fin_cmd(cmd_tk);
 		path = child_procs_part_1(tab, env, arg);
 		child_procs_part_2(i, tab, input, output)
-		child_procs_part_3(path, arg);
+		child_procs_part_3(tab, path, arg);
 	}
 	else
-	{
-		close(input);
-		close(output);
-	}
+		ft_close(&input, &output);
 	return (0);
 }
 
@@ -172,6 +168,8 @@ void	which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
 		*rlt = ft_pwd();
 	//else if (strcmp("exit", cmd_tk->value) == 1)
 	//	*rsl = ft_exit();
+	free_tab(builtins->arg);
+	builtins->arg = NULL;
 }
 
 int	execute_builtins(t_tokens *cmd_tk, t_tab *tab, int i, t_builtins *builtins)
@@ -199,7 +197,7 @@ int	execute_builtins(t_tokens *cmd_tk, t_tab *tab, int i, t_builtins *builtins)
 	return (rlt);
 }
 
-int	find_inoutfile(int *fdin, int *fdout, t_tokens *tokens)
+int	setup_in_out(int *fdin, int *fdout, t_tokens *tokens)
 {
 	char	*here_doc;
 
@@ -227,11 +225,13 @@ int	find_inoutfile(int *fdin, int *fdout, t_tokens *tokens)
 int	pipex(t_builtins *builtins, t_tab *tab, t_process *process, char **env)
 {
 	int		i;
+	int		rslt;
 
 	i = 0;
+	rslt = 0;
 	while (process)
 	{
-		if (find_inoutfile(&tab->fdin, &tab->fdout, process->list_tokens) == 0)
+		if (setup_in_out(&tab->fdin, &tab->fdout, process->list_tokens) == 0)
 		{
 			while (process->list_tokens)
 			{
@@ -240,14 +240,14 @@ int	pipex(t_builtins *builtins, t_tab *tab, t_process *process, char **env)
 					if (isnot_builtins(process->list->tokens->value) == 1)
 						make_child_process(process->list_tokens, &tab, i, env);
 					else
-						execute_builtins(process->list_tokens, &tab, i, builtins);
+						rslt = execute_builtins(process->list_tokens, &tab, i, builtins);
 					i++;
 					break;
 				}
 				process->list_tokens = process->list_tokens->next;
 			}
 		}
-		else
+		else // peut etre on peut mettre le code de retour a cette etape
 			process = process->next;
 	}
 	wait_proces(tab->tab_pid, tab->nb_pipe);
@@ -273,11 +273,13 @@ int	creat_pipefd(int **pipefd, int nb_pipe)
 	{
 		if ((pipe(pipefd[i])) < 0)
 		{
-			if (i != 0)
+			perror("fill_tab: creat_pipefd");
+			while (--i >= 0)
 			{
-				close(pipefd[i - 1][0]);
-				close(pipefd[i - 1][1]);
+				close(pipefd[i][0]);
+				close(pipefd[i][1]);
 			}
+			free_pipefd(pipefd);
 			return (-1);
 		}
 		i++;
@@ -285,40 +287,52 @@ int	creat_pipefd(int **pipefd, int nb_pipe)
 	return (0);
 }
 
-int	init_tab(t_tab *tab, t_process *process)
+int	malloc_pipefd(t_tab *tab)
 {
 	int	i;
 
-	tab->fdin = 0;
-	tab->fdout = 0;
-	tab->nb_pipe = find_nb_cmd(process) - 1;
+	i = 0;
 	tab->pipefd = (int **)malloc(sizeof(int *) * (tab->nb_pipe));
 	if (!(tab->pipefd))
+	{
+		ft_putstr_fd("fill_tab: malloc_pipefd: pipefd: malloc failed\n", 2);
 		return (-1);
+	}
 	i = 0;
 	while (i < tab->nb_pipe)
 	{
 		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
 		if (!(tab->pipefd[i]))
 		{
-			free_pipefd(tab->pipefd, tab->nb_pipe);
+			ft_putstr_fd("fill_tab: malloc_pipefd: []: malloc failed\n", 2);
+			free_pipefd(tab->pipefd, i);
 			return (-1)
 		}
 		i++;
 	}	
-	if (creat_pipefd(tab->pipefd, tab->nb_pipe) == -1)
-		return (-1);
+}
+
+int	fill_tab(t_tab *tab, t_process *process, t_builtins *blt, char *input)
+{
+	tab->nb_pipe = find_nb_process(process) - 1;
 	tab->tab_pid = (pit_t *)malloc(sizeof(pid_t) * nb_pipe + 1);
 	if (!tab->tab_pid)
 	{
-		free_pipefd(tab->pipefd, tab->nb_pipe);
+		ft_putstr_fd("fill_tab: tab_pid: malloc failed\n", 2);
 		return (-1);
 	}
-	ft_memset(tab->tab_pid, 0, tab->nb_pipe);
+	ft_memset(tab->tab_pid, 0, tab->nb_pipe + 1);
+	if (malloc_pipefd(tab) == -1)
+		return (-1);
+	if (creat_pipefd(tab->pipefd, tab->nb_pipe) == -1)
+		return (-1);
+	tab->process = process;
+	tab->t_builtins = blt;
+	tab->input = input;
 	return (0);
 }
 
-int	init_builtins(t_builtins *builtins, char **env)
+int	fill_builtins(t_builtins *builtins, char **env)
 {
 	*builtins->envlist = env_to_envlist(env);
 	if (*builtins->envlist == NULL)
@@ -329,11 +343,11 @@ int	init_builtins(t_builtins *builtins, char **env)
 		clear_lst(builtins->envlist);
 		return (-1);
 	}
-	builtins->arg = NULL;
 	return (0);
 }
 
-int	main(int argc, char **argv, char ** env)
+//////////////////////////////////////////////////////////////////////////////////////////
+/*int	main(int argc, char **argv, char ** env)
 {
 	t_process	**process;
 	char		*input;
@@ -353,7 +367,7 @@ int	main(int argc, char **argv, char ** env)
 		}
 	}
 	return (0);
-}
+}*/
 
 /*int	make_inoutfile(int *fdin, int *fdout, t_process *process)
 {
