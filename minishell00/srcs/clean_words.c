@@ -1,49 +1,34 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                        */
 /*                                                        :::      ::::::::   */
 /*   clean_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:02:21 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/10 21:05:07 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:00:45 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// bool	varcmp(char *model, char *str)
-// {
-// 	int	i;
-// 	i = 0;
-// 	while (model[i] && model[i] != '=')
-// 	{
-// 		if (model[i] != str[i])
-// 			return (0);
-// 		i++;
-// 	}
-// 	if (str[i] == '=')
-// 		return (1);
-// 	return (0);
-// }
-
-char    *clean_word(char *s, t_list **envlist)
+char	*clean_word(char *s, t_list **envlist)
 {
-    int     len;
-    int     i;
-    char    *tmp;
-    char    *cpy;
+	int		len;
+	int		i;
+	char	*tmp;
+	char	*cpy;
 	char	*cpy2;
 
 	if (s)
-    	len = my_strlen(s);
-    i = 0;
+		len = my_strlen(s);
+	i = 0;
 	cpy = NULL;
-    if (s && (s[i] == '"' && s[len - 1] == '"'))
-    {
+	if (s && (s[i] == '"' && s[len - 1] == '"'))
+	{
 		i++;
-        while (i < (len - 2))
-        {
+		while (i < (len - 1))
+		{
 			if (s[i] != '$')
 			{
 				if (cpy == NULL)
@@ -62,7 +47,8 @@ char    *clean_word(char *s, t_list **envlist)
 			}
 			if (s[i] == '$')
 			{
-            	tmp = expand_value(s, i, envlist);
+		tmp = expand_value(s, i, envlist);
+				i++;
 				if (tmp != NULL)
 				{
 					cpy2 = cpy;
@@ -71,19 +57,19 @@ char    *clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while ((s[i] >= '0' && s[i] <= '9')|| s[i] == '_'
-				|| (s[i] >= 'a' && s[i] <= 'z') 
-				|| (s[i] >= 'A' && s[i] <= 'Z'))
+				while ((s[i] >= '0' && s[i] <= '9') || s[i] == '_'
+					|| (s[i] >= 'a' && s[i] <= 'z')
+					|| (s[i] >= 'A' && s[i] <= 'Z'))
 					i++;
 			}
 		}
-        return (cpy);
-    }
+		return (cpy);
+	}
 	if (s && (s[i] == '\'' && s[len - 1] == '\''))
 	{
 		i++;
-        while (i < (len - 1))
-        {
+		while (i < (len - 1))
+		{
 			if (cpy == NULL)
 				cpy = ft_strdup_section(s, i, i + 1);
 			else
@@ -99,14 +85,14 @@ char    *clean_word(char *s, t_list **envlist)
 			i++;
 		}
 		return (cpy);
-	} 
+	}
 	if (s)
 	{
 		while (i < len)
 		{
 			if (s[i] == '$')
 			{
-            	tmp = expand_value(s, i, envlist);
+		tmp = expand_value(s, i, envlist);
 				if (tmp != NULL)
 				{
 					cpy2 = cpy;
@@ -115,9 +101,9 @@ char    *clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while ((s[i] >= '0' && s[i] <= '9')|| s[i] == '_'
-				|| (s[i] >= 'a' && s[i] <= 'z') 
-				|| (s[i] >= 'A' && s[i] <= 'Z'))
+				while ((s[i] >= '0' && s[i] <= '9') || s[i] == '_'
+					|| (s[i] >= 'a' && s[i] <= 'z')
+					|| (s[i] >= 'A' && s[i] <= 'Z'))
 					i++;
 			}
 			if (cpy == NULL)
@@ -139,38 +125,6 @@ char    *clean_word(char *s, t_list **envlist)
 	return (cpy);
 }
 
-// char	*ft_strrchr(const char *s, int c)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i])
-// 		i++;
-// 	while (i >= 0)
-// 	{
-// 		if (s[i] == (unsigned char)c)
-// 			return ((char *)&s[i]);
-// 		i--;
-// 	}
-// 	return (NULL);
-// }
-
-// int	*ft_strrchr_pos(const char *s, int c)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i])
-// 		i++;
-// 	while (i >= 0)
-// 	{
-// 		if (s[i] == (unsigned char)c)
-// 			return ((char *)&s[i]);
-// 		i--;
-// 	}
-// 	return (NULL);
-// }
-
 size_t	my_strlen(const char *s)
 {
 	int	i;
@@ -182,4 +136,3 @@ size_t	my_strlen(const char *s)
 		i++;
 	return (i);
 }
-

@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/07 19:04:00 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:45:09 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*expand_value(char *s, int i, t_list **envlist)
 char	*get_var_to_exp(char *s)
 {
 	int			i;
-	int 		j;
+	int			j;
 	char		*res;
 	char		*s0;
 

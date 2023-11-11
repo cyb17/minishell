@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/10 19:38:33 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:48:56 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 t_process	*create_process(char *s, int start, int end, int id)
 {
-	(void) s;
-	(void) start;
-	(void) end;
-	(void) id;
 	t_process	*process;
-	
+
 	process = (t_process *)malloc(sizeof(t_process));
 	if (!process)
 	{
@@ -36,12 +32,12 @@ t_process	**make_proces_list(char *line)
 {
 	t_process	**list_process;
 	t_process	*new_process;
-	int	i;
-	int	start;
-	int	id;
+	int			i;
+	int			start;
+	int			id;
 
 	list_process = (t_process **)malloc(sizeof(t_process *));
-	if (list_process == NULL) 
+	if (list_process == NULL)
 	{
 		ft_putstr_fd("error: make_proces_list: malloc failed", 2);
 		return (NULL);
@@ -67,23 +63,21 @@ t_process	**make_proces_list(char *line)
 	}
 	if (id == 0)
 	{
-		printf("ici 10\n");
 		new_process = create_process(line, 0, my_strlen(line), 1);
 		ft_procsadd_back(list_process, new_process);
 	}
-	else 
+	else
 	{
-		printf("ici 11\n");
 		new_process = create_process(line, start, (int)my_strlen(line), id + 1);
 		ft_procsadd_back(list_process, new_process);
 	}
 	return (list_process);
 }
 
-t_tokens	*create_tokens(char *str,int id)
+t_tokens	*create_tokens(char *str, int id)
 {
 	t_tokens	*tokens;
-	
+
 	tokens = (t_tokens *)malloc(sizeof(t_tokens));
 	if (!tokens)
 	{
@@ -108,27 +102,22 @@ void	make_token_list(t_process *process, t_list *envlist)
 
 	list_token = (t_tokens **)malloc(sizeof(t_tokens *));
 	new_token = (t_tokens *)malloc(sizeof(t_tokens));
-	if (list_token == NULL) 
+	if (list_token == NULL)
 	{
 		ft_putstr_fd("error: make_proces_list: malloc failed", 2);
 	}
 	*list_token = NULL;
 	new_token = NULL;
-	id = 0;
-	printf("ici 1\n");
-	while(process != NULL)
+	while (process != NULL)
 	{
+		id = 0;
 		i = 0;
-		printf("ici 2\n");
 		words = ft_split_minishell(process->section_cmd, ' ');
-		printf("ici 3\n");
 		print_tab(words);
 		while (words[i] != NULL)
 		{
-			printf("clean : word = %s\n", words[0]);
 			id++;
 			cleaned = clean_word(words[i], &envlist);
-			printf("clean : srt1 = %s, id = %d\n", cleaned, id);
 			new_token = create_tokens(cleaned, id);
 			ft_tokenadd_back(list_token, new_token);
 			i++;
@@ -136,19 +125,6 @@ void	make_token_list(t_process *process, t_list *envlist)
 		freetab(words);
 		process = process->next;
 	}
-	// printf("ici 4\n");
-	// i = 0;
-	// words = ft_split_minishell(process->section_cmd, ' ');
-	// print_tab(words);
-	// while (words[i])
-	// {
-	// 	id++;
-	// 	cleaned = clean_word(words[i], &envlist);
-	// 	new_token = create_tokens(cleaned, id);
-	// 	ft_tokenadd_back(list_token, new_token);
-	// 	i++;
-	// }
-	// freetab(words);
 }
 
 char	*ft_strdup(const char *s)

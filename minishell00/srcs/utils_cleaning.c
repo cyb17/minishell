@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:45:48 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/08 14:28:35 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:53:03 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ char	*ft_strdup_checking(char *s, int start, int end)
 	return (str);
 }
 
+char	*ft_cpy(char *str, char *s, int *i)
+{
+	while (s[*i] != '\0')
+	{
+		str[*i] = s[*i];
+		(*i)++;
+	}
+	return (str);
+}
+
 char	*my_strjoin(char *s1, char *s2)
 {
 	int		i;
@@ -42,13 +52,7 @@ char	*my_strjoin(char *s1, char *s2)
 	if (!str)
 		return (NULL);
 	if (s1)
-	{
-		while (s1[i] != '\0')
-		{
-			str[i] = s1[i];
-			i++;
-		}
-	}
+		str = ft_cpy(str, s1, &i);
 	if (s2)
 	{
 		while (s2[j] != '\0')
@@ -60,12 +64,27 @@ char	*my_strjoin(char *s1, char *s2)
 	str[i + j] = '\0';
 	return (str);
 }
+
 bool	is_ok(char c)
 {
-	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') 
-	|| (c >= 'a' && c <= 'z') || c == '_')
+	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z') || c == '_')
 		return (true);
 	else
 		return (false);
 }
 
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab != NULL)
+	{
+		while (tab[i])
+		{
+			printf("%s -> len = %ld\n", tab[i], strlen(tab[i]));
+			i++;
+		}
+	}
+}

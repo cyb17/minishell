@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/10 20:51:34 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:52:51 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**write_in(char **tab, char *s, char c)
 	max = nb_words(s, c);
 	while (*s2 && *s2 != '\0' && i <= max)
 	{
-		if (*s2 != '\0' && s[k - 1] == c)
+		if (*s2 && *s2 != '\0' && (k > 0) && s[k - 1] == c)
 			j = 0;
 		while (*s2 != '\0' && *s2 != c && (*s2 == '\'' || *s2 == '"'))
 		{
@@ -170,7 +170,6 @@ char	**write_in(char **tab, char *s, char c)
 				k++;
 			}
 		}
-		//else
 		if ((between_quotes(s, k) == k && *s2 == c && *s2 && *s2 != '\0'))
 		{
 			s2++;
@@ -214,7 +213,7 @@ char	**ft_split_minishell(char	*s, char c)
 	tab = malloc(sizeof(char *) * (nb_words(s, c) + 1));
 	if (!tab || s == 0)
 		return (NULL);
-	while (*s3 )
+	while (*s3)
 	{
 		while (*s3 == c && *s3 != '\0' && between_quotes(s, l) == l)
 		{
@@ -264,21 +263,6 @@ char	**ft_split_minishell(char	*s, char c)
 		}	
 	}
 	return (write_in(tab, s, c));
-}
-
-void	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (tab != NULL)
-	{
-		while (tab[i])
-		{
-			printf("%s -> len = %ld\n", tab[i], strlen(tab[i]));
-			i++;
-		}
-	}
 }
 
 /* int	main(int ac, char **av, char **env)

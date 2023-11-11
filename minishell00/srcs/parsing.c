@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/11/09 14:57:38 by nap              ###   ########.fr       */
+/*   Updated: 2023/11/11 19:01:35 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 bool	first_readind(char *input)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
-	// if (is_valid(input) == false)
-	// 	return (false);
 	while (input[i] && i <= (int)my_strlen(input))
 	{
 		if (input[i] == '\'' || input[i] == '"')
@@ -27,7 +25,7 @@ bool	first_readind(char *input)
 			j = check_quotes(input, input[i], i);
 			if (i == j)
 				return (false);
-			else 
+			else
 				i = j;
 		}
 		i++;
