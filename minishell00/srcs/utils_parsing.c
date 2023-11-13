@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/11 19:42:03 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:29:19 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_tokenadd_back(t_tokens **lst, t_tokens *new)
 	t_tokens	*tmp;
 
 	tmp = NULL;
-	if (*lst == NULL)
+	if (*lst == NULL) 
 	{
 		*lst = new;
 		return ;

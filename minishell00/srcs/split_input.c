@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/11 20:48:56 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:27:53 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,20 @@ t_process	*create_process(char *s, int start, int end, int id)
 	return (process);
 }
 
-t_process	**make_proces_list(char *line)
+void	make_process_list(char *line, t_process **list_process)
 {
-	t_process	**list_process;
 	t_process	*new_process;
 	int			i;
 	int			start;
 	int			id;
 
-	list_process = (t_process **)malloc(sizeof(t_process *));
+	// list_process = (t_process **)malloc(sizeof(t_process *));
+	/* list_process = (t_process *)malloc(sizeof(t_process *));
 	if (list_process == NULL)
 	{
 		ft_putstr_fd("error: make_proces_list: malloc failed", 2);
 		return (NULL);
-	}
-	*list_process = NULL;
+	} */
 	new_process = NULL;
 	i = 0;
 	start = 0;
@@ -71,7 +70,7 @@ t_process	**make_proces_list(char *line)
 		new_process = create_process(line, start, (int)my_strlen(line), id + 1);
 		ft_procsadd_back(list_process, new_process);
 	}
-	return (list_process);
+	//printf(" PROCESS 1 = %s\n", (*list_process)->section_cmd);
 }
 
 t_tokens	*create_tokens(char *str, int id)
@@ -93,20 +92,20 @@ t_tokens	*create_tokens(char *str, int id)
 
 void	make_token_list(t_process *process, t_list *envlist)
 {
-	t_tokens	**list_token;
+	// t_tokens	**list_token;
 	t_tokens	*new_token;
 	int			id;
 	int			i;
 	char		**words;
 	char		*cleaned;
 
-	list_token = (t_tokens **)malloc(sizeof(t_tokens *));
+	/* list_token = (t_tokens **)malloc(sizeof(t_tokens *));
 	new_token = (t_tokens *)malloc(sizeof(t_tokens));
 	if (list_token == NULL)
 	{
 		ft_putstr_fd("error: make_proces_list: malloc failed", 2);
-	}
-	*list_token = NULL;
+	} */
+	//process->list_tokens;
 	new_token = NULL;
 	while (process != NULL)
 	{
@@ -119,12 +118,13 @@ void	make_token_list(t_process *process, t_list *envlist)
 			id++;
 			cleaned = clean_word(words[i], &envlist);
 			new_token = create_tokens(cleaned, id);
-			ft_tokenadd_back(list_token, new_token);
+			ft_tokenadd_back(&process->list_tokens, new_token);
 			i++;
 		}
 		freetab(words);
 		process = process->next;
 	}
+	//process = head;
 }
 
 char	*ft_strdup(const char *s)

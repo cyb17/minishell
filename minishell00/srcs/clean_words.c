@@ -12,6 +12,80 @@
 
 #include "../includes/minishell.h"
 
+char	*cpychar(char *s, int i, char *cpy)
+{
+	char	*cpy2;
+	char	*tmp; 
+
+	if (cpy == NULL)
+		cpy = ft_strdup_section(s, i, i + 1);
+	else
+	{
+		tmp = ft_strdup_section(s, i, i + 1);
+		cpy2 = cpy;
+		cpy = my_strjoin(cpy2, tmp);
+		if (cpy2)
+			free(cpy2);
+		if (tmp != NULL)
+			free(tmp);
+	}
+	return (cpy);
+}
+
+/* void	deepclean(char *s)
+{
+	char	*cpy;
+	int		j;
+	int		i;
+
+	j = 0;
+	i = 0;
+	cpy = NULL;
+	while (*s && s[i] != '\0')
+	{
+		if (s[j] == '\'' || s[j] == '"')
+		{
+			if (check_quotes(s, s[j], j) > j)
+			{
+				i = check_quotes(s, s[j], j);
+				while (j < i)
+				{
+					cpy = cpychar(s, j, cpy);
+					j++;
+				}
+			else
+				cpy = cpychar(s, j, cpy);
+
+		}
+		j++; */
+
+void	deepclean(char *s)
+{
+	char	*cpy;
+	int		j;
+	int		i;
+
+	j = 0;
+	i = 0;
+	cpy = NULL;
+	while (*s && s[i] != '\0')
+	{
+		if (s[j] == '\'' || s[j] == '"')
+		{
+			if (between_quotes(s, i) == i)
+				i++;
+			else
+				cpy = cpychar(s, i, cpy);
+
+		}
+		else
+		{
+			cpy = cpychar(s, i, cpy);
+			i++;
+		}
+	}
+
+}
 char	*clean_word(char *s, t_list **envlist)
 {
 	int		len;
@@ -47,7 +121,7 @@ char	*clean_word(char *s, t_list **envlist)
 			}
 			if (s[i] == '$')
 			{
-		tmp = expand_value(s, i, envlist);
+				tmp = expand_value(s, i, envlist);
 				i++;
 				if (tmp != NULL)
 				{
@@ -92,7 +166,8 @@ char	*clean_word(char *s, t_list **envlist)
 		{
 			if (s[i] == '$')
 			{
-		tmp = expand_value(s, i, envlist);
+				tmp = expand_value(s, i, envlist);
+				i++;
 				if (tmp != NULL)
 				{
 					cpy2 = cpy;
@@ -120,6 +195,7 @@ char	*clean_word(char *s, t_list **envlist)
 			}
 			i++;
 		}
+		deepclean(&cpy);
 		return (cpy);
 	}
 	return (cpy);

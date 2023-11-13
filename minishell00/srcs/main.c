@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:31 by nap               #+#    #+#             */
-/*   Updated: 2023/11/11 18:59:30 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:06:14 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int ac, char **av, char **env)
 {
 	char		*input;
-	t_process	**process;
+	t_process	*process;
 	t_list		*envlist;
 
 	(void)ac;
@@ -26,6 +26,11 @@ int	main(int ac, char **av, char **env)
 		envlist = NULL;
 		envlist = env_to_envlist(env);
 		input = readline("minishell > ");
-		ft_parse(input, process, envlist);
+		ft_parse(input, &process, envlist);
+		while (process)
+		{
+			printf("Contenu de section_cmd : %s\n", process->section_cmd);
+			process = process->next ;
+		}
 	}
 }

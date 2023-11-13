@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/11 20:53:22 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:09:08 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		process_init(t_process *process);
 void		token_init(t_tokens *tokens);
 
 /* split_input.c */
-t_process	**make_proces_list(char *line);
+void		make_process_list(char *line, t_process **list_process);
 t_process	*create_process(char *s, int start, int end, int id);
 void		make_token_list(t_process *process, t_list *envlist);
 
