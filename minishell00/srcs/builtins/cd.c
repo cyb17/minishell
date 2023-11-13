@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 16:14:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/13 16:49:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_arg(char **arg)
 	i = 0;
 	while (arg[i])
 		i++;
-	if (i > 1)
+	if (i > 2)
 	{
 		ft_putstr_fd("minishell: cd: too any arguments", 2);
 		return (-1);

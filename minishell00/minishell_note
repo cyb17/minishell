@@ -34,6 +34,7 @@ tout au debut $HOME = $PWD = $OLDPWD
 ../ <=> dossier parent du dossier courant
 / <=> dossier racine 
 
+
 =>echo : with option -n
 -----------------------
 Displays a line of text
@@ -41,6 +42,7 @@ Optional flag -n: do not output the trailing newline
 remarque : code de sortie de echo
 0 -> succes
 >0 -> erreur
+
 
 =>env : with no options or arguments
 ------------------------------------
@@ -56,7 +58,17 @@ remarque: code de sortie de env
 ------------------------
 Terminates the shell.
 Accepts optional argument n, which sets the exit status to n.
-le code de sortie va de 0-255
+
+$? Code de sortie souvent apparu :
+0 : execution qui se termine normalement sans erreur -> ex: exit (sans argument)
+1 : erreur generique sans preciser sa nature -> ex: exit 758 hgfj hgfj (plus d'1 arg)
+2 : syntax error -> ex: exit ghfj gfh fghj (pas arg numerique)
+126 : le système d'exploitation n'a pas pu trouver l'exécutable spécifié ou n'a pas pu le lancer en raison de restrictions de sécurité
+127 : command not found 
+130 : termine en raison de l'interruption de l'utilisateur (ctrl+c)
+131 : termine en raison de l'interruption de signal (ctrl+v)
+$? = exit_code % 256
+
 
 =>export : with no options
 --------------------------
@@ -186,17 +198,6 @@ Parsing :
 -En Bash, le point d'exclamation est réservé pour les événements (history expansion)
 	et provoque l'interprétation de l'expression qui suit comme une référence à un 
 	événement de l'historique
-
-$? Code de sortie souvent apparu :
-
-0 : execution qui se termine normalement sans erreur
-1 : erreur generique sans preciser sa nature
-2 : syntax error
-126 : le système d'exploitation n'a pas pu trouver l'exécutable spécifié ou n'a pas pu le lancer en raison de restrictions de sécurité
-127 : command not found 
-130 : termine en raison de l'interruption de l'utilisateur (ctrl+c)
-131 : termine en raison de l'interruption de signal (ctrl+v)
-$? = exit_code % 256
 
 ==================================================================
 bash man : note
