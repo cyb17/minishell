@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/11 20:52:51 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:23:48 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,10 @@ char	**write_in(char **tab, char *s, char c)
 		}
 	}
 	if (i != max)
+	{
 		tab[i][j] = '\0';
+		printf("word : %s\n", tab[i]);
+	}
 	tab[max] = NULL;
 	return (tab);
 }

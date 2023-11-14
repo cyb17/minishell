@@ -32,7 +32,7 @@ char	*cpychar(char *s, int i, char *cpy)
 	return (cpy);
 }
 
-/* void	deepclean(char *s)
+char	*deepclean(char *s)
 {
 	char	*cpy;
 	int		j;
@@ -43,49 +43,27 @@ char	*cpychar(char *s, int i, char *cpy)
 	cpy = NULL;
 	while (*s && s[i] != '\0')
 	{
-		if (s[j] == '\'' || s[j] == '"')
+		if (s[i] == '\'' || s[i] == '"')
 		{
-			if (check_quotes(s, s[j], j) > j)
+			if (check_quotes(s, s[i], i) > i)
 			{
-				i = check_quotes(s, s[j], j);
-				while (j < i)
-				{
-					cpy = cpychar(s, j, cpy);
-					j++;
-				}
-			else
-				cpy = cpychar(s, j, cpy);
-
-		}
-		j++; */
-
-void	deepclean(char *s)
-{
-	char	*cpy;
-	int		j;
-	int		i;
-
-	j = 0;
-	i = 0;
-	cpy = NULL;
-	while (*s && s[i] != '\0')
-	{
-		if (s[j] == '\'' || s[j] == '"')
-		{
-			if (between_quotes(s, i) == i)
+				j = check_quotes(s, s[i], i);
 				i++;
-			else
-				cpy = cpychar(s, i, cpy);
-
+				while (i < j)
+				{
+					cpy = cpychar(s, i, cpy);
+					i++;
+				}
+			}
 		}
 		else
-		{
 			cpy = cpychar(s, i, cpy);
-			i++;
-		}
+		i++;
 	}
-
+	return (cpy);
 }
+
+
 char	*clean_word(char *s, t_list **envlist)
 {
 	int		len;
@@ -98,7 +76,8 @@ char	*clean_word(char *s, t_list **envlist)
 		len = my_strlen(s);
 	i = 0;
 	cpy = NULL;
-	if (s && (s[i] == '"' && s[len - 1] == '"'))
+	if (s && (s[i] == '"' && s[len - 1] == '"')
+		&& (check_quotes(s, s[i], i) == (len - 1)))
 	{
 		i++;
 		while (i < (len - 1))
@@ -139,7 +118,8 @@ char	*clean_word(char *s, t_list **envlist)
 		}
 		return (cpy);
 	}
-	if (s && (s[i] == '\'' && s[len - 1] == '\''))
+	if (s && (s[i] == '\'' && s[len - 1] == '\'') 
+		&& (check_quotes(s, s[i], i) == (len - 1)))
 	{
 		i++;
 		while (i < (len - 1))
@@ -195,8 +175,10 @@ char	*clean_word(char *s, t_list **envlist)
 			}
 			i++;
 		}
-		deepclean(&cpy);
-		return (cpy);
+		cpy2 = deepclean(cpy);
+		free(cpy);
+		return (cpy2);
+		//return (cpy);
 	}
 	return (cpy);
 }

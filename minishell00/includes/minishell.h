@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/13 16:09:08 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:36:56 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ char		*get_var_to_exp(char *s);
 /* clean_words.c */
 char		*clean_word(char *s, t_list **envlist);
 size_t		my_strlen(const char *s);
+char		*cpychar(char *s, int i, char *cpy);
+char		*deepclean(char *s);
+
 
 /* ft_split_minishell.c */
 int			nb_words(char *s, char c);

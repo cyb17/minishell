@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/13 16:27:53 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:34:35 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,12 @@ void	make_token_list(t_process *process, t_list *envlist)
 		id = 0;
 		i = 0;
 		words = ft_split_minishell(process->section_cmd, ' ');
-		print_tab(words);
+		//print_tab(words);
 		while (words[i] != NULL)
 		{
 			id++;
 			cleaned = clean_word(words[i], &envlist);
+			printf("cleaned : %s\n", cleaned);
 			new_token = create_tokens(cleaned, id);
 			ft_tokenadd_back(&process->list_tokens, new_token);
 			i++;
