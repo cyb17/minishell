@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/13 16:43:18 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/17 17:02:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_tokens
 
 typedef struct s_process
 {
-    char				**section_cmd;
+    char				*section_cmd;
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
@@ -59,8 +59,8 @@ typedef struct s_process
 
 typedef struct s_builtins
 {
-	t_list	**envlist;
-	t_list	**explist;
+	t_list	*envlist;
+	t_list	*explist;
 	char	**arg;
 }				t_builtins;
 
@@ -71,22 +71,26 @@ typedef struct s_tab
 	int			nb_pipe;
 	int			**pipefd;
 	pid_t		*tab_pid;
-	t_process	*process;
-	t_builtins	*builtins;
-	char		*input;
-	static int	exit_code;
 }			t_tab;
 
-/* EXECUTION*/
+typedef struct s_res
+{
+	t_process	*prcs;
+	t_builtins	*blt;
+	t_tab		*tab;
+	char		*input;
+}				t_res;
+/*
+EXECUTION
 
 //utils
 int		ft_compare(char *limiter, char *str);
 void	close_allfd(t_tab *tab);
 void	wait_proces(int *pid, int nb_proces);
-
+*/
 //garbage_collector
-void	garbage_collector(t_process **pc, t_tab *tb, t_builtins *b, char *inpt)
-
+void	garbage_collector(t_res *res);
+/*
 // redirections
 void	redirect_in(int *fdin, char *infile);
 void	redirect_out(int *fdout, char *outfile, char mode);
@@ -106,5 +110,17 @@ char	**find_path(char **env, char *cmd);
 char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value);
 void	child_procs_part_2(t_tab *tab, int input, int output, char *arg);
 void	child_procs_part_3(t_tab *tab, char *path, char *argv_value);
+*/
+
+// test
+t_process	*create_list_process(char **arg);
+void		clear_lst(t_list **list);
+t_list		*env_to_envlist(char **env);
+int			find_nb_process(t_process *process);
+void		free_pipefd(int **pipefd, int nb_pipe);
+int			pipe_pipefd(int **pipefd, int nb_pipe);
+int			creat_pipefd(t_tab *tab);
+t_tab		*fill_tab(t_process *process);
+t_builtins	*fill_builtins(char **env);
 
 #endif

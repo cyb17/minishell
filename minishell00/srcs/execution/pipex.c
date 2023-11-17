@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 16:32:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/16 13:33:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
 	else if (strcmp("pwd", cmd_tk->value) == 1)
 		*rlt = ft_pwd();
 	else if (strcmp("exit", cmd_tk->value) == 1)
-		ft_exit();
+		*rlt = ft_exit();
 	free_tab(builtins->arg);
 	builtins->arg = NULL;
 }
@@ -197,62 +197,65 @@ int	execute_builtins(t_tokens *cmd_tk, t_tab *tab, int i, t_builtins *builtins)
 	return (rlt);
 }
 
-int	setup_in_out(int *fdin, int *fdout, t_tokens *tokens)
+int	setup_in_out(t_tab *tab, t_tokens *tokens)
 {
 	char	*here_doc;
 
 	while (tokens)
 	{
 		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
-			redirect_in(fdin, tokens->next->value);
+			redirect_in(&tab->fdin, tokens->next->value);
 		else if (tokens->type = REDIR_OUT && tokens->next->type == OUTFILE)
-			fredirect_out(fdout, tokens->next->value, 'T');
+			fredirect_out(&tab->fdout, tokens->next->value, 'T');
 		else if (tokens->type = APPEN && tokens->next->type == OUTFILE)
-			fredirect_out(fdout, tokens->next->value, 'A');
+			fredirect_out(&tab->fdout, tokens->next->value, 'A');
 		else if (tokens->type = HEREDOC)
 		{
 			here_doc = ft_here_doc(tokens->next->value);
-			redirect_in(fdin, here_doc);
+			redirect_in(&tab->fdin, here_doc);
 			free(here_doc);
 		}
-		if ((*fdin == -1) || (*fdout == -1))
+		if ((tab->fdin == -1) || (tab->fdout == -1))
 			return (-1);
 		tokens = tokens->next;
 	}
 	return (0);
 }
 
-int	pipex(t_builtins *builtins, t_tab *tab, t_process *process, char **env)
+int	pipex(t_res *res, char **env)
 {
 	int		i;
 
 	i = 0;
 	rslt = 0;
-	while (process)
+	while (res->prcs)
 	{
-		if (setup_in_out(&tab->fdin, &tab->fdout, process->list_tokens) == 0)
+		if (setup_in_out(res->tab, res->prcs->list_tokens) == 0)
 		{
-			while (process->list_tokens)
+			while (res->prcs->list_tokens)
 			{
-				if (process->list_tokens->type == CMD)
+				if (res->prcs->list_tokens->type == CMD)
 				{
-					if (isnot_builtins(process->list->tokens->value) == 1)
-						make_child_process(process->list_tokens, &tab, i, env);
+					if (isnot_builtins(res->prcs->list->tokens->value) == 1)
+					{
+						make_child_process(res->prcs->list_tokens, res->tab, i, env);
+						waitpid(res->tab->pid[i], &rlt, 0);
+					}
 					else
-						rslt = execute_builtins(process->list_tokens, &tab, i, builtins);
+						rslt = execute_builtins(res->prcs->list_tokens, &tab, i, builtins);
 					i++;
 					break;
 				}
 				process->list_tokens = process->list_tokens->next;
 			}
 		}
-		else // peut etre on peut mettre le code de retour a cette etape
-			process = process->next;
+		else
+			res->prcs = res->prcs->next;
 	}
-	wait_proces(tab->tab_pid, tab->nb_pipe);
-	return (0);
+//	wait_proces(tab->tab_pid, tab->nb_pipe);
+	return (rsl);
 }
-
+////////////////////////////////////////////////////////////////////////////////
 void	free_pipefd(int **pipefd, int nb_pipe)
 {
 	int	i;
@@ -263,7 +266,7 @@ void	free_pipefd(int **pipefd, int nb_pipe)
 	free(pipefd);
 }
 
-int	creat_pipefd(int **pipefd, int nb_pipe)
+int	pipe_pipefd(int **pipefd, int nb_pipe)
 {
 	int	i;
 
@@ -286,7 +289,7 @@ int	creat_pipefd(int **pipefd, int nb_pipe)
 	return (0);
 }
 
-int	malloc_pipefd(t_tab *tab)
+int	creat_pipefd(t_tab *tab)
 {
 	int	i;
 
@@ -308,100 +311,59 @@ int	malloc_pipefd(t_tab *tab)
 			return (-1)
 		}
 		i++;
-	}	
-}
-
-int	fill_tab(t_tab *tab, t_process *process, t_builtins *blt, char *input)
-{
-	tab->nb_pipe = find_nb_process(process) - 1;
-	tab->tab_pid = (pit_t *)malloc(sizeof(pid_t) * nb_pipe + 1);
-	if (!tab->tab_pid)
-	{
-		ft_putstr_fd("fill_tab: tab_pid: malloc failed\n", 2);
-		return (-1);
 	}
-	ft_memset(tab->tab_pid, 0, tab->nb_pipe + 1);
-	if (malloc_pipefd(tab) == -1)
+	if (pipe_pipefd(tab->pipefd, tab->nb_pipe) == -1)
 		return (-1);
-	if (creat_pipefd(tab->pipefd, tab->nb_pipe) == -1)
-		return (-1);
-	tab->process = process;
-	tab->t_builtins = blt;
-	tab->input = input;
 	return (0);
 }
 
-int	fill_builtins(t_builtins *builtins, char **env)
+t_tab	*fill_tab(t_process *process)
 {
+	t_tab	*tab
+
+	tab = (t_tab *)malloc(sizeof(t_tab));
+	if (!tab)
+		return (NULL);
+	tab->fdin = 0;
+	tab->fdout = 0;
+	tab->nb_pipe = find_nb_process(process) - 1;
+	tab->tab_pid = (pit_t *)malloc(sizeof(pid_t) * (tab->nb_pipe + 1));
+	if (!tab->tab_pid)
+	{
+		free(tab);
+		ft_putstr_fd("fill_tab: tab_pid: malloc failed\n", 2);
+		return (NULL);
+	}
+	ft_memset(tab->tab_pid, 0, tab->nb_pipe + 1);
+	if (creat_pipefd(tab) == -1)
+	{
+		free(tab->tab_pid);
+		free(tab);
+		return (NULL);
+	}
+	return (tab);
+}
+
+t_builtins	*fill_builtins(char **env)
+{
+	t_builtins	*builtins;
+
+	builtins = (t_builtins *)malloc(sizeof(t_builtins));
+	if (!builtins)
+		return (NULL);
 	*builtins->envlist = env_to_envlist(env);
 	if (*builtins->envlist == NULL)
-		return (-1);
+	{
+		free(builtins);
+		return (NULL);
+	}
 	*builtins->explist = env_to_envlist(env);
 	if (*builtins->explist == NULL)
 	{
 		clear_lst(builtins->envlist);
-		return (-1);
-	}
-	return (0);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-/*int	main(int argc, char **argv, char ** env)
-{
-	t_process	**process;
-	char		*input;
-	t_tab		tab;
-	t_builtins	builtins;
-
-	while (1)
-	{
-		input = readline("minishell > ");
-		ft_parse(input, process);
-		if (init_tab(&tab, *process) == -1 || init_builtins(&builtins, env) == -1
-			|| pipex(&builtins, &tab, *process, env) == -1)
-		{
-			free(input);
-			garbage_collector(process, &tab, &builtins);
-			return (1);
-		}
-	}
-	return (0);
-}*/
-
-/*int	make_inoutfile(int *fdin, int *fdout, t_process *process)
-{
-	while (process)
-	{
-		if (find_inoutfile(fdin, fdout, process->list_tokens) == -1)
-		{
-			if (*fdin > 0)
-				close(*fdin);
-			if (*fdout > 0)
-				close(*fdout);
-			return (-1);
-		}
-		process = process->next;
-	}
-	return(0);
-}*/
-
-/*char	**make_tab_cmd(t_process *process, int nb_cmd)
-{
-	char	**tab_cmd;
-	int		i;
-
-	tab_cmd = (char **)malloc(sizeof(char *) * (nb_cmd + 1));
-	if (!tab_cmd)
+		free(builtins);
 		return (NULL);
-	i = 0;
-	while (process)
-	{
-		tab_cmd[i] = find_cmd(process->list_tokens);
-		if (tab_cmd[i] != NULL)
-			i++;
-		process = process->next;
 	}
-	tab_cmd[i] = NULL;
-	return (tab_cmd);
-}*/
-//////////////////////////////////////////////////////////////////////////////////////
+	builtins->arg = NULL;
+	return (builtins);
+}// fonction teste, no pb

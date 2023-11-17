@@ -6,46 +6,43 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/10/30 16:30:15 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/17 11:26:30 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
-void	replace(t_list **list, t_list *newvar, int oldvar_i)
+void	initialize_var(t_var *export, t_var *env)
 {
-	int		i;
+	export->oldvar = NULL;
+	export->newvar = NULL;
+	export->oldvar_i = 0;
+	env->oldvar = NULL;
+	env->newvar = NULL;
+	env->oldvar_i = 0;
+}
+
+void	print_explist(t_list *explist)
+{
 	t_list	*tmp;
-	t_list	*current;
 
-	i = 0;
-	tmp = NULL;
-	current = *list;
-	if (oldvar_i == 0)
+	tmp = explist;
+	while (tmp)
 	{
-		newvar->next = (current)->next;
-		*list = newvar;
-		free(current);
-		return ;
+		printf("export : %s\n", (char *)tmp->content);
+		tmp = tmp->next;
 	}
-	while (i < oldvar_i)
-	{
-		tmp = current;
-		current = current->next;
-		i++;
-	}
-	tmp->next = newvar;
-	newvar->next = current->next;
-	free(current);
 }
 
-void	free_var(t_var *export, t_var *env)
+void	free_newvar(t_var *export, t_var *env)
 {
-	free(export->newvar);
-	free(env->newvar);
+	if(export->newvar)
+		free(export->newvar);
+	if (env->newvar)
+		free(env->newvar);
 }
 
-void	add_tolist(t_list **envlist, t_var *env, char *arg)
+void	if_addto_env(t_list **envlist, t_var *env, char *arg)
 {
 	if (find_caracter(arg, '=') >= 0)
 		ft_lstadd_back(envlist, env->newvar);

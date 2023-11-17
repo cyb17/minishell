@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/13 17:00:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/15 10:59:14 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static int	is_correct_number(char *arg)
 		i++;
 	}
 	nb = minishell_atoi(arg, &sign);
-	if ((sign == -1 && nb > 9223372036854775808)
-		|| (sign == 1 && nb > 9223372036854775807))
+	if ((sign == -1 && nb < LLONG_MIN)
+		|| (sign == 1 && nb > LLONG_MAX))
 		return (0);
 	return (nb * sign);
 }
@@ -80,7 +80,6 @@ int	ft_exit(char **arg, t_tab *tab)
 {
 	if (arg[1] == NULL)
 	{
-		tab->exit_code = 0;
 		garbage_collector(tab->process, tab, tab->builtins, tab->input);
 		exit(0);
 	}
@@ -94,37 +93,16 @@ int	ft_exit(char **arg, t_tab *tab)
 		exit(2);
 	}
 	if (check_nb_arg(arg) == -1)
-	{
-		tab->exit_code = 1;
 		return (-1);
-	}
 	return (0);
 }
-/*	int	i;
 
-	i = 0;
-	while (arg[i])
-	{
-		if (i > 1)
-		{
-			ft_putstr_fd("minishell: exit: too any arguments", 2);
-			return (-1);
-		}
-		i++;
-	}
-	i = 0;
-	while (arg[1][i])
-	{
-		if (ft_isdigit(arg[1][i]) == 0)
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(arg[1], 2);
-			ft_putstr_fd("numeric argument required", 2)
-			garbage_collector(tab->process, tab, tab->builtins, tab->input);
-			exit(2);
-		}
-		i++;
-	}
-	garbage_collector(tab->process, tab, tab->builtins, tab->input);
-	exit(0);
-}*/
+int	main(int argc, char **argv)
+{
+	t_tab	*tab;
+
+	tab = NULL;
+	argc += 1;
+	ft_exit(argv, tab);
+	return (0);
+}

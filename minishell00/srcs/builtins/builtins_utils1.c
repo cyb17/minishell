@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 16:51:44 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/17 10:18:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	stringcmp(char *model, char *str)
 	int	i;
 
 	i = 0;
-	while (model[i] && model[i] != '=')
+	while (model[i] && model[i] != '=' && model[i] != '+')
 	{
 		if (model[i] != str[i])
 			return (0);
 		i++;
 	}
-	if (str[i] != '=' && str[i] != '\0')
+	if (str[i] != '=' && str[i] != '\0' && model[i] != '+')
 		return (0);
 	return (1);
 }

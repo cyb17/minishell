@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/11/07 18:07:27 by yachen           ###   ########.fr        #
+#    Updated: 2023/11/17 15:54:05 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,16 @@ CFLAGS =  -Wall -Wextra -Werror -g
 
 LIBFTDIR = ./srcs/libft
 
+BUILTINS =
+
+EXECUTION = minishell list_process fonctions_for_test garbage_collector \
+#pipex_child_procs_step pipex_find_path pipex_parsing_cmd pipex utils redirections \
+			
 RM = rm -rf
 
-SRC = srcs/builtins/export_part1.c srcs/builtins/export_part2.c srcs/builtins/echo.c \
+SRC = $(addsuffix .c, $(addprefix srcs/execution/, $(EXECUTION)))
+
+#srcs/builtins/export_part1.c srcs/builtins/export_part2.c srcs/builtins/echo.c \
 	  srcs/builtins/env.c srcs/builtins/unset.c srcs/builtins/builtins_utils1.c \
 	  srcs/builtins/pwd.c srcs/builtins/cd.c srcs/builtins/env.c \
 	  srcs/execution/redirections.c srcs/execution/utils.c srcs/execution/garbage.c \

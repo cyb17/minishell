@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:57:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 14:43:54 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/16 11:02:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	wait_proces(int *pid, int nb_proces)
 	}
 }
 
-/*void	ft_error(char *where, char *what)
+void	ft_error(char *where, char *what)
 {
 	char	*tmp;
 	char	*err;
@@ -82,7 +82,7 @@ void	wait_proces(int *pid, int nb_proces)
 	free(tmp);
 	ft_putstr_fd(err, 2);
 	free(err);
-}*/
+}
 
 /*
 int main(void)
