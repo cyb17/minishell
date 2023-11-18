@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_path_bonus.c                                  :+:      :+:    :+:   */
+/*   pipex_find_path.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:13:38 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:03:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 /* join str to each tab[i] of char **tab 
 return -1 if ft_strjoin failed */

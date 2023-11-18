@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_cmd_bonus.c                                :+:      :+:    :+:   */
+/*   pipex_parsing_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/08 10:27:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:37:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 /* split cmd and options in char **
 return NULL if ft_split failed */
@@ -47,7 +47,11 @@ char	*sub_parsing_cmd1(char **split_cmd)
 		return (NULL);
 	path = NULL;
 	if (access(split_cmd[0], F_OK | R_OK | X_OK) == -1)
-		ft_printf("Error: %s: no such file or directory\n", split_cmd[0]);
+	{
+		ft_putstr_fd("Error : ", 2);
+		ft_putstr_fd(split_cmd[0], 2);
+		ft_putstr_fd(": no such file or directory\n", 2);
+	}
 	else
 		path = ft_strdup(split_cmd[0]);
 	free_tab(split_cmd);
@@ -68,7 +72,9 @@ char	*sub_parsing_cmd2(char **env_main, char **env_exev, char *cmd)
 		i++;
 	if (!(env_path[i]))
 	{
-		ft_printf("Error: %s: Command not found\n", cmd);
+		ft_putstr_fd("Error : ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Command not found\n", 2);
 		free_tab(env_path);
 		return (NULL);
 	}
@@ -87,7 +93,9 @@ char	*parsing_cmd(char **env_main, char *cmd, char **env_exev)
 
 	if (check_cmd(cmd) == 0)
 	{
-		ft_printf("Error : %s: Command not found\n", cmd);
+		ft_putstr_fd("Error : ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Command not found\n", 2);
 		return (NULL);
 	}
 	split_cmd = make_cmd(cmd);

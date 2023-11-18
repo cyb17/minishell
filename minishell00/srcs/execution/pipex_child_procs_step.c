@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_procs_step_bonus.c                           :+:      :+:    :+:   */
+/*   pipex_child_procs_step.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:08:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/10 14:30:42 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:02:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex_bonus.h"
+#include "../../includes/minishell.h"
 
-char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value)
+char	*child_procs_part_1(t_res *res, char **env, char *argv_value)
 {
 	char	*path;
 	char	*env_exev[2];
@@ -23,27 +23,25 @@ char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value)
 	path = parsing_cmd(env, argv_value, env_exev);
 	if (!path)
 	{
-		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
-		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
+		garbage_collector(res);
 		free(argv_value);
 		exit (1);
 	}
 	return (path);
 }
 
-void	child_procs_part_2(t_tab *tab, int input, int output, char *arg)
+void	child_procs_part_2(t_res *res, int input, int output, char *arg)
 {
 	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
 	{
-		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
-		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
+		garbage_collector(res);
 		free(arg);
 		exit (1);
 	}
-	close_allfd(tab);
+	close_allfd(res->tab);
 }
 
-void	child_procs_part_3(t_tab *tab, char *path, char *argv_value)
+void	child_procs_part_3(t_res *res, char *path, char *argv_value)
 {
 	char	**cmd;
 
@@ -51,8 +49,7 @@ void	child_procs_part_3(t_tab *tab, char *path, char *argv_value)
 	if (execve(path, cmd, NULL) == -1)
 	{
 		perror("Error: execve");
-		close_pipefd(tab->pipefd, tab->nb_pipe, tab->nb_pipe);
-		garbage_collector(&tab->process, tab, tab->builtins, tab->input)
+		garbage_collector(res);
 		free(path);
 		free(argv_value);
 		exit (1);

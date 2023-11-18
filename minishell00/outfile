@@ -1,0 +1,10 @@
+total 84
+drwxr-xr-x 2 yachen 2023_paris  4096 Nov  9 10:29 includes
+-rw-r--r-- 1 yachen 2023_paris     0 Nov 18 13:55 infile
+-rw-r--r-- 1 yachen 2023_paris  2159 Nov 18 14:47 makefile
+-rwxr-xr-x 1 yachen 2023_paris 53312 Nov 18 15:54 minishell
+-rw-r--r-- 1 yachen 2023_paris  6292 Nov 16 16:06 minishell_note
+-rw-r--r-- 1 yachen 2023_paris     0 Nov 18 15:55 outfile
+-rw-r--r-- 1 yachen 2023_paris  1705 Nov  9 10:29 pipex_bonus.c
+-rw-r--r-- 1 yachen 2023_paris  2445 Nov 10 14:37 pipex_bonus.h
+drwxr-xr-x 5 yachen 2023_paris  4096 Nov 10 14:51 srcs

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/17 17:02:51 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:31:20 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ void	wait_proces(int *pid, int nb_proces);
 */
 //garbage_collector
 void	garbage_collector(t_res *res);
-/*
+
 // redirections
 void	redirect_in(int *fdin, char *infile);
 void	redirect_out(int *fdout, char *outfile, char mode);
 char	*ft_here_doc(char *limiter);
 
-// pipex_parsing_cmd
+//pipex_parsing_cmd
 char	**make_cmd(char *str);
 int		check_cmd(char *cmd);
 char	*sub_parsing_cmd1(char **split_cmd);
@@ -107,19 +107,28 @@ char	*parsing_cmd(char **env_main, char *cmd, char **env_exev);
 char	**find_path(char **env, char *cmd);
 
 // pipex_child_proces_step
-char	*child_procs_part_1(t_tab *tab, char **env, char *argv_value);
-void	child_procs_part_2(t_tab *tab, int input, int output, char *arg);
-void	child_procs_part_3(t_tab *tab, char *path, char *argv_value);
-*/
+char	*child_procs_part_1(t_res *res, char **env, char *argv_value);
+void	child_procs_part_2(t_res *res, int input, int output, char *arg);
+void	child_procs_part_3(t_res *res, char *path, char *argv_value);
 
 // test
-t_process	*create_list_process(char **arg);
+t_process	*create_list_process(char *input);
+
 void		clear_lst(t_list **list);
 t_list		*env_to_envlist(char **env);
-int			find_nb_process(t_process *process);
+int			ft_compare(char *limiter, char *str);
+void		close_allfd(t_tab *tab);
+int			setup_in_out(t_tab *tab, t_tokens *tokens);
+int			pipex(t_res *res, char **env, int i);
+int			isnot_builtins(char *str);
+void		ft_error(char *where, char *what);
+
+// init_ressources
+
 void		free_pipefd(int **pipefd, int nb_pipe);
 int			pipe_pipefd(int **pipefd, int nb_pipe);
 int			creat_pipefd(t_tab *tab);
+int			find_nb_process(t_process *process);
 t_tab		*fill_tab(t_process *process);
 t_builtins	*fill_builtins(char **env);
 
