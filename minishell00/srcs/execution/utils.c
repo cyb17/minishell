@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:57:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/16 11:02:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/19 10:14:56 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	close_allfd(t_tab *tab)
 	close(tab->fdout);
 	while (i < tab->nb_pipe)
 	{
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
+		close(tab->pipefd[i][0]);
+		close(tab->pipefd[i][1]);
 		i++;
 	}
 }

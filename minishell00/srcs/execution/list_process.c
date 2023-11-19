@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 15:56:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/19 10:19:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ static t_tokens	*make_list_tokens(char *cmd, char *op)
 	t_tokens	*lst;
 
 	lst = NULL;
-	ft_lstadd_tokens(&lst, (create_tokens("<", REDIR_IN)));
-	ft_lstadd_tokens(&lst, (create_tokens("infile", INFILE)));
+	//ft_lstadd_tokens(&lst, (create_tokens("<", REDIR_IN)));
+	//ft_lstadd_tokens(&lst, (create_tokens("infile", INFILE)));
 	ft_lstadd_tokens(&lst, (create_tokens(cmd, CMD)));
 	ft_lstadd_tokens(&lst, (create_tokens(op, WORD)));
-	ft_lstadd_tokens(&lst, (create_tokens(">", REDIR_OUT)));
-	ft_lstadd_tokens(&lst, (create_tokens("/dev/stdout", OUTFILE)));
+	//ft_lstadd_tokens(&lst, (create_tokens(">", REDIR_OUT)));
+	//ft_lstadd_tokens(&lst, (create_tokens("outfile", OUTFILE)));
 	return (lst);
 }
 
@@ -85,11 +85,16 @@ t_process	*create_list_process(char *input)
 {
 	char		**arg;
 	t_process	*list;
+	int			i;
 
 	arg = ft_split(input, ' ');
 	list = NULL;
-	ft_lstadd_process(&list, create_process(arg[0], arg[1]));
-	ft_lstadd_process(&list, create_process(arg[2], arg[3]));
+	i = 0;
+	while (arg[i])
+	{
+		ft_lstadd_process(&list, create_process(arg[i], arg[i + 1]));
+		i += 2;
+	}
 	free_tab(arg);
 	return (list);
 }

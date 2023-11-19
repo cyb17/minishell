@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 16:03:47 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/19 13:05:22 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,28 +184,36 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 // 	return (rlt);
 // }
 
-int	setup_in_out(t_tab *tab, t_tokens *tokens)
+void	setup_pipe(t_res *res, int i)
+{
+	if ()
+	if (i = 0 && res->tab->fdout != 0)
+	
+}
+
+int	setup_in_out(t_res *res, t_tokens *tokens, int i)
 {
 	char	*here_doc;
 
 	while (tokens)
 	{
 		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
-			redirect_in(&tab->fdin, tokens->next->value);
+			redirect_in(&res->tab->fdin, tokens->next->value);
 		else if (tokens->type == REDIR_OUT && tokens->next->type == OUTFILE)
-			redirect_out(&tab->fdout, tokens->next->value, 'T');
+			redirect_out(&res->tab->fdout, tokens->next->value, 'T');
 		else if (tokens->type == APPEN && tokens->next->type == OUTFILE)
-			redirect_out(&tab->fdout, tokens->next->value, 'A');
+			redirect_out(&res->tab->fdout, tokens->next->value, 'A');
 		else if (tokens->type == HEREDOC)
 		{
 			here_doc = ft_here_doc(tokens->next->value);
-			redirect_in(&tab->fdin, here_doc);
+			redirect_in(&res->tab->fdin, here_doc);
 			free(here_doc);
 		}
-		if ((tab->fdin == -1) || (tab->fdout == -1))
+		if ((res->tab->fdin == -1) || (res->tab->fdout == -1))
 			return (-1);
 		tokens = tokens->next;
 	}
+	setup_pipe(res, i);
 	return (0);
 }
 
@@ -215,7 +223,7 @@ int	pipex(t_res *res, char **env, int i)
 	int			status;
 	
 	status = 0;
-	if (setup_in_out(res->tab, res->prcs->list_tokens) == -1)
+	if (setup_in_out(res, res->prcs->list_tokens, i) == -1)
 		return (-1);
 	tmp = res->prcs->list_tokens;
 	while (tmp)

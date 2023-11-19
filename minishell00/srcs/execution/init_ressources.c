@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 13:49:19 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/19 12:54:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_tab	*fill_tab(t_process *process)
 	if (!tab)
 		return (NULL);
 	tab->fdin = 0;
-	tab->fdout = 0;
+	tab->fdout = 1;
 	tab->nb_pipe = find_nb_process(process) - 1;
 	tab->tab_pid = (pid_t *)malloc(sizeof(pid_t) * (tab->nb_pipe + 1));
 	if (!tab->tab_pid)
