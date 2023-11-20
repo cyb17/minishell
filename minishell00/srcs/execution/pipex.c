@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/19 13:05:22 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/20 16:00:52 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,29 @@ char	*make_cmdtk_to_arg(t_tokens *tokens)
 	return (cmd);
 }
 
-void	fixe_in_output(int *input, int *output, t_tab *tab, int i)
-{
-	if (i == 0)
-		*input = tab->fdin;
-	else
-		*input = tab->pipefd[i - 1][0];
-	if (i == tab->nb_pipe)
-		*output = tab->fdout;
-	else
-		*output = tab->pipefd[i][1];
-}
+// void	fixe_in_output(int *input, int *output, t_tab *tab, int i)
+// {
+// 	if (i == 0)
+// 		*input = tab->fdin;
+// 	else
+// 		*input = tab->pipefd[i - 1][0];
+// 	if (i == tab->nb_pipe)
+// 		*output = tab->fdout;
+// 	else
+// 		*output = tab->pipefd[i][1];
+// }
 
-static void	ft_close(int *input, int *output)
-{
-	close(*input);
-	close(*output);
-}
+// static void	ft_close(int *input, int *output)
+// {
+// 	close(*input);
+// 	close(*output);
+// }
 
 int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 {
-	int	input;
-	int	output;
 	char	*arg;
 	char	*path;
 
-	input = 0;
-	output = 0;
-	fixe_in_output(&input, &output, res->tab, i);
 	arg = NULL;
 	res->tab->tab_pid[i] = fork();
 	if (res->tab->tab_pid[i] == -1)
@@ -104,11 +99,13 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 	{
 		arg = make_cmdtk_to_arg(cmd_tk);
 		path = child_procs_part_1(res, env, arg);
-		child_procs_part_2(res, input, output, arg);
 		child_procs_part_3(res, path, arg);
 	}
 	else
-		ft_close(&input, &output);
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+	}
 	return (0);
 }
 
@@ -118,7 +115,7 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 // 	t_tokens	*tmp;
 // 	int			i;
 
-// 	i = 0;
+// 	i = 0;close(res->tab->pipef[i - 1][0]);
 // 	tmp = cmd_tk;
 // 	while (tmp && (tmp->type == CMD || tmp->type == WORD))
 // 	{
@@ -129,7 +126,7 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 // 	if (!arg)
 // 		return (-1);
 // 	i = 0;
-// 	while (cmd_tk && (cmd_tk->type == CMD || cmd_tk->type == WORD))
+// 	while (cmd_tk && (cmd_tk->type == CMD || cmd_tk->type == WORD))close(res->tab->pipef[i - 1][0]);
 // 	{
 // 		arg[i++] = cmd_tk->value;
 // 		cmd_tk = cmd_tk->next;
@@ -184,14 +181,30 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 // 	return (rlt);
 // }
 
-void	setup_pipe(t_res *res, int i)
+
+void	setup_pipe(t_res *res, int procs_i)
 {
-	if ()
-	if (i = 0 && res->tab->fdout != 0)
-	
+	if (i == 0)
+	{
+		dup2(res->tab->fdin, STDIN_FILENO);
+		if (res->tab->fdout == 1)
+			dup2(res->tab->pipefd[i][1], STDOUT_FILENO);
+		else
+			dup2(res->tab->fdout, STDOUT_FILENO);
+	}
+	else if (i == res->tab->nb_pipe)
+	{
+		dup2(res->tab->pipefd[i - 1][0], STDIN_FILENO);
+		dup2(res->tab->fdout, STDOUT_FILENO);
+	}
+	else
+	{
+		dup2(res->tab->pipefd[i - 1][0], STDIN_FILENO);
+		dup2(res->tab->pipefd[i][1], STDOUT_FILENO);
+	}
 }
 
-int	setup_in_out(t_res *res, t_tokens *tokens, int i)
+int	setup_stdin_stdout(t_res *res, t_tokens *tokens, int i)
 {
 	char	*here_doc;
 
@@ -213,19 +226,22 @@ int	setup_in_out(t_res *res, t_tokens *tokens, int i)
 			return (-1);
 		tokens = tokens->next;
 	}
-	setup_pipe(res, i);
+	printf("sortie tokens : %p\n", tokens);
+	printf("fdin : %d fdout: %d i : %d\n", res->tab->fdin, res->tab->fdout, i);
+	//setup_pipe(res, i);
 	return (0);
 }
 
 int	pipex(t_res *res, char **env, int i)
 {
-	t_tokens	*tmp;
-	int			status;
+	//t_tokens	*tmp;
+	//int			status;
 	
-	status = 0;
-	if (setup_in_out(res, res->prcs->list_tokens, i) == -1)
+	//status = 0;
+	(void)env;
+	if (setup_stdin_stdout(res, res->prcs->list_tokens, i) == -1)
 		return (-1);
-	tmp = res->prcs->list_tokens;
+	/*tmp = res->prcs->list_tokens;
 	while (tmp)
 	{
 		if (tmp->type == CMD)
@@ -240,6 +256,6 @@ int	pipex(t_res *res, char **env, int i)
 			break;
 		}
 		tmp = tmp->next;
-	}
+	}*/
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 16:01:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/20 15:10:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		init_structure(&res);
 		res.input = readline("\e[34;1mminishell> \e[0m");
-		process = create_list_process(res.input);
+		process = create_list_process();
 		//ft_parse(res.input, process);
 		res.prcs = process;
 		res.blt = fill_builtins(env);

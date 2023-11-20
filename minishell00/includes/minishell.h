@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 15:31:20 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/20 14:36:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,18 @@ char	**find_path(char **env, char *cmd);
 
 // pipex_child_proces_step
 char	*child_procs_part_1(t_res *res, char **env, char *argv_value);
-void	child_procs_part_2(t_res *res, int input, int output, char *arg);
+//void	child_procs_part_2(t_res *res, int input, int output, char *arg);
 void	child_procs_part_3(t_res *res, char *path, char *argv_value);
 
 // test
-t_process	*create_list_process(char *input);
+t_process	*create_list_process(void);
 
 void		clear_lst(t_list **list);
 t_list		*env_to_envlist(char **env);
 int			ft_compare(char *limiter, char *str);
 void		close_allfd(t_tab *tab);
-int			setup_in_out(t_tab *tab, t_tokens *tokens);
+void		setup_pipe(t_res *res, int i);
+int			setup_stdin_stdout(t_res *res, t_tokens *tokens, int i);
 int			pipex(t_res *res, char **env, int i);
 int			isnot_builtins(char *str);
 void		ft_error(char *where, char *what);
