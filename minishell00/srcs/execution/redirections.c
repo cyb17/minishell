@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/20 11:57:47 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/21 17:09:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	redirect_in(int *fdin, char *infile)
 {
-	if (*fdin != 0)
-		close(*fdin);
+	// if (*fdin != 0)
+	// {
+	// 	close(*fdin);
+	// 	*fdin = 0;
+	// }
 	*fdin = open(infile, O_RDONLY);
 	if (*fdin == -1)
 	{
@@ -31,8 +34,11 @@ void	redirect_in(int *fdin, char *infile)
 // A pour O_APPEND pour >>
 void	redirect_out(int *fdout, char *outfile, char mode)
 {
-	if (*fdout != 1)
-		close(*fdout);
+	// if (*fdout != 1)
+	// {
+	// 	close(*fdout);
+	// 	*fdout = 1;
+	// }
 	if (mode == 'T')
 		*fdout = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (mode == 'A')

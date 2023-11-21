@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:57:49 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 15:31:04 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/21 15:27:30 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,14 @@ void	ft_error(char *where, char *what)
 	free(tmp);
 	ft_putstr_fd(err, 2);
 	free(err);
+}
+
+int	isnot_builtins(char *str)
+{
+	if ((strcmp("echo", str) == 1) || (strcmp("cd", str) == 1)
+		|| (strcmp("env", str) == 1) || (strcmp("exit", str) == 1)
+		|| (strcmp("export", str) == 1) || (strcmp("unset", str) == 1)
+		|| (strcmp("pwd", str) == 1))
+		return (0);
+	return (1);
 }

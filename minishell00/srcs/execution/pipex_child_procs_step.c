@@ -6,12 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:08:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/20 11:11:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/21 17:11:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// Check command and find command_path
 char	*child_procs_part_1(t_res *res, char **env, char *argv_value)
 {
 	char	*path;
@@ -30,17 +31,19 @@ char	*child_procs_part_1(t_res *res, char **env, char *argv_value)
 	return (path);
 }
 
-// void	child_procs_part_2(t_res *res, int input, int output, char *arg)
-// {
-// 	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
-// 	{
-// 		garbage_collector(res);
-// 		free(arg);
-// 		exit (1);
-// 	}
-// 	close_allfd(res->tab);
-// }
+// Redirect stdin and stdout of child process
+void	child_procs_part_2(t_res *res, int input, int output, char *arg)
+{
+	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
+	{
+		garbage_collector(res);
+		free(arg);
+		exit (1);
+	}
+	//close_allfd(res->tab);
+}
 
+// Execute the command
 void	child_procs_part_3(t_res *res, char *path, char *argv_value)
 {
 	char	**cmd;

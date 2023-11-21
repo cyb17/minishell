@@ -6,43 +6,43 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/20 15:09:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/21 17:47:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	clear_tokens_list(t_tokens **list)
-{
-	t_tokens	*tmp;
+// static void	clear_tokens_list(t_tokens **list)
+// {
+// 	t_tokens	*tmp;
 
-	tmp = NULL;
-	while (*list)
-	{
-		tmp = *list;
-		*list = (*list)->next;
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
-	}
-}
+// 	tmp = NULL;
+// 	while (*list)
+// 	{
+// 		tmp = *list;
+// 		*list = (*list)->next;
+// 		if (tmp->value)
+// 			free(tmp->value);
+// 		free(tmp);
+// 	}
+// }
 
-static void	clear_process_list(t_process **process)
-{
-	t_process	*tmp;
+// static void	clear_process_list(t_process **process)
+// {
+// 	t_process	*tmp;
 
-	tmp = NULL;
-	while (*process)
-	{
-		tmp = *process;
-		*process = (*process)->next;
-		if (tmp->section_cmd)
-			free(tmp->section_cmd);
-		if (tmp->list_tokens)
-			clear_tokens_list(&tmp->list_tokens);
-		free(tmp);
-	}
-}
+// 	tmp = NULL;
+// 	while (*process)
+// 	{
+// 		tmp = *process;
+// 		*process = (*process)->next;
+// 		if (tmp->section_cmd)
+// 			free(tmp->section_cmd);
+// 		if (tmp->list_tokens)
+// 			clear_tokens_list(&tmp->list_tokens);
+// 		free(tmp);
+// 	}
+// }
 
 static void	ft_lstadd_tokens(t_tokens **lst, t_tokens *new_l)
 {
@@ -125,20 +125,25 @@ static t_process	*create_process(char infile[2][10], char cmd[2][10], char outfi
 
 t_process	*create_list_process(void)
 {
-	char	infile[2][10] = {"<", "infile"};
-	char	outfile[2][10] = {">", "outfile"};
+	//char	infile[2][10] = {"<", "infile"};
+	//char	outfile[2][10] = {">", "outfile"};
+	//char	outfile2[2][10] = {">", "outfile2"};
 	char	cmd1[2][10] = {"ls", "-l"};
 	char	cmd2[2][10] = {"wc", "-l"};
+//	char	cmd2[2][10] = {"grep", "minishell"};
 	t_process	*proces1;
 	t_process	*proces2;
+	//t_process	*proces3;
 	t_process	*list;
 
 	list = NULL;
-	proces1 = create_process(infile, cmd1, NULL);
+	proces1 = create_process(NULL, cmd1, NULL);
 	proces2 = create_process(NULL, cmd2, NULL);
+	//proces3 = create_process(NULL, cmd3, NULL);
 	
 	ft_lstadd_process(&list, proces1);
 	ft_lstadd_process(&list, proces2);
+	//ft_lstadd_process(&list, proces3);
 	return (list);	
 }
 
