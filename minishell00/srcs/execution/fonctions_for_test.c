@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:57:49 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 15:27:30 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:28:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ int	ft_compare(char *limiter, char *str)
 	return (0);
 }
 
-void	close_allfd(t_tab *tab)
+// Close fdin, fdout 
+// Close pipefd until nb_pipe
+void	close_unsusedfd(t_tab *tab, int j)
 {
 	int	i;
 
 	i = 0;
-	close(tab->fdin);
-	close(tab->fdout);
-	while (i < tab->nb_pipe)
+	//close(tab->fdin);
+	//close(tab->fdout);
+	while (i <= j && i < tab->nb_pipe)
 	{
 		close(tab->pipefd[i][0]);
 		close(tab->pipefd[i][1]);

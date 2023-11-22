@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 17:47:38 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:55:18 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ t_process	*create_list_process(void)
 	//char	outfile2[2][10] = {">", "outfile2"};
 	char	cmd1[2][10] = {"ls", "-l"};
 	char	cmd2[2][10] = {"wc", "-l"};
-//	char	cmd2[2][10] = {"grep", "minishell"};
+	//char	cmd2[2][10] = {"grep", "minishell"};
 	t_process	*proces1;
 	t_process	*proces2;
 	//t_process	*proces3;

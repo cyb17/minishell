@@ -6,12 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/19 12:54:39 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 12:54:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// Free int **pipefd
 void	free_pipefd(int **pipefd, int nb_pipe)
 {
 	int	i;
@@ -22,29 +23,49 @@ void	free_pipefd(int **pipefd, int nb_pipe)
 	free(pipefd);
 }
 
-int	pipe_pipefd(int **pipefd, int nb_pipe)
-{
-	int	i;
+// // Pipe() pipefd until nb_pipe
+// int	pipe_pipefd(int **pipefd, int nb_pipe)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < nb_pipe)
+// 	i = 0;
+// 	while (i < nb_pipe)
+// 	{
+// 		if ((pipe(pipefd[i])) < 0)
+// 		{
+// 			perror("pipe_pipefd");
+// 			while (--i >= 0)
+// 			{
+// 				close(pipefd[i][0]);
+// 				close(pipefd[i][1]);
+// 			}
+// 			return (-1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+
+// Pipe() pipefd[i]
+int	pipe_pipefd(t_tab *tab, int i)
+{
+	if (i < tab->nb_pipe)
 	{
-		if ((pipe(pipefd[i])) < 0)
+		if ((pipe(tab->pipefd[i])) < 0)
 		{
-			perror("fill_tab: creat_pipefd");
-			while (--i >= 0)
+			if (i != 0)
 			{
-				close(pipefd[i][0]);
-				close(pipefd[i][1]);
+				close(tab->pipefd[i - 1][0]);
+				close(tab->pipefd[i - 1][1]);
 			}
-			free_pipefd(pipefd, i);
 			return (-1);
 		}
-		i++;
 	}
 	return (0);
 }
 
+// Malloc memory space for int **pipefd 
 int	creat_pipefd(t_tab *tab)
 {
 	int	i;
@@ -68,11 +89,10 @@ int	creat_pipefd(t_tab *tab)
 		}
 		i++;
 	}
-	if (pipe_pipefd(tab->pipefd, tab->nb_pipe) == -1)
-		return (-1);
 	return (0);
 }
 
+// Return nb of process
 int	find_nb_process(t_process *process)
 {
 	int	nb_process;
@@ -86,6 +106,7 @@ int	find_nb_process(t_process *process)
 	return (nb_process);
 }
 
+// Initialize struct t_tab's data and malloc necessary space if need
 t_tab	*fill_tab(t_process *process)
 {
 	t_tab	*tab;
@@ -113,6 +134,7 @@ t_tab	*fill_tab(t_process *process)
 	return (tab);
 }
 
+// Initialize and fill struct t_builtins's data
 t_builtins	*fill_builtins(char **env)
 {
 	t_builtins	*builtins;

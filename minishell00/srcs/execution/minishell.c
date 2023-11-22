@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/20 15:10:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 12:51:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 		int i = 0;
 		while (res.prcs)
 		{
+			pipe_pipefd(res.tab, i);
 			pipex(&res, env, i);
 			i++;
 			res.prcs = res.prcs->next;

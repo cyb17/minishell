@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:08:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 17:11:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:54:41 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*child_procs_part_1(t_res *res, char **env, char *argv_value)
 }
 
 // Redirect stdin and stdout of child process
-void	child_procs_part_2(t_res *res, int input, int output, char *arg)
+void	child_procs_part_2(t_res *res, int input, int output, char *arg, int i)
 {
 	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
 	{
@@ -40,7 +40,8 @@ void	child_procs_part_2(t_res *res, int input, int output, char *arg)
 		free(arg);
 		exit (1);
 	}
-	//close_allfd(res->tab);
+	(void)i;
+	// close_unsusedfd(res->tab, i);
 }
 
 // Execute the command

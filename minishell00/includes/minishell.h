@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 14:56:00 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 12:51:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	**find_path(char **env, char *cmd);
 
 // pipex_child_proces_step
 char	*child_procs_part_1(t_res *res, char **env, char *argv_value);
-void	child_procs_part_2(t_res *res, int input, int output, char *arg);
+void	child_procs_part_2(t_res *res, int input, int output, char *arg, int i);
 void	child_procs_part_3(t_res *res, char *path, char *argv_value);
 
 // test
@@ -117,7 +117,7 @@ t_process	*create_list_process(void);
 void		clear_lst(t_list **list);
 t_list		*env_to_envlist(char **env);
 int			ft_compare(char *limiter, char *str);
-void		close_allfd(t_tab *tab);
+void		close_unsusedfd(t_tab *tab, int nb_pipe);
 // void		setup_pipe(t_res *res, int i);
 int			setup_stdin_stdout(int *fdin, int *fdout, t_res *res, int i);
 int			pipex(t_res *res, char **env, int i);
@@ -127,7 +127,7 @@ void		ft_error(char *where, char *what);
 // init_ressources
 
 void		free_pipefd(int **pipefd, int nb_pipe);
-int			pipe_pipefd(int **pipefd, int nb_pipe);
+int			pipe_pipefd(t_tab *tab, int i);
 int			creat_pipefd(t_tab *tab);
 int			find_nb_process(t_process *process);
 t_tab		*fill_tab(t_process *process);

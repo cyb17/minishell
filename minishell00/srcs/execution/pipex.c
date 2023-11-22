@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 17:52:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/22 14:05:19 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*make_cmdtk_to_arg(t_tokens *tokens)
 	return (cmd);
 }
 
-// check if there is a infile or a outfile
+// check and open, if there is a infile or a outfile
 int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 {
 	char	*here_doc;
@@ -83,39 +83,6 @@ int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 	}
 	printf("apres open file => fdin:%d  fdout:%d\n", *fdin, *fdout);
 	return (0);
-}
-
-// static void	fixe_in_output(int *input, int *output, t_tab *tab, int i)
-// {
-// 	if (i == 0)
-// 		*input = tab->fdin;
-// 	else if (tab->fdin > 2)
-// 	{
-// 		*input = tab->fdin;
-// 		close(tab->pipefd[i - 1][0]);
-// 	}
-// 	else
-// 		*input = tab->pipefd[i - 1][0];
-// 	if (i == tab->nb_pipe)
-// 		*output = tab->fdout;
-// 	else if (tab->fdout > 2)
-// 	{
-// 		*output = tab->fdout;
-// 		close(tab->pipefd[i][1]);
-// 	}
-// 	else
-// 		*output = tab->pipefd[i][1];
-// 	printf("fixe_input_output : input:%d  output:%d\n", *input, *output);
-// 	if (i > 0)
-// 		printf("pipefd[i - 1] :[0]=%d [1]=%d\n", tab->pipefd[i - 1][0], tab->pipefd[i - 1][1]);
-// 	//printf("pipefd[i]: [0]=%d [1]:%d\n", tab->pipefd[i][0], tab->pipefd[i][1]);
-// 	printf("\n");
-// }
-
-static void	ft_close(int *input, int *output)
-{
-	close(*input);
-	close(*output);
 }
 
 static void	redirection(t_res *res, int i)
@@ -153,14 +120,28 @@ static void	fixe_in_output(int *input, int *output, t_tab *tab, int i)
 	}
 }
 
+void	print_allfd(t_tab *tab, int input, int output)
+{
+	int	i = 0;
+	printf("fdin:%d   fdout:%d\n", tab->fdin, tab->fdout);
+	printf("nb_pipe:%d\n", tab->nb_pipe);
+	while (i < tab->nb_pipe)
+	{
+		printf("pipefd[%d][0]:%d  pipefd[%d][1]:%d\n", i, tab->pipefd[i][0], i, tab->pipefd[i][1]);
+		i++;
+	}
+	printf("input:%d  output:%d\n", input, output);
+}
+
 int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 {
 	char	*arg;
 	char	*path;
 	int		input;
 	int		output;
-(void)path;
-(void)env;
+	// (void)path;
+	// (void)env;
+	// (void)cmd_tk;
 
 	input = 0;
 	output = 1;
@@ -169,6 +150,7 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 		return (-1);
 	redirection(res, i);
 	fixe_in_output(&input, &output, res->tab, i);
+	print_allfd(res->tab, input, output);
 	res->tab->tab_pid[i] = fork();
 	if (res->tab->tab_pid[i] == -1)
 	{
@@ -178,13 +160,15 @@ int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
 	else if (res->tab->tab_pid[i] == 0)
 	{
 		arg = make_cmdtk_to_arg(cmd_tk);
-		// path = child_procs_part_1(res, env, arg);
-		// child_procs_part_2(res, input, output, arg);
-		// child_procs_part_3(res, path, arg);
-		printf("input:%d  output:%d\n", input, output);
+		path = child_procs_part_1(res, env, arg);
+		child_procs_part_2(res, input, output, arg, i);
+		child_procs_part_3(res, path, arg);
 	}
 	else
-	 	ft_close(&input, &output);
+	{
+		close(input);
+		close(output);
+	}
 	return (0);
 }
 
