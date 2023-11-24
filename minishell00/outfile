@@ -1,11 +1,13 @@
+str = ls
+not builtins
 total 92
-drwxr-xr-x 2 yachen 2023_paris  4096 Nov  9 10:29 includes
--rw-r--r-- 1 yachen 2023_paris    21 Nov 19 10:46 infile
--rw-r--r-- 1 yachen 2023_paris  2159 Nov 20 15:48 makefile
--rwxr-xr-x 1 yachen 2023_paris 53920 Nov 21 17:13 minishell
--rw-r--r-- 1 yachen 2023_paris  6292 Nov 16 16:06 minishell_note
--rw-r--r-- 1 yachen 2023_paris     0 Nov 21 17:15 outfile
--rw-r--r-- 1 yachen 2023_paris     2 Nov 21 17:15 outfile2
--rw-r--r-- 1 yachen 2023_paris  1705 Nov  9 10:29 pipex_bonus.c
--rw-r--r-- 1 yachen 2023_paris  2445 Nov 10 14:37 pipex_bonus.h
-drwxr-xr-x 5 yachen 2023_paris  4096 Nov 10 14:51 srcs
+drwxr-xr-x 2 yachen 2023_paris  4096 Nov 24 15:34 includes
+-rw-r--r-- 1 yachen 2023_paris    21 Nov 24 15:34 infile
+-rw-r--r-- 1 yachen 2023_paris  2159 Nov 24 15:34 makefile
+-rwxr-xr-x 1 yachen 2023_paris 55880 Nov 24 17:53 minishell
+-rw-r--r-- 1 yachen 2023_paris  6292 Nov 24 15:34 minishell_note
+-rw-r--r-- 1 yachen 2023_paris    22 Nov 24 17:53 outfile
+-rw-r--r-- 1 yachen 2023_paris     0 Nov 24 15:34 outfile2
+-rw-r--r-- 1 yachen 2023_paris  1705 Nov 24 15:34 pipex_bonus.c
+-rw-r--r-- 1 yachen 2023_paris  2445 Nov 24 15:34 pipex_bonus.h
+drwxr-xr-x 5 yachen 2023_paris  4096 Nov 24 15:34 srcs

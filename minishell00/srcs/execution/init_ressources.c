@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/22 12:54:45 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:53:35 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,14 @@ t_tab	*fill_tab(t_process *process)
 	tab->fdin = 0;
 	tab->fdout = 1;
 	tab->nb_pipe = find_nb_process(process) - 1;
-	tab->tab_pid = (pid_t *)malloc(sizeof(pid_t) * (tab->nb_pipe + 1));
+	tab->tab_pid = (pid_t *)malloc(sizeof(pid_t) * find_nb_process(process));
 	if (!tab->tab_pid)
 	{
 		free(tab);
 		ft_putstr_fd("fill_tab: tab_pid: malloc failed\n", 2);
 		return (NULL);
 	}
-	ft_memset(tab->tab_pid, 0, tab->nb_pipe + 1);
+	ft_memset(tab->tab_pid, 0, find_nb_process(process));
 	if (creat_pipefd(tab) == -1)
 	{
 		free(tab->tab_pid);

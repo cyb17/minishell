@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/22 14:05:19 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:31:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 {
 	char	*here_doc;
 
-	printf("\n");
-	printf("token: %s\n", tokens->value);
-	printf("avant open file => fdin:%d  fdout:%d\n", *fdin, *fdout);
 	while (tokens)
 	{
 		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
@@ -81,7 +78,6 @@ int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 			return (-1);
 		tokens = tokens->next;
 	}
-	printf("apres open file => fdin:%d  fdout:%d\n", *fdin, *fdout);
 	return (0);
 }
 

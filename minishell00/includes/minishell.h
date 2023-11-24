@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/22 12:51:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:40:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int			setup_stdin_stdout(int *fdin, int *fdout, t_res *res, int i);
 int			pipex(t_res *res, char **env, int i);
 int			isnot_builtins(char *str);
 void		ft_error(char *where, char *what);
+int			check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
+char		*make_cmdtk_to_arg(t_tokens *tokens);
 
 // init_ressources
 

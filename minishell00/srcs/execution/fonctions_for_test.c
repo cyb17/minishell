@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:57:49 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/22 13:28:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:28:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ void	ft_error(char *where, char *what)
 
 int	isnot_builtins(char *str)
 {
-	if ((strcmp("echo", str) == 1) || (strcmp("cd", str) == 1)
-		|| (strcmp("env", str) == 1) || (strcmp("exit", str) == 1)
-		|| (strcmp("export", str) == 1) || (strcmp("unset", str) == 1)
-		|| (strcmp("pwd", str) == 1))
+	printf("str = %s\n", str);
+	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
+		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
+		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
+		|| (ft_strcmp("pwd", str) == 1))
 		return (0);
 	return (1);
 }

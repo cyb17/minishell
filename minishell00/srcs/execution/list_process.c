@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/22 13:55:18 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/24 17:57:19 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,21 +129,21 @@ t_process	*create_list_process(void)
 	//char	outfile[2][10] = {">", "outfile"};
 	//char	outfile2[2][10] = {">", "outfile2"};
 	char	cmd1[2][10] = {"ls", "-l"};
-	char	cmd2[2][10] = {"wc", "-l"};
-	//char	cmd2[2][10] = {"grep", "minishell"};
+	char	cmd3[2][10] = {"wc", "-l"};
+	char	cmd2[2][10] = {"ls", "-l"};
 	t_process	*proces1;
 	t_process	*proces2;
-	//t_process	*proces3;
+	t_process	*proces3;
 	t_process	*list;
 
 	list = NULL;
 	proces1 = create_process(NULL, cmd1, NULL);
 	proces2 = create_process(NULL, cmd2, NULL);
-	//proces3 = create_process(NULL, cmd3, NULL);
+	proces3 = create_process(NULL, cmd3, NULL);
 	
 	ft_lstadd_process(&list, proces1);
 	ft_lstadd_process(&list, proces2);
-	//ft_lstadd_process(&list, proces3);
+	ft_lstadd_process(&list, proces3);
 	return (list);	
 }
 
