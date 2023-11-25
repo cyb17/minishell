@@ -1,60 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 10:57:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/19 10:14:56 by yachen           ###   ########.fr       */
+/*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
+/*   Updated: 2023/11/25 18:20:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_compare(char *limiter, char *str)
+int	isnot_builtins(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (limiter[i])
-	{
-		if (limiter[i] != str[i])
-			return (0);
-		i++;
-	}
-	if (limiter[i] == '\0' && str[i] == '\n')
-		return (1);
-	return (0);
+	printf("str = %s\n", str);
+	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
+		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
+		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
+		|| (ft_strcmp("pwd", str) == 1))
+		return (0);
+	return (1);
 }
 
-void	close_allfd(t_tab *tab)
+t_tokens	*check_cmd_tk(t_tokens *list_tokens)
 {
-	int	i;
+	t_tokens	*tmp;
 
-	i = 0;
-	close(tab->fdin);
-	close(tab->fdout);
-	while (i < tab->nb_pipe)
+	tmp = list_tokens;
+	while (tmp)
 	{
-		close(tab->pipefd[i][0]);
-		close(tab->pipefd[i][1]);
-		i++;
+		if (tmp->type == CMD)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+void	execute_cmd(t_res *res, char **env, t_tokens *list_tokens)
+{
+	t_tokens	*cmd;
+
+	cmd = check_cmd_tk(list_tokens);
+	if (!cmd)
+		return ;
+	if (isnot_builtins(cmd->value) == 1)
+		exe_no_builtins(res, env, cmd);
+	else
+	{
+		printf("is builtins\n");
+		// exe_builtins(cmd);
 	}
 }
 
-void	wait_proces(int *pid, int nb_proces)
+void	clean_fds(int fdin, int fdout)
 {
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < nb_proces)
-	{
-		if (pid[i] != 0)
-			waitpid(pid[i], &status, 0);
-		i++;
-	}
+	if (fdin > 2)
+		close(fdin);
+	if (fdout > 2)
+		close(fdout);
 }
 
 void	ft_error(char *where, char *what)
@@ -83,9 +87,3 @@ void	ft_error(char *where, char *what)
 	ft_putstr_fd(err, 2);
 	free(err);
 }
-
-/*
-int main(void)
-{
-	ft_error("Error: echo: ", strerror(errno));
-}*/

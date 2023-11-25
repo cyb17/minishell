@@ -6,19 +6,15 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/21 17:09:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 17:10:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// Ouvre infile en fdin
 void	redirect_in(int *fdin, char *infile)
 {
-	// if (*fdin != 0)
-	// {
-	// 	close(*fdin);
-	// 	*fdin = 0;
-	// }
 	*fdin = open(infile, O_RDONLY);
 	if (*fdin == -1)
 	{
@@ -29,16 +25,11 @@ void	redirect_in(int *fdin, char *infile)
 	}
 }
 
-// cette fontion possede 2 mode :
+// Ouvre fdout en outfile et possede 2 mode :
 // T pour O_TRUNC pour >
 // A pour O_APPEND pour >>
 void	redirect_out(int *fdout, char *outfile, char mode)
 {
-	// if (*fdout != 1)
-	// {
-	// 	close(*fdout);
-	// 	*fdout = 1;
-	// }
 	if (mode == 'T')
 		*fdout = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (mode == 'A')
@@ -134,18 +125,3 @@ char	*ft_here_doc(char *limiter)
 	}
 	return (hd_path);
 }
-
-/*
-int	main(void)
-{
-	char	buffer[10];
-	char	*infile;
-	
-	infile = "./test";//ft_here_doc("end");
-
-	read(redirect_in(infile), buffer, 5);
-	printf("%s\n", buffer);
-	//ft_putstr_fd("\ntest\n", redirect_out("test", 'A'));
-	//free(infile);
-	return (0);
-}*/

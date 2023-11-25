@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/24 17:57:19 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 17:04:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ static t_tokens	*make_list_tokens(char infile[2][10], char cmd[2][10], char outf
 		ft_lstadd_tokens(&lst, (create_tokens(infile[1], INFILE)));
 	}
 	ft_lstadd_tokens(&lst, (create_tokens(cmd[0], CMD)));
-	ft_lstadd_tokens(&lst, (create_tokens(cmd[1], WORD)));
+	if (cmd[1][0] != '\0')
+		ft_lstadd_tokens(&lst, (create_tokens(cmd[1], WORD)));
 	if (outfile)
 	{
 		ft_lstadd_tokens(&lst, (create_tokens(outfile[0], REDIR_OUT)));
@@ -126,24 +127,40 @@ static t_process	*create_process(char infile[2][10], char cmd[2][10], char outfi
 t_process	*create_list_process(void)
 {
 	//char	infile[2][10] = {"<", "infile"};
-	//char	outfile[2][10] = {">", "outfile"};
-	//char	outfile2[2][10] = {">", "outfile2"};
-	char	cmd1[2][10] = {"ls", "-l"};
-	char	cmd3[2][10] = {"wc", "-l"};
-	char	cmd2[2][10] = {"ls", "-l"};
+	// char	outfile[2][10] = {">", "outfile"};
+	// char	outfile2[2][10] = {">", "outfile2"};
+	char	ls[2][10] = {"ls", "-l"};
+	// char	wc[2][10] = {"wc", "-l"};
+	// char	grep[2][10] = {"grep", "pipex"};
+	// char	cat[2][10] = {"cat", "\0"};
+	// char	yes[1][10] = {"yes"};
+	// char	head[1][10] = {"head"};
+	
 	t_process	*proces1;
-	t_process	*proces2;
-	t_process	*proces3;
+	// t_process	*proces2;
+	// t_process	*proces3;
+	// t_process	*proces4bis;
+	// t_process	*proces4;
+	// t_process	*proces5;
+	// t_process	*proces6;
 	t_process	*list;
 
 	list = NULL;
-	proces1 = create_process(NULL, cmd1, NULL);
-	proces2 = create_process(NULL, cmd2, NULL);
-	proces3 = create_process(NULL, cmd3, NULL);
+	proces1 = create_process(NULL, ls, NULL);
+	// proces2 = create_process(NULL, wc, NULL);
+	// proces3 = create_process(NULL, grep, NULL);
+	// proces4 = create_process(NULL, cat, NULL);
+	// proces4bis = create_process(NULL, cat, NULL);
+	// proces5 = create_process(NULL, yes, NULL);
+	// proces6 = create_process(NULL, head, NULL);
 	
 	ft_lstadd_process(&list, proces1);
-	ft_lstadd_process(&list, proces2);
-	ft_lstadd_process(&list, proces3);
+	// ft_lstadd_process(&list, proces2);
+	// ft_lstadd_process(&list, proces3);
+	// ft_lstadd_process(&list, proces2);
+	// ft_lstadd_process(&list, proces4bis);
+	// ft_lstadd_process(&list, proces5);
+	// ft_lstadd_process(&list, proces6);
 	return (list);	
 }
 

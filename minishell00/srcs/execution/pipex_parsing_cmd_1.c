@@ -1,43 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_parsing_cmd.c                                :+:      :+:    :+:   */
+/*   parsing_cmd_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 15:37:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 17:52:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* split cmd and options in char **
-return NULL if ft_split failed */
-char	**make_cmd(char *str)
-{
-	char	**cmd;
-
-	cmd = ft_split(str, ' ');
-	if (!cmd)
-		return (NULL);
-	return (cmd);
-}
-
-/* return 0 if cmd is "" | "   " */
-int	check_cmd(char *cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return (0);
-	i = 0;
-	while (cmd[i] && cmd[i] == ' ')
-		i++;
-	if (!cmd[i])
-		return (0);
-	return (1);
-}
 
 char	*sub_parsing_cmd1(char **split_cmd)
 {

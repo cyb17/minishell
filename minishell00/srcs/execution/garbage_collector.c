@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 14:55:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 18:12:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,8 @@ void	garbage_collector(t_res *res)
 		clear_builtins(res->blt);
 	if (res->tab)
 	{
-		if (res->tab->fdin > 2)
-			close(res->tab->fdin);
-		if (res->tab->fdout > 2)
-			close(res->tab->fdout);
 		if (res->tab->pipefd)
 			free_pipefd(res->tab->pipefd, res->tab->nb_pipe);
-		if (res->tab->tab_pid)
-			free(res->tab->tab_pid);
 		free(res->tab);
 	}
 }

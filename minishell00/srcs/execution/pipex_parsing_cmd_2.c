@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_find_path.c                                  :+:      :+:    :+:   */
+/*   pipex_parsing_cmd_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/28 16:13:38 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/18 15:03:48 by yachen           ###   ########.fr       */
+/*   Created: 2023/11/25 17:51:02 by yachen            #+#    #+#             */
+/*   Updated: 2023/11/25 18:14:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,31 @@ char	**find_path(char **env, char *cmd)
 		return (NULL);
 	}
 	return (path);
+}
+
+/* split cmd and options in char **
+return NULL if ft_split failed */
+char	**make_cmd(char *str)
+{
+	char	**cmd;
+
+	cmd = ft_split(str, ' ');
+	if (!cmd)
+		return (NULL);
+	return (cmd);
+}
+
+/* return 0 if cmd is "" | "   " */
+int	check_cmd(char *cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return (0);
+	i = 0;
+	while (cmd[i] && cmd[i] == ' ')
+		i++;
+	if (!cmd[i])
+		return (0);
+	return (1);
 }

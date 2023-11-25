@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/11/20 15:48:34 by yachen           ###   ########.fr        #
+#    Updated: 2023/11/25 18:11:56 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ LIBFTDIR = ./srcs/libft
 BUILTINS =
 
 EXECUTION = minishell list_process fonctions_for_test garbage_collector init_ressources \
-			redirections pipex pipex_child_procs_step pipex_find_path pipex_parsing_cmd \
-			#utils \
+			redirections_1 redirections_2 pipex_parsing_cmd_1 pipex_parsing_cmd_2 \
+			exe_no_builtins process process_utils \
 			
 RM = rm -rf
 

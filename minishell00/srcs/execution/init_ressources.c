@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/24 15:53:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 18:14:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,6 @@ void	free_pipefd(int **pipefd, int nb_pipe)
 	free(pipefd);
 }
 
-// // Pipe() pipefd until nb_pipe
-// int	pipe_pipefd(int **pipefd, int nb_pipe)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < nb_pipe)
-// 	{
-// 		if ((pipe(pipefd[i])) < 0)
-// 		{
-// 			perror("pipe_pipefd");
-// 			while (--i >= 0)
-// 			{
-// 				close(pipefd[i][0]);
-// 				close(pipefd[i][1]);
-// 			}
-// 			return (-1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-
 // Pipe() pipefd[i]
 int	pipe_pipefd(t_tab *tab, int i)
 {
@@ -61,33 +37,6 @@ int	pipe_pipefd(t_tab *tab, int i)
 			}
 			return (-1);
 		}
-	}
-	return (0);
-}
-
-// Malloc memory space for int **pipefd 
-int	creat_pipefd(t_tab *tab)
-{
-	int	i;
-
-	i = 0;
-	tab->pipefd = (int **)malloc(sizeof(int *) * (tab->nb_pipe));
-	if (!(tab->pipefd))
-	{
-		ft_putstr_fd("fill_tab: malloc_pipefd: pipefd: malloc failed\n", 2);
-		return (-1);
-	}
-	i = 0;
-	while (i < tab->nb_pipe)
-	{
-		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
-		if (!(tab->pipefd[i]))
-		{
-			ft_putstr_fd("fill_tab: malloc_pipefd: []: malloc failed\n", 2);
-			free_pipefd(tab->pipefd, i);
-			return (-1);
-		}
-		i++;
 	}
 	return (0);
 }
@@ -110,26 +59,31 @@ int	find_nb_process(t_process *process)
 t_tab	*fill_tab(t_process *process)
 {
 	t_tab	*tab;
+	int		i;
 
 	tab = (t_tab *)malloc(sizeof(t_tab));
 	if (!tab)
 		return (NULL);
-	tab->fdin = 0;
-	tab->fdout = 1;
 	tab->nb_pipe = find_nb_process(process) - 1;
-	tab->tab_pid = (pid_t *)malloc(sizeof(pid_t) * find_nb_process(process));
-	if (!tab->tab_pid)
+	tab->pipefd = (int **)malloc(sizeof(int *) * (tab->nb_pipe));
+	if (!(tab->pipefd))
 	{
+		ft_putstr_fd("fill_tab: pipefd: malloc failed\n", 2);
 		free(tab);
-		ft_putstr_fd("fill_tab: tab_pid: malloc failed\n", 2);
 		return (NULL);
 	}
-	ft_memset(tab->tab_pid, 0, find_nb_process(process));
-	if (creat_pipefd(tab) == -1)
+	i = 0;
+	while (i < tab->nb_pipe)
 	{
-		free(tab->tab_pid);
-		free(tab);
-		return (NULL);
+		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
+		if (!(tab->pipefd[i]))
+		{
+			ft_putstr_fd("fill_tab: pipefd: []: malloc failed\n", 2);
+			free_pipefd(tab->pipefd, i);
+			free(tab);
+			return (NULL);
+		}
+		i++;
 	}
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:57:49 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/24 16:28:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/25 17:53:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,59 +61,4 @@ int	ft_compare(char *limiter, char *str)
 	if (limiter[i] == '\0' && str[i] == '\n')
 		return (1);
 	return (0);
-}
-
-// Close fdin, fdout 
-// Close pipefd until nb_pipe
-void	close_unsusedfd(t_tab *tab, int j)
-{
-	int	i;
-
-	i = 0;
-	//close(tab->fdin);
-	//close(tab->fdout);
-	while (i <= j && i < tab->nb_pipe)
-	{
-		close(tab->pipefd[i][0]);
-		close(tab->pipefd[i][1]);
-		i++;
-	}
-}
-
-void	ft_error(char *where, char *what)
-{
-	char	*tmp;
-	char	*err;
-
-	tmp = ft_strjoin(where, what);
-	if (!tmp)
-	{
-		ft_putstr_fd(where, 2);
-		ft_putstr_fd(what, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
-	err = ft_strjoin(tmp, "\n");
-	if (!err)
-	{
-		free(tmp);
-		ft_putstr_fd(where, 2);
-		ft_putstr_fd(what, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
-	free(tmp);
-	ft_putstr_fd(err, 2);
-	free(err);
-}
-
-int	isnot_builtins(char *str)
-{
-	printf("str = %s\n", str);
-	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
-		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
-		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
-		|| (ft_strcmp("pwd", str) == 1))
-		return (0);
-	return (1);
 }
