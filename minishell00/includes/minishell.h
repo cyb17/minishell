@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:09:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 11:01:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,8 @@ void		ft_error(char *where, char *what);
 
 // fonction for test
 t_process	*create_list_process(void);
-void		clear_lst(t_list **list);
-t_list		*env_to_envlist(char **env);
-int			ft_compare(char *limiter, char *str);
+// void		clear_lst(t_list **list);
+// t_list		*env_to_envlist(char **env);
+// int			ft_compare(char *limiter, char *str);
 
 #endif

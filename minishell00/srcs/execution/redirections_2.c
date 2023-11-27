@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:30:43 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:20:22 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 10:34:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i)
 	else if (i == tab->nb_pipe)
 		redir_last_process(fdin, fdout, tab->pipefd[i - 1]);
 	else
-		redir_medium_process(fdin, fdout, tab->pipefd[i - 1], tab->pipefd[i]);
+		redir_medium_prcs(fdin, fdout, tab->pipefd[i - 1], tab->pipefd[i]);
 }
 
 void	redirection_single_prcs(int fdin, int fdout)

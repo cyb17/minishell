@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 17:04:44 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 11:00:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_process	*create_list_process(void)
 	//char	infile[2][10] = {"<", "infile"};
 	// char	outfile[2][10] = {">", "outfile"};
 	// char	outfile2[2][10] = {">", "outfile2"};
-	char	ls[2][10] = {"ls", "-l"};
+	char	ls[2][10] = {"echo", "hello"};
 	// char	wc[2][10] = {"wc", "-l"};
 	// char	grep[2][10] = {"grep", "pipex"};
 	// char	cat[2][10] = {"cat", "\0"};

@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/11/25 18:11:56 by yachen           ###   ########.fr        #
+#    Updated: 2023/11/27 11:04:13 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS =  -Wall -Wextra -Werror -g
 
 LIBFTDIR = ./srcs/libft
 
-BUILTINS =
+BUILTINS = cd echo env exit export_part1 export_part2 pwd unset builtins_utils \
 
 EXECUTION = minishell list_process fonctions_for_test garbage_collector init_ressources \
 			redirections_1 redirections_2 pipex_parsing_cmd_1 pipex_parsing_cmd_2 \
@@ -27,6 +27,7 @@ EXECUTION = minishell list_process fonctions_for_test garbage_collector init_res
 RM = rm -rf
 
 SRC = $(addsuffix .c, $(addprefix srcs/execution/, $(EXECUTION)))
+	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS)))
 	  
 OBJ = $(SRC:.c=.o)
 

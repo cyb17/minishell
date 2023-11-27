@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/15 10:59:14 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 10:45:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int	ft_exit(char **arg, t_tab *tab)
 	return (0);
 }
 
-int	main(int argc, char **argv)
-{
-	t_tab	*tab;
+// int	main(int argc, char **argv)
+// {
+// 	t_tab	*tab;
 
-	tab = NULL;
-	argc += 1;
-	ft_exit(argv, tab);
-	return (0);
-}
+// 	tab = NULL;
+// 	argc += 1;
+// 	ft_exit(argv, tab);
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:16:17 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 11:00:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 	return (0);
 }
 
-void	which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
+void	exe_which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
 {
 	if (strcmp("echo", cmd_tk->value) == 1)
 		*rlt = ft_echo(bultins->arg);
@@ -59,29 +59,19 @@ void	which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
 	builtins->arg = NULL;
 }
 
-int	execute_builtins(t_tokens *cmd_tk, t_tab *tab, int i, t_builtins *builtins)
+int	exe_builtins(t_res *res, char **env, t_tokens *cmd)
 {
-	int	rlt;
-	int	input;
-	int	output;
+	int	rslt;
 
-	result = 0;
-	input = 0;
-	output = 0;
-	fixe_in_output(&input, &output, tab, i);
-	if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
+	rslt = 0;
+	if (builtin_cmd_arg(cmd, res->blt) == -1)
 	{
-		close(input);
-		close(output);
-		perror("dup2");
+		ft_putstr_fd("Error: exe_builtins: builtin_cmd_arg: malloc failed\n", 2);
 		return (-1);
 	}
-	close(input);
-	close(output);
-	if (builtin_cmd_arg(cmd_tk, builtins) == -1)
-		return (-1);
-	which_cmd(buitins, cmd_tk, &rlt);
-	return (rlt);
+	printf("execute comand\n");
+	//exe_which_cmd();
+	return (rslt);
 }
 
 // static void	redirection(t_res *res, int i)

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/17 11:28:51 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 10:46:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	modifie_var(t_var *env, t_var *exp, int i);
 void	replace(t_list **list, t_list *newvar, int oldvar_i);
 int		export_arg(t_list **envlist, t_list **explist, char *arg);
 int		ft_export(t_list **envlist, t_list **explist, char **arg);
-
 //export_part_2
 void	initialize_var(t_var *export, t_var *env);
 void	print_explist(t_list *explist);
@@ -62,5 +61,8 @@ int		ft_unset(t_list **envlist, t_list **explist, char *arg);
 
 // pwd
 int		ft_pwd(void);
+
+// ft_exit
+int		ft_exit(char **arg, t_tab *tab);
 
 #endif
