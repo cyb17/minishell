@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 11:00:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 16:56:33 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 // static void	clear_tokens_list(t_tokens **list)
 // {
@@ -129,38 +129,38 @@ t_process	*create_list_process(void)
 	//char	infile[2][10] = {"<", "infile"};
 	// char	outfile[2][10] = {">", "outfile"};
 	// char	outfile2[2][10] = {">", "outfile2"};
-	char	ls[2][10] = {"echo", "hello"};
+	// char	ls[2][10] = {"env", "\0"};
 	// char	wc[2][10] = {"wc", "-l"};
 	// char	grep[2][10] = {"grep", "pipex"};
 	// char	cat[2][10] = {"cat", "\0"};
-	// char	yes[1][10] = {"yes"};
-	// char	head[1][10] = {"head"};
+	char	yes[2][10] = {"yes", "\0"};
+	char	head[2][10] = {"hea", "\0"};
 	
-	t_process	*proces1;
+	// t_process	*proces1;
 	// t_process	*proces2;
 	// t_process	*proces3;
 	// t_process	*proces4bis;
 	// t_process	*proces4;
-	// t_process	*proces5;
-	// t_process	*proces6;
+	t_process	*proces5;
+	t_process	*proces6;
 	t_process	*list;
 
 	list = NULL;
-	proces1 = create_process(NULL, ls, NULL);
+	// proces1 = create_process(NULL, ls, NULL);
 	// proces2 = create_process(NULL, wc, NULL);
 	// proces3 = create_process(NULL, grep, NULL);
 	// proces4 = create_process(NULL, cat, NULL);
 	// proces4bis = create_process(NULL, cat, NULL);
-	// proces5 = create_process(NULL, yes, NULL);
-	// proces6 = create_process(NULL, head, NULL);
+	proces5 = create_process(NULL, yes, NULL);
+	proces6 = create_process(NULL, head, NULL);
 	
-	ft_lstadd_process(&list, proces1);
+	// ft_lstadd_process(&list, proces1);
 	// ft_lstadd_process(&list, proces2);
 	// ft_lstadd_process(&list, proces3);
 	// ft_lstadd_process(&list, proces2);
 	// ft_lstadd_process(&list, proces4bis);
-	// ft_lstadd_process(&list, proces5);
-	// ft_lstadd_process(&list, proces6);
+	ft_lstadd_process(&list, proces5);
+	ft_lstadd_process(&list, proces6);
 	return (list);	
 }
 

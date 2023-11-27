@@ -6,11 +6,27 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:12:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
+
+int	ft_compare(char *limiter, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (limiter[i])
+	{
+		if (limiter[i] != str[i])
+			return (0);
+		i++;
+	}
+	if (limiter[i] == '\0' && str[i] == '\n')
+		return (1);
+	return (0);
+}
 
 static void	clear_tokens_list(t_tokens **list)
 {
@@ -61,7 +77,8 @@ void	garbage_collector(t_res *res)
 	tmp = NULL;
 	if (res->input)
 		free(res->input);
-	clear_process_list(&res->prcs);
+	if (res->prcs)
+		clear_process_list(&res->prcs);
 	if (res->blt)
 		clear_builtins(res->blt);
 	if (res->tab)

@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 10:45:13 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 16:46:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./builtins.h"
+#include "../../includes/builtins.h"
 
 static long	minishell_atoi(char *str, int *sign)
 {
@@ -76,21 +76,20 @@ static int	check_nb_arg(char **arg)
 	return (0);
 }
 
-int	ft_exit(char **arg, t_tab *tab)
+int	ft_exit(char **arg)
 {
 	if (arg[1] == NULL)
 	{
-		garbage_collector(tab->process, tab, tab->builtins, tab->input);
-		exit(0);
+		g_signal[0] = 0;
+		return (0);
 	}
-	tab->exit_code = is_correct_number(arg[1]);
-	if (tab->exit_code = 0 && ft_strcmp(arg[i], "0") == 0)
+	if (is_correct_number(arg[1]) && ft_strcmp(arg[1], "0") == 0)
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
-		ft_putstr_fd("numeric argument required\n", 2)
-		garbage_collector(tab->process, tab, tab->builtins, tab->input);
-		exit(2);
+		ft_putstr_fd("numeric argument required\n", 2);
+		g_signal[0] = 2;
+		return (0);
 	}
 	if (check_nb_arg(arg) == -1)
 		return (-1);

@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:00:55 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 {
@@ -133,6 +133,5 @@ void	single_prcs(t_res *res, char **env)
 		redirection_single_prcs(fdin, fdout);
 		execute_cmd(res, env, res->prcs->list_tokens);
 	}
-	else
-		waitpid(res->prcs->pid, NULL, 0);
+	waitpid(res->prcs->pid, NULL, 0);
 }

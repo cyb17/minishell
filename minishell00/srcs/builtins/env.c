@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:23:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/06 17:37:39 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./builtins.h"
+#include "../../includes/builtins.h"
 
 int	ft_env(char **arg, t_list *envlist)
 {

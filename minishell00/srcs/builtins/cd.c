@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/13 16:49:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./builtins.h"
+#include "../../includes/builtins.h"
 
 static int	go_to(t_list **envlist, char *var_name)
 {

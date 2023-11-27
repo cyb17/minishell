@@ -6,15 +6,14 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:20:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 int	isnot_builtins(char *str)
 {
-	printf("str = %s\n", str);
 	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
 		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
 		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
@@ -47,10 +46,7 @@ void	execute_cmd(t_res *res, char **env, t_tokens *list_tokens)
 	if (isnot_builtins(cmd->value) == 1)
 		exe_no_builtins(res, env, cmd);
 	else
-	{
-		printf("is builtins\n");
-		// exe_builtins(cmd);
-	}
+		exe_builtins(res, cmd);
 }
 
 void	clean_fds(int fdin, int fdout)

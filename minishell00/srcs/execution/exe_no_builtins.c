@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/25 18:16:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 // Parse cmd and find path for execution
 char	*find_execve_path(t_res *res, char **env, char *argv_value)

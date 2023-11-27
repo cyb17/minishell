@@ -6,15 +6,14 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 11:00:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
-int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
+static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 {
-	char		**arg;
 	t_tokens	*tmp;
 	int			i;
 
@@ -25,213 +24,56 @@ int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 		i++;
 		tmp = tmp->next;
 	}
-	arg = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!arg)
+	builtins->arg = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!builtins->arg)
 		return (-1);
 	i = 0;
 	while (cmd_tk && (cmd_tk->type == CMD || cmd_tk->type == WORD))
 	{
-		arg[i++] = cmd_tk->value;
+		builtins->arg[i] = ft_strdup(cmd_tk->value);
+		if (!builtins->arg[i])
+			break ;
 		cmd_tk = cmd_tk->next;
+		i++;
 	}
-	arg[i] = NULL;
-	builtins->arg = arg;
+	builtins->arg[i] = NULL;
 	return (0);
 }
 
-void	exe_which_cmd(t_builtins *builtins, t_tokens *cmd_tk, int *rlt)
+static void	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 {
-	if (strcmp("echo", cmd_tk->value) == 1)
-		*rlt = ft_echo(bultins->arg);
-	else if (strcmp("cd", cmd_tk->value) == 1)
-		*rlt = ft_cd(builtins->envlist, bultins->explist, builtins->arg);
-	else if (strcmp("env", cmd_tk->value) == 1)
-		*rlt = ft_env(builtins->envlist, builtins->arg);
-	else if (strcmp("export", cmd_tk->value) == 1)
-		*rlt = ft_export(builtins->envlist, builtins->explist, builtins->arg);
-	else if (strcmp("unset", cmd_tk->value) == 1)
-		*rlt = ft_unset(builtins->envlist, builtins->explist, builtins->arg[0]);
-	else if (strcmp("pwd", cmd_tk->value) == 1)
-		*rlt = ft_pwd();
-	else if (strcmp("exit", cmd_tk->value) == 1)
-		*rlt = ft_exit();
-	free_tab(builtins->arg);
-	builtins->arg = NULL;
+	if (ft_strcmp("echo", cmd_tk->value) == 1)
+		g_signal[0] = ft_echo(res->blt->arg);
+	else if (ft_strcmp("cd", cmd_tk->value) == 1)
+		g_signal[0] = ft_cd(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+	else if (ft_strcmp("env", cmd_tk->value) == 1)
+		g_signal[0] = ft_env(res->blt->arg, res->blt->envlist);
+	else if (ft_strcmp("export", cmd_tk->value) == 1)
+		g_signal[0] = ft_export(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+	else if (ft_strcmp("unset", cmd_tk->value) == 1)
+		g_signal[0] = ft_unset(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+	else if (ft_strcmp("pwd", cmd_tk->value) == 1)
+		g_signal[0] = ft_pwd();
+	else if (ft_strcmp("exit", cmd_tk->value) == 1)
+	{
+		if (ft_exit(res->blt->arg) == 0)
+		{
+			garbage_collector(res);
+			exit(g_signal[0]);
+		}
+		garbage_collector(res);
+	}
+	free_tab(res->blt->arg);
+	res->blt->arg = NULL;
 }
 
-int	exe_builtins(t_res *res, char **env, t_tokens *cmd)
+void	exe_builtins(t_res *res, t_tokens *cmd)
 {
-	int	rslt;
-
-	rslt = 0;
 	if (builtin_cmd_arg(cmd, res->blt) == -1)
 	{
+		free_tab(res->blt->arg);
 		ft_putstr_fd("Error: exe_builtins: builtin_cmd_arg: malloc failed\n", 2);
-		return (-1);
+		return ;
 	}
-	printf("execute comand\n");
-	//exe_which_cmd();
-	return (rslt);
+	exe_which_cmd(res, cmd);
 }
-
-// static void	redirection(t_res *res, int i)
-// {
-// 	if (res->tab->fdin > 2 && i > 0)
-// 	{
-// 		dup2(res->tab->fdin, res->tab->pipefd[i - 1][0]);
-// 		close(res->tab->fdin);
-// 		res->tab->fdin = 0;
-// 	}
-// 	if (res->tab->fdout > 2 && i < res->tab->nb_pipe)
-// 	{
-// 		dup2(res->tab->fdout, res->tab->pipefd[i][1]);
-// 		close(res->tab->fdout);
-// 		res->tab->fdout = 1;
-// 	}
-// }
-
-// static void	fixe_in_output(int *input, int *output, t_tab *tab, int i)
-// {
-// 	if (i == 0)
-// 	{
-// 		*input = tab->fdin;
-// 		*output = tab->pipefd[i][1];
-// 	}
-// 	else if (i == tab->nb_pipe)
-// 	{
-// 		*input = tab->pipefd[i - 1][0];
-// 		*output = tab->fdout;
-// 	}
-// 	else
-// 	{
-// 		*input = tab->pipefd[i - 1][0];
-// 		*output = tab->pipefd[i][1];
-// 	}
-// }
-
-// void	print_allfd(t_tab *tab, int input, int output)
-// {
-// 	int	i = 0;
-// 	printf("fdin:%d   fdout:%d\n", tab->fdin, tab->fdout);
-// 	printf("nb_pipe:%d\n", tab->nb_pipe);
-// 	while (i < tab->nb_pipe)
-// 	{
-// 		printf("pipefd[%d][0]:%d  pipefd[%d][1]:%d\n", i, tab->pipefd[i][0], i, tab->pipefd[i][1]);
-// 		i++;
-// 	}
-// 	printf("input:%d  output:%d\n", input, output);
-// }
-
-// int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
-// {
-// 	char	*arg;
-// 	char	*path;
-// 	int		input;
-// 	int		output;
-// 	// (void)path;
-// 	// (void)env;
-// 	// (void)cmd_tk;
-
-// 	input = 0;
-// 	output = 1;
-// 	arg = NULL;
-// 	if (check_fdin_fdout(&res->tab->fdin, &res->tab->fdout, res->prcs->list_tokens) == -1)
-// 		return (-1);
-// 	redirection(res, i);
-// 	fixe_in_output(&input, &output, res->tab, i);
-// 	print_allfd(res->tab, input, output);
-// 	res->tab->tab_pid[i] = fork();
-// 	if (res->tab->tab_pid[i] == -1)
-// 	{
-// 		perror("Error : fork");
-// 		return (-1);
-// 	}
-// 	else if (res->tab->tab_pid[i] == 0)
-// 	{
-// 		arg = make_cmdtk_to_arg(cmd_tk);
-// 		path = find_execve_path(res, env, arg);
-// 		child_procs_part_2(res, input, output, arg, i);
-// 		ft_execve(res, path, arg);
-// 	}
-// 	else
-// 	{
-// 		close(input);
-// 		close(output);
-// 	}
-// 	return (0);
-// }
-
-// int	pipex(t_res *res, char **env, int i)
-// {
-// 	t_tokens	*tmp;
-// 	int			status;
-	
-// 	status = 0;
-// 	tmp = res->prcs->list_tokens;
-// 	while (tmp)
-// 	{
-// 		if (tmp->type == CMD)
-// 		{
-// 			if (isnot_builtins(tmp->value) == 1)
-// 			{
-// 				make_child_process(tmp, res, i, env);
-// 				waitpid(res->tab->tab_pid[i], &status, 0);
-// 			}
-// 			// else
-// 			// 	rslt = execute_builtins(res->prcs->list_tokens, &tab, i, builtins);
-// 			// break;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
-
-// int	make_child_process(t_tokens *cmd_tk, t_res *res, int i, char **env)
-// {
-// 	char	*arg;
-// 	char	*path;
-
-// 	arg = NULL;
-// 	res->tab->tab_pid[i] = fork();
-// 	if (res->tab->tab_pid[i] == -1)
-// 	{
-// 		perror("Error : fork");
-// 		return (-1);
-// 	}
-// 	else if (res->tab->tab_pid[i] == 0)
-// 	{
-// 		arg = make_cmdtk_to_arg(cmd_tk);
-// 		path = find_execve_path(res, env, arg);
-// 		ft_execve(res, path, arg);
-// 	}
-// 	else
-// 	{
-// 		close(STDIN_FILENO);
-// 		close(STDOUT_FILENO);
-// 	}
-// 	return (0);
-// }
-
-// int	setup_stdin_stdout(int *fdin, int *fdout, t_res *res, int i)
-// {
-// 	printf("avant redirection => i: %d stdin:%d  stdout:%d\n", i, STDIN_FILENO, STDOUT_FILENO);
-// 	if (*fdout > 2)
-// 		dup2(*fdout, STDOUT_FILENO);
-// 	else
-// 	{
-// 		if (i == res->tab->nb_pipe)
-// 			dup2(1, STDOUT_FILENO);
-// 		else
-// 			dup2(res->tab->pipefd[i][1], STDOUT_FILENO);
-// 	}
-// 	if (*fdin > 2)
-// 		dup2(*fdin, STDIN_FILENO);
-// 	else
-// 	{
-// 		if (i > 0)
-// 			dup2(res->tab->pipefd[i - 1][0], STDIN_FILENO);
-// 	}
-// 	printf("apres redirection => i: %d stdin:%d  stdout:%d\n", i, STDIN_FILENO, STDOUT_FILENO);
-// 	return (0);
-// }
-

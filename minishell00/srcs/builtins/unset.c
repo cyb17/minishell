@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/09 12:05:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./builtins.h"
+#include "../../includes/builtins.h"
 
 static void	delete_var(t_list **list, int oldvar_i)
 {
@@ -40,7 +40,7 @@ static void	delete_var(t_list **list, int oldvar_i)
 	free(current);
 }
 
-int	ft_unset(t_list **envlist, t_list **explist, char *arg)
+static void	unset_arg(t_list **envlist, t_list **explist, char *arg)
 {
 	t_list	*env_oldvar;
 	t_list	*exp_oldvar;
@@ -50,17 +50,29 @@ int	ft_unset(t_list **envlist, t_list **explist, char *arg)
 	oldvar_i[1] = 0;
 	env_oldvar = NULL;
 	exp_oldvar = NULL;
-	if (!arg)
-		return (0);
 	exp_oldvar = find_oldvar(arg, *explist, oldvar_i + 0);
 	if (!exp_oldvar)
-		return (0);
+		return ;
 	else
 	{
 		delete_var(explist, oldvar_i[0]);
 		env_oldvar = find_oldvar(arg, *envlist, oldvar_i + 1);
 		if (env_oldvar)
 			delete_var(envlist, oldvar_i[1]);
+	}
+}
+
+int	ft_unset(t_list **envlist, t_list **explist, char **arg)
+{
+	int	i;
+
+	i = 1;
+	if (!arg[i])
+		return (0);
+	while (arg[i])
+	{
+		unset_arg(envlist, explist, arg[i]);
+		i++;
 	}
 	return (0);
 }
