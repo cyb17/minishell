@@ -32,3 +32,32 @@ if (s[i + 1] == ' ' || s[i + 1] == '\0')
 					}
 					i++;
 				}
+
+"" '$PWD  !'| $? cou'cou' | "$USER" $USE'R'
+
+"" '$PWD  !' < | << $? >> cou'cou' | "$USER" $USE'R'
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*ptr;
+
+	if (lst == NULL || del == NULL)
+		return ;
+	while (*lst != NULL)
+	{
+		ptr = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = ptr;
+	}
+}
+
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (!del)
+		return ;
+	if (lst)
+	{
+		(*del)(lst -> content);
+		free(lst);
+	}
+}

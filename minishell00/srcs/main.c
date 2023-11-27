@@ -6,31 +6,40 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:31 by nap               #+#    #+#             */
-/*   Updated: 2023/11/14 20:55:53 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:11:32 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 int	main(int ac, char **av, char **env)
 {
 	char		*input;
 	t_process	*process;
-	t_list		*envlist;
+	t_all		all;
 
 	(void)ac;
 	(void)av;
 	process = NULL;
+	all_init(&all, env);
 	while (1)
 	{
-		envlist = NULL;
-		envlist = env_to_envlist(env);
 		input = readline("minishell > ");
-		ft_parse(input, &process, envlist);
-		while (process)
+		if (input[0] != '\0')
 		{
-			printf("Contenu de section_cmd : %s\n", process->section_cmd);
-			process = process->next ;
+			ft_parse(input, &all);
+			/* process = all.process;
+			while (process)
+			{
+				printf("Contenu de section_cmd : %s id = %d\n", process->section_cmd, process->section_cmd_id);
+				while (process->list_tokens)
+				{
+					printf("tkn %d : %s,\n", process->list_tokens->value, process->list_tokens->type);
+					process->list_tokens = process->list_tokens->next;
+				}
+				process = process->next ;
+			} */
+			clean_loop(&all);
 		}
 	}
 }

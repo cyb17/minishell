@@ -6,11 +6,11 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/11/14 20:22:38 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 12:03:06 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 int	check_quotes(char *input, char c, int i)
 {

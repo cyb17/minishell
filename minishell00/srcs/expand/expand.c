@@ -6,11 +6,11 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/14 20:53:43 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 12:01:23 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/parsing.h"
 
 bool	varcmp(char *model, char *str)
 {
@@ -63,11 +63,11 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	int		j;
 
 	if (s[i + 1] == ' ' || s[i + 1] == '\0'
-	|| (s[i + 1] == '"' && between_quotes(s, i) > i))
-		return(ft_strdup_section(s, i, i + 1));
-	if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' ')
-		|| ((s[i + 2] == '"' && between_quotes(s, i) > i))))
-		return(ft_strdup_section(s, i, i + 2));
+		|| (s[i + 1] == '"' && between_quotes(s, i) > i))
+		return (ft_strdup_section(s, i, i + 1));
+	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' ')
+			|| ((s[i + 2] == '"' && between_quotes(s, i) > i))))
+		return (ft_strdup_section(s, i, i + 2));
 	j = 0;
 	tmp = s;
 	while (j <= i)

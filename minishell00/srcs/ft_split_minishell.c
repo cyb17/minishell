@@ -6,11 +6,11 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/14 15:23:48 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:08:28 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 int	nb_words(char *s, char c)
 {
@@ -177,10 +177,7 @@ char	**write_in(char **tab, char *s, char c)
 		}
 	}
 	if (i != max)
-	{
 		tab[i][j] = '\0';
-		printf("word : %s\n", tab[i]);
-	}
 	tab[max] = NULL;
 	return (tab);
 }
@@ -215,7 +212,10 @@ char	**ft_split_minishell(char	*s, char c)
 	s3 = s;
 	tab = malloc(sizeof(char *) * (nb_words(s, c) + 1));
 	if (!tab || s == 0)
+	{
+		ft_putstr_fd(" ft_split_minishell : malloc failed", 2);
 		return (NULL);
+	}
 	while (*s3)
 	{
 		while (*s3 == c && *s3 != '\0' && between_quotes(s, l) == l)
@@ -227,7 +227,10 @@ char	**ft_split_minishell(char	*s, char c)
 		{
 			tab[i] = malloc(sizeof(char) * (size_words(s3, c) + 1));
 			if (!tab[i])
+			{
+				ft_putstr_fd(" ft_split_minishell : malloc failed", 2);
 				return (NULL);
+			}
 			i++;
 		}
 		while (*s3 != c && *s3 != '\0')
@@ -267,31 +270,3 @@ char	**ft_split_minishell(char	*s, char c)
 	}
 	return (write_in(tab, s, c));
 }
-
-/* int	main(int ac, char **av, char **env)
-{
-	// char	*s;
-	// char	c;
-	char  **res;
-	int		m;
-	char c;
-	char 		*input;
-	//t_list		*envlist;
-	
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{  
-        // envlist = NULL;
-	    // envlist = env_to_envlist(env);
-		input = readline("minishell > ");
-		c = ' ';
-		m = nb_words(input, c);
-		res = ft_split_minishell(input, c);
-		print_tab(res);
-		freetab(res);
-		printf("nb mots = %d\n", m);
-	}
-	return (0);
-} */

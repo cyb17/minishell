@@ -6,7 +6,7 @@
 #    By: achevala <achevala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 10:12:10 by yachen            #+#    #+#              #
-#    Updated: 2023/11/08 16:27:54 by achevala         ###   ########.fr        #
+#    Updated: 2023/11/27 13:27:43 by achevala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ RM = rm -rf
 SRC = ./srcs/main.c ./srcs/parsing.c ./srcs/init.c ./srcs/utils_parsing.c\
 	./srcs/ft_split_minishell.c ./srcs/utils_cleaning.c\
 	./srcs/split_input.c ./srcs/expand/expand.c ./srcs/clean_words.c\
-	./srcs/utils_double.c\
+	./srcs/utils_double.c ./srcs/garbage.c ./srcs/utils_parsing2.c\
+	./srcs/garbage_collector.c ./srcs/tokenization/token.c\
+	./srcs/utils_parsing3.c\
 
 OBJ = $(SRC:.c=.o)
 

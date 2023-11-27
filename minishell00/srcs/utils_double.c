@@ -6,11 +6,11 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:00:29 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/11 19:47:39 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 12:03:00 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

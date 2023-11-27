@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 char	*cpychar(char *s, int i, char *cpy)
 {
@@ -63,6 +63,14 @@ char	*deepclean(char *s)
 	return (cpy);
 }
 
+bool	is_exp_char(char c)
+{
+	if ((c >= '0' && c <= '9') || c == '_' || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (true);
+	else
+		return (false);
+}
 
 char	*clean_word(char *s, t_list **envlist)
 {
@@ -84,18 +92,7 @@ char	*clean_word(char *s, t_list **envlist)
 		{
 			if (s[i] != '$')
 			{
-				if (cpy == NULL)
-					cpy = ft_strdup_section(s, i, i + 1);
-				else
-				{
-					tmp = ft_strdup_section(s, i, i + 1);
-					cpy2 = cpy;
-					cpy = my_strjoin(cpy2, tmp);
-					if (cpy2)
-						free(cpy2);
-					if (tmp != NULL)
-						free(tmp);
-				}
+				cpy = cpychar(s, i, cpy);
 				i++;
 			}
 			if (s[i] == '$')
@@ -110,9 +107,7 @@ char	*clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while ((s[i] >= '0' && s[i] <= '9') || s[i] == '_'
-					|| (s[i] >= 'a' && s[i] <= 'z')
-					|| (s[i] >= 'A' && s[i] <= 'Z'))
+				while (is_exp_char(s[i]) == true)
 					i++;
 			}
 		}
@@ -124,18 +119,7 @@ char	*clean_word(char *s, t_list **envlist)
 		i++;
 		while (i < (len - 1))
 		{
-			if (cpy == NULL)
-				cpy = ft_strdup_section(s, i, i + 1);
-			else
-			{
-				tmp = ft_strdup_section(s, i, i + 1);
-				cpy2 = cpy;
-				cpy = my_strjoin(cpy2, tmp);
-				if (cpy2)
-					free(cpy2);
-				if (tmp != NULL)
-					free(tmp);
-			}
+			cpy = cpychar(s, i, cpy);
 			i++;
 		}
 		return (cpy);
@@ -156,14 +140,12 @@ char	*clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while ((s[i] >= '0' && s[i] <= '9') || s[i] == '_'
-					|| (s[i] >= 'a' && s[i] <= 'z')
-					|| (s[i] >= 'A' && s[i] <= 'Z'))
+				while (is_exp_char(s[i]) == true)
 					i++;
 			}
-			if (cpy == NULL)
+			if (cpy == NULL && i < len)
 				cpy = ft_strdup_section(s, i, i + 1);
-			else
+			else if (i < len)
 			{
 				tmp = ft_strdup_section(s, i, i + 1);
 				cpy2 = cpy;
@@ -175,10 +157,12 @@ char	*clean_word(char *s, t_list **envlist)
 			}
 			i++;
 		}
-		cpy2 = deepclean(cpy);
-		free(cpy);
-		return (cpy2);
-		//return (cpy);
+		if (cpy != NULL)
+		{
+			cpy2 = deepclean(cpy);
+			free(cpy);
+			return (cpy2);
+		}
 	}
 	return (cpy);
 }

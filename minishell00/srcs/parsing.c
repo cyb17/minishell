@@ -6,11 +6,11 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/11/14 18:16:33 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:07:11 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parsing.h"
 
 bool	first_readind(char *input)
 {
@@ -32,100 +32,91 @@ bool	first_readind(char *input)
 	}
 	return (true);
 }
-
-char	*delete_quotes(char *s)
+bool check_redir(char *s)
 {
-	int		i;
-	char	*cpy;
+	int	i;
+	bool flag;
 
 	i = 0;
-	cpy = NULL;
-	while (*s && s[i] != '\0' && i < ((int)ft_strlen(s)))
+	while (*s && s[i] != '\0')
 	{
-		if (s && (s[i] == '\'' && s[i + 1] == '\'') 
-			&& between_quotes(s, i + 1) == i)
-			i = i + 2;
-		else if (s && (s[i] == '"' && s[i + 1] == '"'))
-			i = i + 2;
-		else 
+		while (s[i] == ' ')
+			i++;
+		while (*s && s[i] != '\0' && s[i + 1] != '\0' && s[i] != '<'
+				&& s[i] != '>')
 		{
-			if (cpy == NULL)
-				cpy = ft_strdup_section(s, i, i + 1);
-			else
-				cpy = cpychar(s, i, cpy);
+			flag = false;
 			i++;
 		}
-	}
-	return (cpy);
-}
-bool	valid_char(char c)
-{
-	if (c == '>' || c == '<')
-		return(false);
-	else
-		return(true);
-		
-}
-
-/* bool	next_is_valid(char *l, int i, char c)
-{
-	i++;
-	while (l[i] && i <= (int)ft_strlen(l))
-	{
-		while(l[i] == ' ');
-			i++;
-		if (valid_char(l[i]) == false)
-		{
-			if (between_quotes(l, i) == i)
-				return (false);
-			else 
-				i = between_quotes(l, i);
-		}
+		if (between_quotes(s, i) == i && s[i] != '\0' && s[i + 1] != '\0'
+			&& ((s[i] == '<' && s[i + 1] == '>')
+			|| (s[i] == '>' && s[i + 1] == '<')))
+			return (false);
+		if (s[i] != '\0' && s[i + 1] != '\0' && s[i + 2] != '\0'
+			&& (s[i] == '<' || s[i] == '>') && (s[i + 1] == '<' 
+			|| s[i + 1] == '>') && (s[i + 2] == '<' || s[i + 2] == '>')
+			&& between_quotes(s, i) == i)
+			return (false);
+		if (between_quotes(s, i) == i && s[i] != '\0' && s[i + 1] != '\0' 
+			&&((s[i] == '<' && (s[i + 1] != '<')) || (s[i] == '>' 
+			&& s[i + 1] != '>')))
+			{
+				if (flag == true)
+					return (false);
+				flag = true;
+			}
+		else if (between_quotes(s, i) == i && s[i] != '\0' && s[i + 1] != '\0' 
+			&&((s[i] == '<' && (s[i + 1] == '<')) || (s[i] == '>' 
+			&& s[i + 1] == '>')))
+			{
+				if (flag == true)
+					return (false);
+				flag = true;
+				i++;
+			}
 		i++;
 	}
 	return (true);
-} */
+}
 
-/* char *manage_meta(char *s)
+// "" '$PWD  !' < | << $? >> cou'cou' | "$USER" $USE'R'
+
+
+
+int	ft_parse(char *line, t_all *all)
 {
-	int		i;
-	char	*cpy;
-
-	i = 0;
-	cpy = NULL;
-	while (*s && s[i] != '\0' && i < ((int)ft_strlen(s)))
+	t_list		*envlist;
+	
+	all->process = NULL;
+	envlist = all->envlist;
+	all->p = malloc(sizeof(t_p));
+	if (!all->p)
 	{
-		if (s && (s[i] == '<' && s[i + 1] == '<') 
-			&& between_quotes(s, i + 1) == i)
-			{
-				if (next_is_valid(s, i + 1, s[i]) == true)
-			}
-		else if (s && (s[i] == '"' && s[i + 1] == '"'))
-			i = i + 2;
-		else 
-		{
-			if (cpy == NULL)
-				cpy = ft_strdup_section(s, i, i + 1);
-			else
-				cpy = cpychar(s, i, cpy);
-			i++;
-		}
-	}
-} */
-
-int	ft_parse(char *line, t_process **process, t_list *envlist)
-{
-	char	*str;
-	if (first_readind(line) == false)
-	{
-		printf("erreur : ");
+		ft_putstr_fd("error: create_process: malloc failed\n", 2);
 		return (1);
 	}
-	str = delete_quotes(line);
+	pars_init(all->p, line);
+	if (first_readind(all->p->s) == false)
+	{
+		ft_putstr_fd("error: quotes\n", 2);
+		return (1);
+	}
+	all->p->s0 = delete_quotes(all->p->s);
 	free(line);
-	//line = manage_meta(str);
-	make_process_list(str, process);
-	make_token_list(*process, envlist);
+	all->p->s1 = add_space(all->p->s0);
+	/* printf(" S1 : %s\n", all->p->s1); */
+	all->p->s2 = input_max(all, envlist);
+	if (!all->p->s2)
+		return (1);
+	/* printf(" S2: %s\n", all->p->s2); */
+	if (check_redir(all->p->s1) == false)
+	{
+		ft_putstr_fd("error: redir\n", 2);
+		return (1);
+	}
+	make_process_list(all->p, &all->process);
+	make_token_list(all->process, envlist, all->p);
+	ft_token(all->process);
 	/* while ((*process))
 		{
 			printf("Contenu de section_cmd : %s\n", (*process)->section_cmd);
