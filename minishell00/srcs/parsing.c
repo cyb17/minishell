@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/11/27 15:07:11 by achevala         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:05:42 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool check_redir(char *s)
 	bool flag;
 
 	i = 0;
+	flag = false;
 	while (*s && s[i] != '\0')
 	{
 		while (s[i] == ' ')
