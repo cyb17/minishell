@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/28 16:44:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/28 17:43:11 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	exe_prcs(t_res *res, char **env, t_process *prcs, int i)
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 	{
-		garbage_collector(res);
+		garbage_collector(res, NULL);
 		perror("Error : fork");
 		return ;
 	}
@@ -56,11 +56,11 @@ void	exe_prcs(t_res *res, char **env, t_process *prcs, int i)
 		if (check_fdin_fdout(&fdin, &fdout, prcs->list_tokens) == -1)
 		{
 			clean_fds(fdin, fdout);
-			garbage_collector(res);
+			garbage_collector(res, NULL);
 			return ;
 		}
 		redirection_multi_prcs(fdin, fdout, res->tab, i);
-		execute_cmd(res, env, prcs->list_tokens);
+		execute_cmd(res, env, prcs);
 	}
 	else
 		close_pipeline_fds(res->tab, i);
@@ -89,7 +89,7 @@ void	multi_prcs(t_res *res, char **env)
 	res->tab = fill_tab(res->prcs);
 	if (!res->tab)
 	{
-		garbage_collector(res);
+		garbage_collector(res, NULL);
 		return ;
 	}
 	while (tmp)
@@ -115,23 +115,11 @@ void	single_prcs(t_res *res, char **env)
 
 	fdin = 0;
 	fdout = 1;
-	// res->prcs->pid = fork();
-	// if (res->prcs->pid == -1)
-	// {
-	// 	clean_fds(fdin, fdout);
-	// 	garbage_collector(res);
-	// 	perror("Error : fork");
-	// 	return ;
-	// }
-	// else if (res->prcs->pid == 0)
-	// {
-		if (check_fdin_fdout(&fdin, &fdout, res->prcs->list_tokens) == -1)
-		{
-			garbage_collector(res);
-			return ;
-		}
-		redirection_single_prcs(fdin, fdout);
-		execute_cmd(res, env, res->prcs->list_tokens);
-	// }
-	// waitpid(res->prcs->pid, NULL, 0);
+	if (check_fdin_fdout(&fdin, &fdout, res->prcs->list_tokens) == -1)
+	{
+		garbage_collector(res, NULL);
+		return ;
+	}
+	redirection_single_prcs(fdin, fdout);
+	execute_cmd(res, env, res->prcs);
 }

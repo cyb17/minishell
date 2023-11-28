@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:45:22 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/28 16:44:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/28 12:27:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,11 @@ static t_process	*create_process(char infile[2][10], char cmd[2][10], char outfi
 
 t_process	*create_list_process(void)
 {
-	char	infile[2][10] = {"<", "infile"};
-	char	outfile[2][10] = {">", "outfile"};
+	//char	infile[2][10] = {"<", "infile"};
+	// char	outfile[2][10] = {">", "outfile"};
 	// char	outfile2[2][10] = {">", "outfile2"};
-	char	ls[2][10] = {"echo", "hello"};
-	// char	wc[2][10] = {"cat", "outfile"};
+	char	ls[2][10] = {"exit", "\0"};
+	// char	wc[2][10] = {"wc", "-l"};
 	// char	grep[2][10] = {"grep", "pipex"};
 	// char	cat[2][10] = {"cat", "\0"};
 	// char	yes[2][10] = {"yes", "\0"};
@@ -146,7 +146,7 @@ t_process	*create_list_process(void)
 	t_process	*list;
 
 	list = NULL;
-	proces1 = create_process(infile, ls, outfile);
+	proces1 = create_process(NULL, ls, NULL);
 	// proces2 = create_process(NULL, wc, NULL);
 	// proces3 = create_process(NULL, grep, NULL);
 	// proces4 = create_process(NULL, cat, NULL);
