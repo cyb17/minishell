@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:02:15 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/29 15:16:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:46:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ void	garbage_collector_parent(t_res *res)
 		clear_prcs_list(&res->prcs);
 		res->prcs = NULL;
 	}
-	// if (res->blt)
-	// 	clear_builtins(res->blt);
-	free_tab(res->blt->arg);
-	res->blt->arg = NULL;
+	if (res->blt)
+	{
+		free_tab(res->blt->arg);
+		res->blt->arg = NULL;
+	}
 	if (res->tab)
 	{
 		if (res->tab->pipefd)

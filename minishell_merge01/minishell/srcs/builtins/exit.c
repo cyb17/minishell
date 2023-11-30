@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/29 11:15:22 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:38:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ void	ft_exit(char **arg, t_res *res)
 		garbage_collector(res);
 		exit(0);
 	}
-	if (is_correct_number(arg[1]) && ft_strcmp(arg[1], "0") == 0)
+	if (is_correct_number(arg[1]) == 0 && ft_strcmp(arg[1], "0") == 0)
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
-		ft_putstr_fd("numeric argument required\n", 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		g_signal[0] = 2;
 		garbage_collector(res);
 		exit(2);

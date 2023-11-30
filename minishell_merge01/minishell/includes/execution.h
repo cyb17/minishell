@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 12:17:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 14:18:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		redirect_out(int *fdout, char *outfile, char mode);
 char		*ft_here_doc(char *limiter);
 // redirections_2
 void		redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
-void		redirection_single_prcs(int fdin, int fdout);
+// void		redirection_single_prcs(int fdin, int fdout);
 
 // pipex_parsing_cmd_1
 char		*sub_parsing_cmd1(char **split_cmd);

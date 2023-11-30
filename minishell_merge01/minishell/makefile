@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/11/29 15:15:00 by yachen           ###   ########.fr        #
+#    Updated: 2023/11/30 13:42:28 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,12 @@ CFLAGS =  -Wall -Wextra -Werror -g3
 LIBFTDIR = ./srcs/libft
 
 PARSING = parsing init utils_parsing ft_split_minishell utils_cleaning \
-		  split_input expand clean_words utils_double garbage utils_parsing2 \
+		  split_input expand clean_words utils_double utils_parsing2 \
 		  token utils_parsing3 \
 
 BUILTINS = cd echo env export_part1 export_part2 pwd unset builtins_utils exit \
 
-EXECUTION = minishell fonctions_for_test garbage_collector init_ressources \
+EXECUTION = minishell single_prcs garbage_collector init_ressources \
 			redirections_1 redirections_2 pipex_parsing_cmd_1 pipex_parsing_cmd_2 \
 			exe_no_builtins exe_builtins process process_utils garbage_collector_parent \
 			

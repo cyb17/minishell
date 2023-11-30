@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:15:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 int	create_newvar(char *arg, t_var *env, t_var *export)
 {
-	export->newvar = ft_lstnew(arg);
-	if (!export->newvar)
+	export->newvar = ft_lstnew(ft_strdup(arg));
+	if (!export->newvar || !export->newvar->content)
 	{
-		write(2, "export: create_newvar: malloc failed", 31);
+		if (export->newvar)
+			free(export->newvar);
+		ft_putstr_fd("Error: create_newvar: malloc failed\n", 2);
 		return (-1);
 	}
-	env->newvar = ft_lstnew(arg);
-	if (!env->newvar)
+	env->newvar = ft_lstnew(ft_strdup(arg));
+	if (!env->newvar || !env->newvar->content)
 	{
 		free(export->newvar);
-		write(2, "export: create_newvar: malloc failed", 31);
+		if (env->newvar)
+			free(env->newvar);
+		ft_putstr_fd("Error: create_newvar: malloc failed\n", 2);
 		return (-1);
 	}
 	return (0);
@@ -131,33 +135,3 @@ int	ft_export(t_list **envlist, t_list **explist, char **arg)
 	}
 	return (0);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	t_list	*envlist;
-	t_list	*explist;
-
-	envlist = NULL;
-	explist = NULL;
-	(void)argc;
-	envlist = env_to_envlist(env);
-	explist = env_to_envlist(env);
-
-	printf("print env list : \n");
-	ft_env(argv + (argc - 1), envlist);
-	printf("\n\n");
-	ft_export(&envlist, &explist, argv + 1);
-	printf("\n\n");
-	// ft_unset(&envlist, &explist, "test");
-	// ft_unset(&envlist, &explist, "test1=");
-	// ft_unset(&envlist, &explist, "te");
-	// ft_unset(&envlist, &explist, "SHELL");
-	ft_env(argv + (argc - 1), envlist);
-	// printf("\n\n");
-	// ft_unset(&envlist, &explist, NULL);
-	// ft_export(&envlist, &explist, NULL);
-	// ft_pwd();
-	clear_lst(&envlist);
-	clear_lst(&explist);
-	return (0);
-}*/

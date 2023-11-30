@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 11:30:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:32:15 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 		g_signal[0] = ft_pwd();
 	else if (ft_strcmp("exit", cmd_tk->value) == 1)
 		ft_exit(res->blt->arg, res);
-	free_tab(res->blt->arg);
-	res->blt->arg = NULL;
 }
 
 void	exe_builtins(t_res *res, t_tokens *cmd)

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 12:47:12 by yachen           ###   ########.fr       */
+/*   Updated: 2023/11/30 13:34:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,48 +116,4 @@ void	multi_prcs(t_res *res)
 		printf("waitpit succes\n");
 		tmp = tmp->next;
 	}
-}
-
-void	single_prcs(t_res *res)
-{
-	int			fdin;
-	int			fdout;
-	int			in;
-	int			out;
-	t_tokens	*cmd;
-
-	fdin = 0;
-	fdout = 1;
-	in = dup(STDIN_FILENO);
-	out = dup(STDOUT_FILENO);
-	if (check_fdin_fdout(&fdin, &fdout, res->prcs->list_tokens) == -1)
-	{
-		clean_fds(fdin, fdout);
-		garbage_collector_parent(res);
-		return ;
-	}
-	cmd = check_cmd_tk(res->prcs->list_tokens);
-	if (!cmd)
-		return ;
-	redirection_single_prcs(fdin, fdout);
-	if (isnot_builtins(cmd->value) == 0)
-		exe_builtins(res, cmd);
-	else
-	{
-		res->prcs->pid = fork();
-		if (res->prcs->pid == -1)
-		{
-			clean_fds(fdin, fdout);
-			garbage_collector_parent(res);
-			perror("Error : fork");
-			return ;
-		}
-		else if (res->prcs->pid == 0)
-			exe_no_builtins(res, cmd);
-		waitpid(res->prcs->pid, NULL, 0);
-	}
-	dup2(in, STDIN_FILENO);
-	close(in);
-	dup2(out, STDOUT_FILENO);
-	close(out);
 }
