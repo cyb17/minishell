@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 17:38:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/01 12:20:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ void	ft_exit(char **arg, t_res *res)
 	if (check_nb_arg(arg) == -1)
 	{
 		g_signal[0] = 1;
-		garbage_collector(res);
+		garbage_collector_parent(res);
 		return ;
 	}
-	g_signal[0] = ft_atoi(arg[1]);
+	g_signal[0] = ft_atoi(arg[1]) % 256;
 	garbage_collector(res);
 	exit(g_signal[0]);
 }

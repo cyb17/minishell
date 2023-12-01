@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:02:15 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 17:46:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/01 11:58:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,16 @@ void	garbage_collector_parent(t_res *res)
 	t_process	*tmp;
 
 	tmp = NULL;
-	// if (res->input)
-	// 	free(res->input);
 	if (res->prcs)
 	{
 		clear_prcs_list(&res->prcs);
 		res->prcs = NULL;
 	}
-	if (res->blt)
-	{
-		free_tab(res->blt->arg);
-		res->blt->arg = NULL;
-	}
+	// if (res->blt)
+	// {
+	// 	free_tab(res->blt->arg);
+	// 	res->blt->arg = NULL;
+	// }
 	if (res->tab)
 	{
 		if (res->tab->pipefd)

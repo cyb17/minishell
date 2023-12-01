@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 16:51:58 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:55:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int		ft_env(char **arg, t_list *envlist);
 
 // export_part_1
 int		create_newvar(char *arg, t_var *env, t_var *export);
-void	modifie_var(t_var *env, t_var *exp, int i);
-void	replace(t_list **list, t_list *newvar, int oldvar_i);
+int		join_newvar_oldvar(t_var *var, int i);
+// void	modifie_var(t_var *env, t_var *exp, int i);
+void	replace_var(t_list **list, t_list *newvar, int oldvar_i);
 int		export_arg(t_list **envlist, t_list **explist, char *arg);
 int		ft_export(t_list **envlist, t_list **explist, char **arg);
 //export_part_2
@@ -45,7 +46,7 @@ void	initialize_var(t_var *export, t_var *env);
 void	print_explist(t_list *explist);
 void	free_newvar(t_var *export, t_var *env);
 void	if_addto_env(t_list **envlist, t_var *env, char *arg);
-void	replace_var(t_list **envlst, t_list **explst, t_var *env, t_var *exp);
+// void	replace_var(t_list **envlst, t_list **explst, t_var *env, t_var *exp);
 
 // unset
 int		ft_unset(t_list **envlist, t_list **explist, char **arg);

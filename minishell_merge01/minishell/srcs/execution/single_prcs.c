@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:34:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 17:34:00 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/01 12:23:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,5 @@ void	single_prcs(t_res *res)
 		child_prcs(fdin, fdout, res, cmd);
 	else
 		exe_builtins(res, cmd);
-	printf("test\n");
 	init_stdin_stdout(stdin, stdout);
 }

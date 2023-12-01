@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/29 18:20:43 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:29:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_list	*env_to_envlist(char **env)
 	return (envlist);
 }
 
+// If c is found, retur indice of c
 int	find_caracter(char *str, char c)
 {
 	int	i;
@@ -78,6 +79,7 @@ int	stringcmp(char *model, char *str)
 	return (1);
 }
 
+// If oldvar is found, fixe i = indice_var and return a pointer on oldvar
 t_list	*find_oldvar(char *var, t_list *list, int *i)
 {
 	t_list	*current;
