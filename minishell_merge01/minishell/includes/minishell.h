@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 11:42:52 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:02:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,20 @@ typedef struct s_res
 
 typedef struct s_var
 {
+	t_list	**list;
 	t_list	*oldvar;
 	t_list	*newvar;
 	int		oldvar_i;
+	int		equal_i;
+	int		plus_i;
 }			t_var;
+
+typedef struct s_redir
+{
+	int			fdin;
+	int			fdout;
+	int			stdin;
+	int			stdout;
+}				t_redir;
 
 #endif

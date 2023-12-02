@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 12:39:24 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:34:52 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,10 @@ int	exe_no_builtins(t_res *res, t_tokens *cmd)
 
 	env = list_to_tab(res->blt->envlist);
 	if (!env[0] && res->blt->envlist)
-		return (-1);
+		return (1);
 	arg = make_cmdtk_to_arg(cmd);
 	if (!arg)
-		return (-1);
+		return (1);
 	path = find_execve_path(res, env, arg);
 	ft_execve(res, env, path, arg);
 	return (0);

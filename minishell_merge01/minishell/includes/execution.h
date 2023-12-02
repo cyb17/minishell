@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 14:18:46 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:24:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ char		*make_cmdtk_to_arg(t_tokens *tokens);
 int			exe_no_builtins(t_res *res, t_tokens *cmd);
 
 // exe_builtins
-void		exe_builtins(t_res *res, t_tokens *cmd);
+int			exe_builtins(t_res *res, t_tokens *cmd);
 
 // process
 int			check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
 void		exe_prcs(t_res *res, t_process *prcs, int i);
 void		close_pipeline_fds(t_tab *tab, int i);
 void		multi_prcs(t_res *res);
-void		single_prcs(t_res *res);
+int			single_prcs(t_res *res);
 
 // process_utils
 int			isnot_builtins(char *str);

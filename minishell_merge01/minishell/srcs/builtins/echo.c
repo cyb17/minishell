@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 11:33:18 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:17:49 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	print_echo_arg(char **arg, int i, int op_flag)
 	return (0);
 }
 
+// Error = 1 || succes = 0
 int	ft_echo(char **arg)
 {
 	int	i;
@@ -81,6 +82,8 @@ int	ft_echo(char **arg)
 		op_flag = 1;
 		i++;
 	}
+	if (!arg[i])
+		return (0);
 	if (print_echo_arg(arg, i, op_flag) == 1)
 		return (1);
 	return (0);

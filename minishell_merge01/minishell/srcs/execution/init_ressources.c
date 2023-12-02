@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/29 18:33:23 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 13:26:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ t_builtins	*fill_builtins(char **env)
 	if (!builtins)
 		return (NULL);
 	builtins->envlist = env_to_envlist(env);
-	if (!builtins->envlist && env)
+	if (!builtins->envlist && env[0])
 	{
 		free(builtins);
 		return (NULL);
 	}
 	builtins->explist = env_to_envlist(env);
-	if (!builtins->explist && env)
+	if (!builtins->explist && env[0])
 	{
 		clear_lst(&builtins->envlist);
 		free(builtins);

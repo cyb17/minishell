@@ -6,65 +6,106 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/01 16:30:08 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 12:38:55 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-void	initialize_var(t_var *export, t_var *env)
+// Joint newvar's value to oldvar's value, but need condition: oldvar != NULL
+static int	join_newvar_oldvar(t_var *var, int i)
 {
-	export->oldvar = NULL;
-	export->newvar = NULL;
-	export->oldvar_i = 0;
-	env->oldvar = NULL;
-	env->newvar = NULL;
-	env->oldvar_i = 0;
-}
+	char	*tmp;
 
-void	print_explist(t_list *explist)
-{
-	t_list	*tmp;
-
-	tmp = explist;
-	while (tmp)
+	tmp = var->oldvar->content;
+	if (*(char *)(var->newvar->content + i) != '\0')
 	{
-		printf("export : %s\n", (char *)tmp->content);
-		tmp = tmp->next;
+		var->oldvar->content = ft_strjoin(tmp, var->newvar->content + i);
+		if (!var->oldvar->content)
+		{
+			ft_putstr_fd("Error: joint_newvar_oldvar: malloc failed\n", 2);
+			return (-1);
+		}
+		free(var->newvar->content);
 	}
+	return (0);
 }
 
-void	free_newvar(t_var *export, t_var *env)
+// Dup export->newvar->content to env->newvar->content and lstaddback to envlist
+static int	add_var_to_envlist(t_var *env, t_var *export)
 {
-	if(export->newvar)
-		free(export->newvar);
-	if (env->newvar)
-		free(env->newvar);
+	free(env->newvar->content);
+	env->newvar->content = ft_strdup(export->newvar->content);
+	if (!env->newvar->content)
+	{
+		ft_putstr_fd("Error: add_var_to_envlist: malloc failed\n", 2);
+		free_newvar(export, env);
+		return (-1);
+	}
+	ft_lstadd_back(env->list, env->newvar);
+	return (0);
 }
 
-void	if_addto_env(t_list **envlist, t_var *env, char *arg)
+// Find oldvar in list and replace it by newvar
+static void	replace_var(t_list **list, t_list *newvar, int oldvar_i)
 {
-	if (find_caracter(arg, '=') >= 0)
-		ft_lstadd_back(envlist, env->newvar);
+	int		i;
+	t_list	*tmp;
+	t_list	*current;
+
+	i = 0;
+	tmp = NULL;
+	current = *list;
+	if (oldvar_i == 0)
+	{
+		newvar->next = (current)->next;
+		*list = newvar;
+		free(current);
+		return ;
+	}
+	while (i < oldvar_i)
+	{
+		tmp = current;
+		current = current->next;
+		i++;
+	}
+	tmp->next = newvar;
+	newvar->next = current->next;
+	free(current);
+}
+
+int	join_and_update(t_var *env, t_var *export)
+{
+	if (join_newvar_oldvar(export, export->equal_i + 1) == -1)
+	{
+		free_newvar(export, env);
+		return (-1);
+	}
+	if (env->oldvar)
+	{
+		if (join_newvar_oldvar(env, env->equal_i + 1) == -1)
+		{
+			free_newvar(export, env);
+			return (-1);
+		}
+	}
 	else
-		free(env->newvar);
+	{
+		if (add_var_to_envlist(env, export) == -1)
+			return (-1);
+	}
+	return (0);
 }
 
-// void	replace_var(t_list **envlst, t_list **explst, t_var *env, t_var *exp)
-// {
-// 	replace(explst, env->newvar, env->oldvar_i);
-// 	replace(envlst, exp->newvar, exp->oldvar_i);
-// }
-
-// int	create_newvar(char *arg, t_var *var)
-// {
-// 	var->newvar = ft_lstnew(ft_strdup(arg));
-// 	if (!var->newvar || !var->newvar->content)
-// 	{
-// 		if (var->newvar)
-// 			free(var->newvar);
-// 		ft_putstr_fd("Error: create_newvar: malloc failed\n", 2);
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
+int	replace_and_update(t_var *env, t_var *export)
+{
+	replace_var(export->list, export->newvar, export->oldvar_i);
+	if (env->oldvar)
+		replace_var(env->list, env->newvar, env->oldvar_i);
+	else
+	{
+		if (add_var_to_envlist(env, export) == -1)
+			return (-1);
+	}
+	return (0);
+}

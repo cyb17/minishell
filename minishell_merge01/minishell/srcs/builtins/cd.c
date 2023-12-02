@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:18:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	go_to(t_list **envlist, char *var_name)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(var_name, 2);
-		ft_putstr_fd(" not set", 2);
+		ft_putstr_fd(" not set\n", 2);
 		return (-1);
 	}
 	if (chdir(var->content + (ft_strlen(var_name) + 1)) == -1)
@@ -41,7 +41,7 @@ static int	check_arg(char **arg)
 		i++;
 	if (i > 2)
 	{
-		ft_putstr_fd("minishell: cd: too any arguments", 2);
+		ft_putstr_fd("minishell: cd: too any arguments\n", 2);
 		return (-1);
 	}
 	return (0);
@@ -77,6 +77,7 @@ static void	update_path(t_list **list)
 	pwd_found->content = ft_getcwd();
 }
 
+// Error = 1 || succes = 0
 int	ft_cd(t_list **envlist, t_list **explist, char **arg)
 {
 	if (check_arg(arg) == -1)
@@ -103,16 +104,3 @@ int	ft_cd(t_list **envlist, t_list **explist, char **arg)
 	update_path(explist);
 	return (0);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	t_list	*envlist;
-	t_list	*explist;
-
-	argc = argc + 1;
-	envlist	= env_to_envlist(env);
-	explist	= env_to_envlist(env);
-	ft_cd(&envlist, &explist, argv);
-	clear_lst(&envlist);
-	clear_lst(&explist);
-}*/

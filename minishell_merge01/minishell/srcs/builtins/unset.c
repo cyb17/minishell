@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 15:49:23 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:20:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	unset_arg(t_list **envlist, t_list **explist, char *arg)
 	}
 }
 
+// Return 0 anyway
 int	ft_unset(t_list **envlist, t_list **explist, char **arg)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/01 12:17:18 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:13:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,38 @@ static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 	return (0);
 }
 
-static void	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
+static int	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 {
+	int	rslt;
+	
+	rslt = 0;
 	if (ft_strcmp("echo", cmd_tk->value) == 1)
-		g_signal[0] = ft_echo(res->blt->arg);
+		rslt = ft_echo(res->blt->arg);
 	else if (ft_strcmp("cd", cmd_tk->value) == 1)
-		g_signal[0] = ft_cd(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+		rslt = ft_cd(&res->blt->envlist, &res->blt->explist, res->blt->arg);
 	else if (ft_strcmp("env", cmd_tk->value) == 1)
-		g_signal[0] = ft_env(res->blt->arg, res->blt->envlist);
+		rslt = ft_env(res->blt->arg, res->blt->envlist);
 	else if (ft_strcmp("export", cmd_tk->value) == 1)
-		g_signal[0] = ft_export(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+		rslt = ft_export(&res->blt->envlist, &res->blt->explist, res->blt->arg);
 	else if (ft_strcmp("unset", cmd_tk->value) == 1)
-		g_signal[0] = ft_unset(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+		rslt = ft_unset(&res->blt->envlist, &res->blt->explist, res->blt->arg);
 	else if (ft_strcmp("pwd", cmd_tk->value) == 1)
-		g_signal[0] = ft_pwd();
+		rslt = ft_pwd();
 	else if (ft_strcmp("exit", cmd_tk->value) == 1)
-		ft_exit(res->blt->arg, res);
+		rslt = ft_exit(res->blt->arg, res);
 	free_tab(res->blt->arg);
 	res->blt->arg = NULL;
+	return (rslt);
 }
 
-void	exe_builtins(t_res *res, t_tokens *cmd)
+// Return command exit status
+int	exe_builtins(t_res *res, t_tokens *cmd)
 {
 	if (builtin_cmd_arg(cmd, res->blt) == -1)
 	{
 		free_tab(res->blt->arg);
 		ft_putstr_fd("Error: exe_builtins: builtin_cmd_arg: malloc failed\n", 2);
-		return ;
+		return (1);
 	}
-	exe_which_cmd(res, cmd);
+	return (exe_which_cmd(res, cmd));
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 12:16:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/02 13:35:30 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*parsing_cmd(char **env_main, char *cmd)
 	}
 	split_cmd = make_cmd(cmd);
 	path = NULL;
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || cmd[0] == '.')
 	{
 		path = sub_parsing_cmd1(split_cmd);
 		return (path);
