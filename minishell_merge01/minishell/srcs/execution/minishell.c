@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 13:32:21 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/04 11:53:20 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	init_structure(t_res *res)
 // 	tmp = prcs;
 // 	while (tmp)
 // 	{
+// 		tmp2 = prcs->list_tokens;
 // 		while (tmp2)
 // 		{
 // 			printf("%s ", tmp2->value);
@@ -68,6 +69,7 @@ int	main(int argc, char **argv, char **env)
 			// if (find_nb_process(res.prcs) > 1)
 			// 	multi_prcs(&res);
 			// else
+			// print_prcs(res.prcs);
 				single_prcs(&res);
 		}
 		garbage_collector_parent(&res);

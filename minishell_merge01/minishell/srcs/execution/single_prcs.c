@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:34:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:43:30 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/04 10:37:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ static int	redirection_single_prcs(int fdin, int fdout)
 
 static int	child_prcs(int fdin, int fdout, t_res *res, t_tokens *cmd)
 {
+	int	status;
+
+	status = 0;
 	res->prcs->pid = fork();
 	if (res->prcs->pid == -1)
 	{
@@ -51,7 +54,11 @@ static int	child_prcs(int fdin, int fdout, t_res *res, t_tokens *cmd)
 	}
 	else if (res->prcs->pid == 0)
 		exe_no_builtins(res, cmd);
-	waitpid(res->prcs->pid, NULL, 0);
+	waitpid(res->prcs->pid, &status, 0);
+	if (WIFEXITED(status))
+		g_signal[0] = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_signal[0] = WTERMSIG(status);
 	return (0);
 }
 
@@ -117,7 +124,7 @@ int	single_prcs(t_res *res)
 	if (redirection_single_prcs(io.fdin, io.fdout) == -1)
 		return (1);
 	if (isnot_builtins(cmd->value) == 1)
-		rslt = child_prcs(io.fdin, io.fdout, res, cmd); // il faudra fixer la valeur de retour a l'aide des macros de waitpid 
+		rslt = child_prcs(io.fdin, io.fdout, res, cmd);
 	else
 		rslt = exe_builtins(res, cmd);
 	init_stdin_stdout(io.stdin, io.stdout);

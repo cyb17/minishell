@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:17:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/04 11:53:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ static int	print_newline(void)
 	return (0);
 }
 
-static int	print_echo_arg(char **arg, int i, int op_flag)
+static int	print_echo_arg(char *argv, int op_flag)
 {
-	while (arg[i + 1])
+	int	j;
+	
+	j = 0;
+	while (argv[j])
 	{
-		if (printf("%s ", arg[i]) < 0)
+		if (argv[j + 1] && argv[j] == '$' && argv[j + 1] == '?')
 		{
-			perror("Error: echo: print_echo_arg: ");
-			return (1);
+			ft_putnbr_fd(g_signal[0], STDOUT_FILENO);
+			j++;
 		}
-		i++;
-	}
-	if (printf("%s", arg[i]) < 0)
-	{
-		perror("Error: echo: print_echo_arg: ");
-		return (1);
+		else
+			ft_putchar_fd(argv[j], STDOUT_FILENO);
+		j++;
 	}
 	if (op_flag == 0)
 	{
@@ -71,7 +71,7 @@ int	ft_echo(char **arg)
 
 	i = 1;
 	op_flag = 0;
-	if (arg[i] == NULL)
+	if (!arg[i])
 	{
 		if (print_newline() == 1)
 			return (1);
@@ -84,7 +84,11 @@ int	ft_echo(char **arg)
 	}
 	if (!arg[i])
 		return (0);
-	if (print_echo_arg(arg, i, op_flag) == 1)
-		return (1);
+	while (arg[i])
+	{
+		if (print_echo_arg(arg[i], op_flag) == 1)
+			return (1);
+		i++;
+	}
 	return (0);
 }
