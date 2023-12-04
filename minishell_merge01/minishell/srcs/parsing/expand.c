@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/28 13:33:20 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/04 16:53:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,34 @@ char	*my_getenv(char *var, t_list *list)
 		return (my_strjoin((str + (ft_strlen(var) + 1)), tmp));
 }
 
+// char	*expand_value(char *s, int i, t_list **envlist)
+// {
+// 	char	*to_expand;
+// 	char	*expanded;
+// 	char	*tmp;
+// 	int		j;
+
+// 	if (s[i + 1] == ' '
+// 		|| (s[i + 1] == '"' && between_quotes(s, i) > i))
+// 		return (ft_strdup_section(s, i, i + 1));
+// 	else if (s[i + 1] == '?' && ((s[i + 2] == '\0')
+// 		|| (s[i + 2] == '$')
+// 		|| ((s[i + 2] == '"' && between_quotes(s, i) > i))))
+// 		return (ft_strdup_section(s, i, i + 2));
+// 	j = 0;
+// 	tmp = s;
+// 	while (j <= i)
+// 	{
+// 		tmp++;
+// 		j++;
+// 	}
+// 	to_expand = get_var_to_exp(tmp);
+// 	expanded = my_getenv(to_expand, *envlist);
+// 	free(to_expand);
+// 	if (!expanded)
+// 		return (NULL);
+// 	return (expanded);
+// }
 char	*expand_value(char *s, int i, t_list **envlist)
 {
 	char	*to_expand;
@@ -65,8 +93,9 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	if (s[i + 1] == ' ' || s[i + 1] == '\0'
 		|| (s[i + 1] == '"' && between_quotes(s, i) > i))
 		return (ft_strdup_section(s, i, i + 1));
-	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' ')
-			|| ((s[i + 2] == '"' && between_quotes(s, i) > i))))
+	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' '
+			|| (s[i + 2] == '$')) || ((s[i + 2] == '"'
+			&& between_quotes(s, i) > i))))
 		return (ft_strdup_section(s, i, i + 2));
 	j = 0;
 	tmp = s;

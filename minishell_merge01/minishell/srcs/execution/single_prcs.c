@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:34:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/04 10:37:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:05:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	redirection_single_prcs(int fdin, int fdout)
 		}
 		close(fdin);
 	}
-	if (fdout > 2)
+	if (fdout != STDOUT_FILENO)
 	{
 		if (dup2(fdout, STDOUT_FILENO) == -1)
 		{
@@ -39,7 +39,7 @@ static int	redirection_single_prcs(int fdin, int fdout)
 	return (0);
 }
 
-static int	child_prcs(int fdin, int fdout, t_res *res, t_tokens *cmd)
+static int	child_prcs(t_redir *io, t_res *res, t_tokens *cmd)
 {
 	int	status;
 
@@ -47,13 +47,17 @@ static int	child_prcs(int fdin, int fdout, t_res *res, t_tokens *cmd)
 	res->prcs->pid = fork();
 	if (res->prcs->pid == -1)
 	{
-		clean_fds(fdin, fdout);
+		clean_fds(io->fdin, io->fdout);
 		garbage_collector_parent(res);
 		perror("Error : fork");
 		return (1);
 	}
 	else if (res->prcs->pid == 0)
+	{
+		close(io->stdin);
+		close(io->stdout);
 		exe_no_builtins(res, cmd);
+	}
 	waitpid(res->prcs->pid, &status, 0);
 	if (WIFEXITED(status))
 		g_signal[0] = WEXITSTATUS(status);
@@ -124,7 +128,7 @@ int	single_prcs(t_res *res)
 	if (redirection_single_prcs(io.fdin, io.fdout) == -1)
 		return (1);
 	if (isnot_builtins(cmd->value) == 1)
-		rslt = child_prcs(io.fdin, io.fdout, res, cmd);
+		rslt = child_prcs(&io, res, cmd);
 	else
 		rslt = exe_builtins(res, cmd);
 	init_stdin_stdout(io.stdin, io.stdout);
