@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:31 by nap               #+#    #+#             */
-/*   Updated: 2023/11/27 15:11:32 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:39:15 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ int	main(int ac, char **av, char **env)
 		if (input[0] != '\0')
 		{
 			ft_parse(input, &all);
-			/* process = all.process;
+			process = all.process;
 			while (process)
 			{
 				printf("Contenu de section_cmd : %s id = %d\n", process->section_cmd, process->section_cmd_id);
 				while (process->list_tokens)
 				{
-					printf("tkn %d : %s,\n", process->list_tokens->value, process->list_tokens->type);
+					printf("tkn %s : %d,\n", process->list_tokens->value, process->list_tokens->type);
 					process->list_tokens = process->list_tokens->next;
 				}
 				process = process->next ;
-			} */
+			}
 			clean_loop(&all);
 		}
 	}

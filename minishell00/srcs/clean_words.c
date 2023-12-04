@@ -107,8 +107,16 @@ char	*clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while (is_exp_char(s[i]) == true)
+				if (is_exp_char(s[i]) == true)
+				{
+					while (is_exp_char(s[i]) == true)
 					i++;
+				}
+				else if (s[i] == '?' || s[i] == '$')
+				{
+					while(s[i] == '?' || s[i] == '$')
+						i++;
+				}
 			}
 		}
 		return (cpy);
@@ -140,8 +148,16 @@ char	*clean_word(char *s, t_list **envlist)
 						free(cpy2);
 					i++;
 				}
-				while (is_exp_char(s[i]) == true)
+				if (is_exp_char(s[i]) == true)
+				{
+					while (is_exp_char(s[i]) == true)
 					i++;
+				}
+				else if (s[i] == '?' || s[i] == '$')
+				{
+					while(s[i] == '?' || s[i] == '$')
+						i++;
+				}
 			}
 			if (cpy == NULL && i < len)
 				cpy = ft_strdup_section(s, i, i + 1);
