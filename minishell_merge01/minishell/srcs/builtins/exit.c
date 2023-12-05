@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:19:43 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 15:02:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_exit(char **arg, t_res *res)
 	if (arg[1] == NULL)
 	{
 		g_signal[0] = 0;
-		garbage_collector(res);
+		garbage_collector_child(res);
 		exit(0);
 	}
 	if (is_correct_number(arg[1]) == 0 && ft_strcmp(arg[1], "0") == 0)
@@ -91,7 +91,7 @@ int	ft_exit(char **arg, t_res *res)
 		ft_putstr_fd(arg[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_signal[0] = 2;
-		garbage_collector(res);
+		garbage_collector_child(res);
 		exit(2);
 	}
 	if (check_nb_arg(arg) == -1)
@@ -101,7 +101,7 @@ int	ft_exit(char **arg, t_res *res)
 		return (1);
 	}
 	g_signal[0] = ft_atoi(arg[1]) % 256;
-	garbage_collector(res);
+	garbage_collector_child(res);
 	exit(g_signal[0]);
 	return (0);
 }

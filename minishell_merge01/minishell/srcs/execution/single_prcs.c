@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:34:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/04 17:05:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 15:47:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	single_prcs(t_res *res)
 
 	if (init_intput_output(&io) == -1)
 		return (1);
-	if (check_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
+	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
 	{
 		clean_fds(io.fdin, io.fdout);
 		garbage_collector_parent(res);

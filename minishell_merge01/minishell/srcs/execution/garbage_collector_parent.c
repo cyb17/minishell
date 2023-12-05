@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:02:15 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/01 11:58:50 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 14:38:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,6 @@ static void	clear_prcs_list(t_process **process)
 	}
 }
 
-// static void	clear_builtins(t_builtins *blt)
-// {
-// 	if (blt->envlist)
-// 		clear_lst(&blt->envlist);
-// 	if (blt->explist)
-// 		clear_lst(&blt->explist);
-// 	free_tab(blt->arg);
-// 	free(blt);
-// }
-
 void	garbage_collector_parent(t_res *res)
 {
 	t_process	*tmp;
@@ -64,11 +54,6 @@ void	garbage_collector_parent(t_res *res)
 		clear_prcs_list(&res->prcs);
 		res->prcs = NULL;
 	}
-	// if (res->blt)
-	// {
-	// 	free_tab(res->blt->arg);
-	// 	res->blt->arg = NULL;
-	// }
 	if (res->tab)
 	{
 		if (res->tab->pipefd)

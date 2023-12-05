@@ -6,13 +6,17 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/04 12:34:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 16:34:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-int	check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
+// Browse tokens list, and fixe the fdin and fdout at the end of browse
+// if <infile is found it's will be opened
+// if there is another <infile the precedent will be closed and fdin=newone
+// same for outfile
+int	open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 {
 	char	*here_doc;
 
@@ -47,17 +51,17 @@ void	exe_prcs(t_res *res, t_process *prcs, int i)
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 	{
-		garbage_collector(res);
+		garbage_collector_child(res);
 		perror("Error: exe_prcs: fork failed");
 		g_signal[0] = 1;
 		return ;
 	}
 	else if (prcs->pid == 0)
 	{
-		if (check_fdin_fdout(&fdin, &fdout, prcs->list_tokens) == -1)
+		if (open_fdin_fdout(&fdin, &fdout, prcs->list_tokens) == -1)
 		{
 			clean_fds(fdin, fdout);
-			garbage_collector(res);
+			garbage_collector_child(res);
 			exit(1);
 		}
 		redirection_multi_prcs(fdin, fdout, res->tab, i);
@@ -92,7 +96,7 @@ void	multi_prcs(t_res *res)
 	res->tab = fill_tab(res->prcs);
 	if (!res->tab)
 	{
-		garbage_collector(res);
+		garbage_collector_child(res);
 		g_signal[0] = 1;
 		return ;
 	}
@@ -101,7 +105,7 @@ void	multi_prcs(t_res *res)
 		if (pipe_pipefd(res->tab, i) == -1)
 		{
 			ft_putstr_fd("Error: pipe_pipefd: create pipe failed\n", 2);
-			garbage_collector(res);
+			garbage_collector_child(res);
 			break ;
 		}
 		exe_prcs(res, tmp, i);

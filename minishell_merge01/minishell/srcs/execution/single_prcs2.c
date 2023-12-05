@@ -6,12 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 13:25:47 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 16:51:49 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+// redirect io if there is a infile or outfile opened
 static int	redirection_single_prcs(int fdin, int fdout)
 {
 	if (fdin != STDIN_FILENO)
@@ -52,26 +53,23 @@ static void	child_prcs(t_res *res, t_tokens *cmd)
 	res->prcs->pid = fork();
 	if (res->prcs->pid == -1)
 	{
-		free(cmd);
-		garbage_collector_parent(res);
+		// garbage_collector_parent(res);
 		perror("Error : fork");
 		g_signal[0] = 1;
 		return ;
 	}
 	else if (res->prcs->pid == 0)
 	{
-		if (check_fdin_fdout(&fdin, &fdout, res->prcs->list_tokens) == -1
+		if (open_fdin_fdout(&fdin, &fdout, res->prcs->list_tokens) == -1
 		|| redirection_single_prcs(fdin, fdout) == -1)
 		{
-			free(cmd);
 			clean_fds(fdin, fdout);
-			// garbage_collector(res);
+			garbage_collector_child(res);
 			exit(1);
 		}
 		if (exe_no_builtins(res, cmd) == -1)
 		{
-			free(cmd);
-			// garbage_collector(res);
+			garbage_collector_child(res);
 			exit(1);
 		}
 	}
@@ -140,7 +138,7 @@ static int	parent_prcs(t_res *res, t_tokens *cmd)
 	
 	if (init_intput_output(&io) == -1)
 		return (1);
-	if (check_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1
+	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1
 		|| redirection_single_prcs(io.fdin, io.fdout) == -1)
 	{
 		clean_io(&io);
@@ -158,21 +156,22 @@ void	single_prcs(t_res *res)
 	t_tokens	*cmd;
 
 	cmd = check_cmd_tk(res->prcs->list_tokens);
-	if (cmd && isnot_builtins(cmd->value) == 1)
-		child_prcs(res, cmd);
-	else if (cmd && isnot_builtins(cmd->value) == 0)
-		g_signal[0] = parent_prcs(res, cmd);
-	else
+	if (!cmd)
 	{
 		io.fdin = STDIN_FILENO;
-		io.fdout = STDIN_FILENO;
-		if (check_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
+		io.fdout = STDOUT_FILENO;
+		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
 		{
 			clean_fds(io.fdin, io.fdout);
 			garbage_collector_parent(res);
 			g_signal[0] = 1;
+			return ;
 		}
 		clean_fds(io.fdin, io.fdout);
 		g_signal[0] = 0;
 	}
+	else if (cmd && isnot_builtins(cmd->value) == 1)
+		child_prcs(res, cmd);
+	else if (cmd && isnot_builtins(cmd->value) == 0)
+		g_signal[0] = parent_prcs(res, cmd);
 }

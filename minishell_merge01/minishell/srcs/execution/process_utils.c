@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 11:04:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 15:49:07 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	isnot_builtins(char *str)
 	return (1);
 }
 
+// If there is a cmd, return a pointer on cmd
 t_tokens	*check_cmd_tk(t_tokens *list_tokens)
 {
 	t_tokens	*tmp;
@@ -57,9 +58,9 @@ void	execute_cmd(t_res *res, t_tokens *list_tokens)
 
 void	clean_fds(int fdin, int fdout)
 {
-	if (fdin != STDIN_FILENO)
+	if (fdin != STDIN_FILENO && fdin != -1)
 		close(fdin);
-	if (fdout != STDOUT_FILENO)
+	if (fdout != STDOUT_FILENO && fdout != -1)
 		close(fdout);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 12:11:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 15:47:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 /* EXECUTION */
 
 // garbage_collector
-void		garbage_collector(t_res *res);
+void		garbage_collector_child(t_res *res);
 void		garbage_collector_parent(t_res *res);
 int			ft_compare(char *limiter, char *str);
 
@@ -60,7 +60,7 @@ int			exe_no_builtins(t_res *res, t_tokens *cmd);
 int			exe_builtins(t_res *res, t_tokens *cmd);
 
 // process
-int			check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
+int			open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
 void		exe_prcs(t_res *res, t_process *prcs, int i);
 void		close_pipeline_fds(t_tab *tab, int i);
 void		multi_prcs(t_res *res);
