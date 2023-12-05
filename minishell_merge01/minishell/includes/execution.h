@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:24:27 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:11:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ char		**make_cmd(char *str);
 int			check_cmd(char *cmd);
 
 // exe_no_builtins
-char		*find_execve_path(t_res *res, char **env, char *argv_value);
-void		ft_execve(t_res *res, char **env, char *path, char *argv_value);
-char		*make_cmdtk_to_arg(t_tokens *tokens);
+// char		*find_execve_path(t_res *res, char **env, char *argv_value);
+// void		ft_execve(t_res *res, char **env, char *path, char *argv_value);
+// char		*make_cmdtk_to_arg(t_tokens *tokens);
 int			exe_no_builtins(t_res *res, t_tokens *cmd);
 
 // exe_builtins
@@ -64,7 +64,7 @@ int			check_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
 void		exe_prcs(t_res *res, t_process *prcs, int i);
 void		close_pipeline_fds(t_tab *tab, int i);
 void		multi_prcs(t_res *res);
-int			single_prcs(t_res *res);
+void		single_prcs(t_res *res);
 
 // process_utils
 int			isnot_builtins(char *str);

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 12:09:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 11:04:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	execute_cmd(t_res *res, t_tokens *list_tokens)
 
 void	clean_fds(int fdin, int fdout)
 {
-	if (fdin > 2)
+	if (fdin != STDIN_FILENO)
 		close(fdin);
-	if (fdout > 2)
+	if (fdout != STDOUT_FILENO)
 		close(fdout);
 }
 

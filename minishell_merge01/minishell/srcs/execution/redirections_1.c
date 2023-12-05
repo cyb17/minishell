@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 15:44:25 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:21:32 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static char	*create_hdname(void)
 	}
 	name[5] = '\0';
 	here_doc = ft_strjoin(tmp, name);
+	close(urandom_fd);
 	return (here_doc);
 }
 
