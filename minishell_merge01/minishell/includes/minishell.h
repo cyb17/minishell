@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:02:04 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:21:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,6 @@ typedef struct s_tab
 	int			**pipefd;
 }			t_tab;
 
-typedef struct s_res
-{
-	t_process	*prcs;
-	t_builtins	*blt;
-	t_tab		*tab;
-	char		*input;
-}				t_res;
-
 typedef struct s_var
 {
 	t_list	**list;
@@ -126,5 +118,15 @@ typedef struct s_redir
 	int			stdin;
 	int			stdout;
 }				t_redir;
+
+typedef struct s_res
+{
+	t_process	*prcs;
+	t_builtins	*blt;
+	t_tab		*tab;
+	char		*input;
+	t_redir		*io;
+}				t_res;
+
 
 #endif

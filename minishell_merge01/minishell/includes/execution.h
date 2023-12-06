@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 15:47:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:21:20 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		exe_prcs(t_res *res, t_process *prcs, int i);
 void		close_pipeline_fds(t_tab *tab, int i);
 void		multi_prcs(t_res *res);
 void		single_prcs(t_res *res);
+int			init_stdin_stdout(int stdin, int stdout);
 
 // process_utils
 int			isnot_builtins(char *str);

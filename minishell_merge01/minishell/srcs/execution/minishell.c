@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 15:33:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:17:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,32 @@ static void	init_structure(t_res *res)
 	res->blt = NULL;
 	res->tab = NULL;
 	res->input = NULL;
+	res->io = NULL;
 }
 
-// static void	print_prcs(t_process *prcs)
-// {
-// 	t_process	*tmp;
-// 	t_tokens	*tmp2;
+static void	print_prcs(t_process *prcs)
+{
+	t_process	*tmp;
+	t_tokens	*tmp2;
 
-// 	tmp = prcs;
-// 	while (tmp)
-// 	{
-// 		tmp2 = prcs->list_tokens;
-// 		while (tmp2)
-// 		{
-// 			printf("%s type%d", tmp2->value, tmp2->type);
-// 			tmp2 = tmp2->next;
-// 		}
-// 		tmp = tmp->next;
-// 		printf("\n");
-// 	}
-// }
+	tmp = prcs;
+	if (tmp == NULL)
+		printf("yes1\n");
+	while (tmp)
+	{
+		tmp2 = prcs->list_tokens;
+		printf("1=CMD, 2=W, 3=INFILE, 4=OUTFILE, 5=REDIR_IN, 6=REDIR_OUT\n");
+		if (tmp2 == NULL)
+			printf("yes2\n");
+		while (tmp2)
+		{
+			printf("value: %s type: %d\n", tmp2->value, tmp2->type);
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+		printf("\n");
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -69,8 +75,8 @@ int	main(int argc, char **argv, char **env)
 			// if (find_nb_process(res.prcs) > 1)
 			// 	multi_prcs(&res);
 			// else
+			print_prcs(res.prcs);
 			single_prcs(&res);
-			// print_prcs(res.prcs);
 		}
 		garbage_collector_parent(&res);
 	}

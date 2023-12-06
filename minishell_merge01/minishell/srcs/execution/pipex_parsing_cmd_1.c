@@ -6,12 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 13:40:07 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 13:54:58 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+// Check if cmd accessible and executable
 char	*sub_parsing_cmd1(char **split_cmd)
 {
 	char	*path;
@@ -20,7 +21,10 @@ char	*sub_parsing_cmd1(char **split_cmd)
 		return (NULL);
 	path = NULL;
 	if (access(split_cmd[0], F_OK | R_OK | X_OK) == -1)
-		perror("Error"); // $? = 126 permision denied
+	{
+		g_signal[0] = 126;
+		perror("Error");
+	}
 	else
 		path = ft_strdup(split_cmd[0]);
 	free_tab(split_cmd);
@@ -55,7 +59,7 @@ char	*sub_parsing_cmd2(char **env_main, char *cmd)
 	return (path);
 }
 
-/* if cmd start with /../..cmd, use sub_parsing_cmd1
+/* if cmd start with /../..cmd or ./cmd, use sub_parsing_cmd1
 else use sub_parsing_cmd2 
 return NULL if there is any error*/
 char	*parsing_cmd(char **env_main, char *cmd)
@@ -67,7 +71,7 @@ char	*parsing_cmd(char **env_main, char *cmd)
 	{
 		ft_putstr_fd("Error : ", 2);
 		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": Command not found\n", 2); // $? = 127 || no such...
+		ft_putstr_fd(": Command not found\n", 2);
 		g_signal[0] = 127;
 		return (NULL);
 	}
@@ -79,6 +83,8 @@ char	*parsing_cmd(char **env_main, char *cmd)
 		return (path);
 	}
 	path = sub_parsing_cmd2(env_main, split_cmd[0]);
+	if (!path)
+		g_signal[0] = 1;
 	free_tab(split_cmd);
 	return (path);
 }

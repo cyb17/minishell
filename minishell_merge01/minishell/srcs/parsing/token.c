@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:53:25 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/28 13:33:20 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 12:28:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,13 @@ void	ft_token(t_process *process)
 		{
 			s = process->list_tokens->value;
 			read_value(s, process->list_tokens);
+			process->list_tokens = process->list_tokens->next;
+		}
+		process->list_tokens = head;
+		while (process->list_tokens)
+		{
+			s = process->list_tokens->value;
 			cmd_value(process->list_tokens);
-			/* printf("tkn %s type = %d,\n", process->list_tokens->value, process->list_tokens->type); */
 			process->list_tokens = process->list_tokens->next;
 		}
 		process->list_tokens = head;

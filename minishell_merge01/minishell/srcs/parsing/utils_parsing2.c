@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/11/28 13:32:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 12:17:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ char *add_space(char *s)
 			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
 			&& between_quotes(s, i) == i && s[i + 1] != '\0')
 			cpy = add_blank(cpy);
-		else
-			cpy = cpychar3(s, i, cpy);
+		cpy = cpychar3(s, i, cpy);
 		i++;
 	}
 	return (cpy);

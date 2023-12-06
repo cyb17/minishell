@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 16:51:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:19:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	child_prcs(t_res *res, t_tokens *cmd)
 	res->prcs->pid = fork();
 	if (res->prcs->pid == -1)
 	{
-		// garbage_collector_parent(res);
 		perror("Error : fork");
 		g_signal[0] = 1;
 		return ;
@@ -110,7 +109,7 @@ static void	clean_io(t_redir *io)
 	close(io->stdout);
 }
 
-static int	init_stdin_stdout(int stdin, int stdout)
+int	init_stdin_stdout(int stdin, int stdout)
 {
 	if (dup2(stdin, STDIN_FILENO) == -1)
 	{
@@ -138,6 +137,7 @@ static int	parent_prcs(t_res *res, t_tokens *cmd)
 	
 	if (init_intput_output(&io) == -1)
 		return (1);
+	res->io = &io;
 	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1
 		|| redirection_single_prcs(io.fdin, io.fdout) == -1)
 	{
@@ -148,6 +148,44 @@ static int	parent_prcs(t_res *res, t_tokens *cmd)
 	rslt = exe_builtins(res, cmd);
 	init_stdin_stdout(io.stdin, io.stdout);
 	return (rslt);
+}
+
+// If there is a infile or a outfile valid fd opened, close it.
+void	clean_fds(int fdin, int fdout)
+{
+	if (fdin != STDIN_FILENO && fdin != -1)
+		close(fdin);
+	if (fdout != STDOUT_FILENO && fdout != -1)
+		close(fdout);
+}
+
+// Browse tokens list, and fixe the fdin and fdout at the end of browse
+// if <infile is found it's will be opened
+// if there is another <infile the precedent will be closed and fdin=newone
+// same for outfile
+int	open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
+{
+	char	*here_doc;
+
+	while (tokens)
+	{
+		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
+			redirect_in(fdin, tokens->next->value);
+		else if (tokens->type == REDIR_OUT && tokens->next->type == OUTFILE)
+			redirect_out(fdout, tokens->next->value, 'T');
+		else if (tokens->type == APPEN && tokens->next->type == OUTFILE)
+			redirect_out(fdout, tokens->next->value, 'A');
+		else if (tokens->type == HEREDOC)
+		{
+			here_doc = ft_here_doc(tokens->next->value);
+			redirect_in(fdin, here_doc);
+			free(here_doc);
+		}
+		if ((*fdin == -1) || (*fdout == -1))
+			return (-1);
+		tokens = tokens->next;
+	}
+	return (0);
 }
 
 void	single_prcs(t_res *res)
@@ -163,7 +201,6 @@ void	single_prcs(t_res *res)
 		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
 		{
 			clean_fds(io.fdin, io.fdout);
-			garbage_collector_parent(res);
 			g_signal[0] = 1;
 			return ;
 		}

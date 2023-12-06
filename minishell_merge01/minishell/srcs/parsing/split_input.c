@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/11/28 13:32:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 13:39:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_process	*create_process(t_p *p, int end)
 		return (NULL);
 	}
 	process_init(process);
-	process->section_cmd = ft_strdup_section(p->s2, p->start, end);
+	process->section_cmd = ft_strdup_section(p->s1, p->start, end);
 	process->cmds = ft_split_minishell(process->section_cmd, ' ');
 	process->section_cmd_id = p->id;
 	return (process);
@@ -42,11 +42,11 @@ void	make_process_list(t_p *p, t_process **list_process)
 
 	new = NULL;
 	i = 0;
-	while (p->s2[i] && i <= (int)my_strlen(p->s2))
+	while (p->s1[i] && i <= (int)my_strlen(p->s1))
 	{
-		if (p->s2[i] == '|')
+		if (p->s1[i] == '|')
 		{
-			if (between_quotes(p->s2, i) == i)
+			if (between_quotes(p->s1, i) == i)
 			{
 				map_list(p, list_process, new, i);
 				p->start = i + 1;
@@ -56,9 +56,9 @@ void	make_process_list(t_p *p, t_process **list_process)
 		i++;
 	}
 	if (p->id == 1)
-		map_list(p, list_process, new, (int)my_strlen(p->s2));
+		map_list(p, list_process, new, (int)my_strlen(p->s1));
 	else
-		map_list(p, list_process, new, (int)my_strlen(p->s2));
+		map_list(p, list_process, new, (int)my_strlen(p->s1));
 }
 
 t_tokens	*create_tokens(char *str, int id)

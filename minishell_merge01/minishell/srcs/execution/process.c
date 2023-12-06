@@ -6,40 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 16:34:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/06 13:23:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
-
-// Browse tokens list, and fixe the fdin and fdout at the end of browse
-// if <infile is found it's will be opened
-// if there is another <infile the precedent will be closed and fdin=newone
-// same for outfile
-int	open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
-{
-	char	*here_doc;
-
-	while (tokens)
-	{
-		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
-			redirect_in(fdin, tokens->next->value);
-		else if (tokens->type == REDIR_OUT && tokens->next->type == OUTFILE)
-			redirect_out(fdout, tokens->next->value, 'T');
-		else if (tokens->type == APPEN && tokens->next->type == OUTFILE)
-			redirect_out(fdout, tokens->next->value, 'A');
-		else if (tokens->type == HEREDOC)
-		{
-			here_doc = ft_here_doc(tokens->next->value);
-			redirect_in(fdin, here_doc);
-			free(here_doc);
-		}
-		if ((*fdin == -1) || (*fdout == -1))
-			return (-1);
-		tokens = tokens->next;
-	}
-	return (0);
-}
 
 void	exe_prcs(t_res *res, t_process *prcs, int i)
 {
