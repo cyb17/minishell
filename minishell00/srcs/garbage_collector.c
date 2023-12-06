@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/27 16:33:33 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:56:43 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ void clean_pars(t_p *p)
 	if (p->s1)
 		free(p->s1);
 	p->s1 = NULL;
-	if (p->s2)
-		free(p->s2);
-	p->s2 = NULL;
 	if (p->words)
 		free_tab(p->words);
 	p->words = NULL;
