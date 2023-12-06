@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:58:13 by nap               #+#    #+#             */
-/*   Updated: 2023/11/27 16:33:41 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:42:12 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	pars_init(t_p *p, char *line)
 /* 	printf("INPUT : %s\n", p->s); */
 	p->s0 = NULL;
 	p->s1 = NULL;
-	p->s2 = NULL;
 	p->len = ft_strlen(line);
 	p->len1 = -1;
 	p->start = 0;

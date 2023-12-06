@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/11/28 16:05:42 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:41:51 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,7 @@ int	ft_parse(char *line, t_all *all)
 	all->p->s0 = delete_quotes(all->p->s);
 	free(line);
 	all->p->s1 = add_space(all->p->s0);
-	/* printf(" S1 : %s\n", all->p->s1); */
-	all->p->s2 = input_max(all, envlist);
-	if (!all->p->s2)
-		return (1);
-	/* printf(" S2: %s\n", all->p->s2); */
+	printf(" S1 : %s\n", all->p->s1);
 	if (check_redir(all->p->s1) == false)
 	{
 		ft_putstr_fd("error: redir\n", 2);

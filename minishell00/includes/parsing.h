@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/27 16:33:53 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:42:05 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_p
 	char				*s;
 	char				*s0;
 	char				*s1;
-	char				*s2;
 	int					len;
 	int					len1;
 	int					start;
@@ -127,8 +126,6 @@ void		map_list(t_p *p, t_process **list_process, t_process *new, int i);
 t_process	*create_process(t_p *p, int end);
 void		make_token_list(t_process *process, t_list *envlist, t_p *p);
 t_tokens	*create_tokens(char *str, int id);
-char 	*input_max(t_all *all, t_list	*envlist);
-
 
 /* expand .c */
 bool		varcmp(char *model, char *str);

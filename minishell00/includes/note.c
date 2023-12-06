@@ -61,3 +61,28 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		free(lst);
 	}
 }
+
+
+
+test  a corriger :
+
+minishell > <infile >outfile
+Contenu de section_cmd : < infile outfile id = 1
+tkn < : 5,
+tkn infile : 3,
+tkn outfile : 1,
+
+minishell > "      " " OK"
+Contenu de section_cmd :         OK id = 1
+tkn OK : 1,
+
+>>> devrait y avoir deux token aux espaces entre guillemets 
+
+<infile<infile2 cat >outfile
+1=CMD, 2=W, 3=INFILE, 4=OUTFILE, 5=REDIR_IN, 6=REDIR_OUT
+value: < type: 5
+value: infile type: 3
+value: < type: 5
+value: infile2 type: 3
+value: cat type: 2
+value: outfile type: 2
