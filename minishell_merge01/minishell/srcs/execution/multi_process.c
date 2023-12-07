@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   multi_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 13:23:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:59:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ void	exe_prcs(t_res *res, t_process *prcs, int i)
 	int			fdin;
 	int			fdout;
 
-	fdin = 0;
-	fdout = 1;
+	fdin = STDIN_FILENO;
+	fdout = STDOUT_FILENO;
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 	{
-		garbage_collector_child(res);
 		perror("Error: exe_prcs: fork failed");
 		g_signal[0] = 1;
 		return ;
@@ -67,7 +66,6 @@ void	multi_prcs(t_res *res)
 	res->tab = fill_tab(res->prcs);
 	if (!res->tab)
 	{
-		garbage_collector_child(res);
 		g_signal[0] = 1;
 		return ;
 	}
@@ -76,7 +74,6 @@ void	multi_prcs(t_res *res)
 		if (pipe_pipefd(res->tab, i) == -1)
 		{
 			ft_putstr_fd("Error: pipe_pipefd: create pipe failed\n", 2);
-			garbage_collector_child(res);
 			break ;
 		}
 		exe_prcs(res, tmp, i);

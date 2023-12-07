@@ -58,9 +58,6 @@ static void	clear_builtins(t_builtins *blt)
 
 void	garbage_collector_child(t_res *res)
 {
-	t_process	*tmp;
-
-	tmp = NULL;
 	if (res->prcs)
 		clear_prcs_list(&res->prcs);
 	if (res->blt)

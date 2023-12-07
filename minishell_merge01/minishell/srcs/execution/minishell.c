@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/07 16:45:17 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:49:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	main(int argc, char **argv, char **env)
 			add_history(res.input);
 			ft_parse(res.input, &all);
 			res.prcs = all.process;
+			print_prcs(res.prcs);
 			if (find_nb_process(res.prcs) > 1)
 				multi_prcs(&res);
 			else
-			print_prcs(res.prcs);
-			single_prcs(&res);
+				single_prcs(&res);
 		}
 		garbage_collector_parent(&res);
 	}

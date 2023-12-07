@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_2.c                                   :+:      :+:    :+:   */
+/*   redirections_multi_prcs.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:30:43 by yachen            #+#    #+#             */
-/*   Updated: 2023/11/30 13:36:24 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:10:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 static void	redir_first_process(int fdin, int fdout, int *pipefd)
 {
 	close(pipefd[0]);
-	if (fdin > 2)
+	if (fdin != STDIN_FILENO)
 	{
 		dup2(fdin, STDIN_FILENO);
 		close(fdin);
 	}
-	if (fdout > 2)
+	if (fdout != STDOUT_FILENO)
 	{
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);
@@ -37,7 +37,7 @@ static void	redir_first_process(int fdin, int fdout, int *pipefd)
 
 static void	redir_last_process(int fdin, int fdout, int *pipefd)
 {
-	if (fdin > 2)
+	if (fdin != STDIN_FILENO)
 	{
 		dup2(fdin, STDIN_FILENO);
 		close(fdin);
@@ -48,7 +48,7 @@ static void	redir_last_process(int fdin, int fdout, int *pipefd)
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
 	}
-	if (fdout > 2)
+	if (fdout != STDOUT_FILENO)
 	{
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);
@@ -58,7 +58,7 @@ static void	redir_last_process(int fdin, int fdout, int *pipefd)
 static void	redir_medium_prcs(int fdin, int fdout, int *previous, int *current)
 {
 	close(current[0]);
-	if (fdin > 2)
+	if (fdin != STDIN_FILENO)
 	{
 		dup2(fdin, STDIN_FILENO);
 		close(fdin);
@@ -69,7 +69,7 @@ static void	redir_medium_prcs(int fdin, int fdout, int *previous, int *current)
 		dup2(previous[0], STDIN_FILENO);
 		close(previous[0]);
 	}
-	if (fdout > 2)
+	if (fdout != STDOUT_FILENO)
 	{
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);

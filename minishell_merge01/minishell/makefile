@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/12/07 16:47:27 by yachen           ###   ########.fr        #
+#    Updated: 2023/12/07 17:15:24 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ BUILTINS = cd echo env export_part1 export_part2 export_part3 pwd unset builtins
 
 EXECUTION = minishell single_prcs garbage_collector init_ressources \
 			redirections_1 redirections_2 pipex_parsing_cmd_1 pipex_parsing_cmd_2 \
-			exe_no_builtins exe_builtins process process_utils \
+			exe_no_builtins exe_builtins multi_process process_utils \
 			
 RM = rm -rf
 
