@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:02:15 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 14:38:44 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ static void	clear_prcs_list(t_process **process)
 
 void	garbage_collector_parent(t_res *res)
 {
-	t_process	*tmp;
-
-	tmp = NULL;
 	if (res->prcs)
 	{
 		clear_prcs_list(&res->prcs);

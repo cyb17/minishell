@@ -12,22 +12,6 @@
 
 #include "../../includes/execution.h"
 
-int	ft_compare(char *limiter, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (limiter[i])
-	{
-		if (limiter[i] != str[i])
-			return (0);
-		i++;
-	}
-	if (limiter[i] == '\0' && str[i] == '\n')
-		return (1);
-	return (0);
-}
-
 static void	clear_tk_list(t_tokens **list)
 {
 	t_tokens	*tmp;
@@ -86,5 +70,21 @@ void	garbage_collector_child(t_res *res)
 		if (res->tab->pipefd)
 			free_pipefd(res->tab->pipefd, res->tab->nb_pipe);
 		free(res->tab);
+	}
+}
+
+void	garbage_collector_parent(t_res *res)
+{
+	if (res->prcs)
+	{
+		clear_prcs_list(&res->prcs);
+		res->prcs = NULL;
+	}
+	if (res->tab)
+	{
+		if (res->tab->pipefd)
+			free_pipefd(res->tab->pipefd, res->tab->nb_pipe);
+		free(res->tab);
+		res->tab = NULL;
 	}
 }

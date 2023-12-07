@@ -6,11 +6,27 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 13:25:58 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_compare(char *limiter, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (limiter[i])
+	{
+		if (limiter[i] != str[i])
+			return (0);
+		i++;
+	}
+	if (limiter[i] == '\0' && str[i] == '\n')
+		return (1);
+	return (0);
+}
 
 int	isnot_builtins(char *str)
 {
