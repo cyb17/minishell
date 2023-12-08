@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:58:13 by nap               #+#    #+#             */
-/*   Updated: 2023/11/29 16:42:01 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:48:14 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	token_init(t_tokens *tokens)
 	tokens->next = NULL;
 }
 
-void	all_init(t_all *all, t_res *res)
-{
-	all->process = NULL;
-	all->envlist = res->blt->envlist;
-	all->process = NULL;
-	all->p = NULL;
-}
+// void	all_init(t_all *all, t_res *res)
+// {
+// 	all->process = NULL;
+// 	all->envlist = res->blt->envlist;
+// 	all->process = NULL;
+// 	all->p = NULL;
+// }

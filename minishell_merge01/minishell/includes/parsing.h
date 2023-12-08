@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/11/29 16:41:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 17:01:00 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			manage_num(char *s, int i);
 void		process_init(t_process *process);
 int			pars_init(t_p *p, char *line);
 void		token_init(t_tokens *tokens);
-void		all_init(t_all *all, t_res* res);
+// void		all_init(t_all *all, t_res* res);
 
 /* split_input.c */
 void		make_process_list(t_p *p, t_process **list_process);
