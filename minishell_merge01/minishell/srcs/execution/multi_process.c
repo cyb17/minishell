@@ -6,13 +6,20 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 12:14:16 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:25:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-void	execute_cmd(t_res *res, t_tokens *list_tokens)
+static void	error_task(int fdin, int fdout, t_res *res, int exit_code)
+{
+	clean_fds(fdin, fdout);
+	garbage_collector_child(res);
+	exit(exit_code);
+}
+
+static void	execute_cmd(t_res *res, t_tokens *list_tokens)
 {
 	t_tokens	*cmd;
 	int			exit_code;
@@ -24,7 +31,7 @@ void	execute_cmd(t_res *res, t_tokens *list_tokens)
 	{
 		if (exe_no_builtins(res, cmd) == -1)
 		{
-			garbage_collector_parent(res);
+			garbage_collector_child(res);
 			exit(1);
 		}
 	}
@@ -35,7 +42,25 @@ void	execute_cmd(t_res *res, t_tokens *list_tokens)
 	}
 }
 
-void	exe_prcs(t_res *res, t_process *prcs, int i)
+static void	parent_task(t_tab *tab, int i, t_process *prcs, int *status)
+{
+	if (i == 0)
+		close(tab->pipefd[i][1]);
+	else if (i == tab->nb_pipe)
+		close(tab->pipefd[i - 1][0]);
+	else
+	{
+		close(tab->pipefd[i][1]);
+		close(tab->pipefd[i - 1][0]);
+	}
+	waitpid(prcs->pid, status, 0);
+	if (WIFEXITED(*status))
+		g_signal[0] = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
+		g_signal[0] = WTERMSIG(*status);
+}
+
+static void	exe_prcs(t_res *res, t_process *prcs, int i)
 {
 	int			fdin;
 	int			fdout;
@@ -54,40 +79,14 @@ void	exe_prcs(t_res *res, t_process *prcs, int i)
 	else if (prcs->pid == 0)
 	{
 		if (open_fdin_fdout(&fdin, &fdout, prcs->list_tokens) == -1)
-		{
-			clean_fds(fdin, fdout);
-			garbage_collector_child(res);
-			exit(1);
-		}
+			error_task(fdin, fdout, res, 1);
 		redirection_multi_prcs(fdin, fdout, res->tab, i);
 		if (check_cmd_tk(prcs->list_tokens) == NULL)
-		{
-			clean_fds(fdin, fdout);
-			g_signal[0] = 1;
-			exit(0);
-		}
+			error_task(fdin, fdout, res, 0);
 		execute_cmd(res, prcs->list_tokens);
 	}
 	else
-		close_pipeline_fds(res->tab, i);
-	waitpid(prcs->pid, &status, 0);
-	if (WIFEXITED(status))
-		g_signal[0] = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_signal[0] = WTERMSIG(status);
-}
-
-void	close_pipeline_fds(t_tab *tab, int i)
-{
-	if (i == 0)
-		close(tab->pipefd[i][1]);
-	else if (i == tab->nb_pipe)
-		close(tab->pipefd[i - 1][0]);
-	else
-	{
-		close(tab->pipefd[i][1]);
-		close(tab->pipefd[i - 1][0]);
-	}
+		parent_task(res->tab, i, prcs, &status);
 }
 
 void	multi_prcs(t_res *res)

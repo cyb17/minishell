@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/12/08 13:37:21 by yachen           ###   ########.fr        #
+#    Updated: 2023/12/08 16:38:38 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ PARSING = parsing init utils_parsing ft_split_minishell utils_cleaning \
 		  split_input expand clean_words utils_double utils_parsing2 \
 		  token utils_parsing3 \
 
-BUILTINS = cd echo env export_part1 export_part2 export_part3 pwd unset builtins_utils exit \
+BUILTINS = cd echo env export/export_part1 export/export_part2 export/export_part3 pwd unset utils exit \
 
 EXECUTION = minishell single_prcs garbage_collector init_ressources \
 			here_doc redirections_prcs pipex_parsing_cmd_1 pipex_parsing_cmd_2 \
-			exe_no_builtins exe_builtins multi_process process_utils_1 process_utils_2 \
+			exe_no_builtins exe_builtins multi_process utils_1 utils_2 utils_3 \
 			
 RM = rm -rf
 

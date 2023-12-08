@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 12:38:55 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:39:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../../includes/builtins.h"
 
 // Joint newvar's value to oldvar's value, but need condition: oldvar != NULL
 static int	join_newvar_oldvar(t_var *var, int i)

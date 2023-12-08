@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_procs.c                               :+:      :+:    :+:   */
+/*   redirections_prcs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:30:43 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 13:29:55 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:20:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
-
-//  PENSE A PROTEGER LES DUP2 !!
 
 static void	redir_first_process(int fdin, int fdout, int *pipefd)
 {

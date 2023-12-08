@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 12:46:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:25:14 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 static int	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 {
 	int	rslt;
-	
+
 	rslt = 0;
 	if (ft_strcmp("echo", cmd_tk->value) == 1)
 		rslt = ft_echo(res->blt->arg);

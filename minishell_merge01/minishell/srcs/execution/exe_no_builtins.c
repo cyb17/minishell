@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 13:04:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:26:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*join_cmd_and_option(char *s1, char *s2)
 		free(tmp);
 	return (cmd);
 }
-
 
 // Make cmd_tk to a char * to give to parsing_cmd as parameter
 static char	*make_cmdtk_to_arg(t_tokens *tokens)
@@ -72,7 +71,7 @@ static char	**allocate_a_tab(t_list *envlist)
 		tmp = tmp->next;
 	}
 	env = (char **)malloc(sizeof(char *) * (i + 1));
-	if(!env)
+	if (!env)
 		ft_putstr_fd("Error: list_to_tab: malloc failed\n", 2);
 	return (env);
 }

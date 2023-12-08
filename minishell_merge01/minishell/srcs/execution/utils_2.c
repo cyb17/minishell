@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_utils_1.c                                  :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 13:39:42 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:25:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,6 @@ int	ft_execve(char **env, char *path, char *arg)
 		return (-1);
 	}
 	return (0);
-}
-
-void	ft_error(char *where, char *what)
-{
-	char	*tmp;
-	char	*err;
-
-	tmp = ft_strjoin(where, what);
-	if (!tmp)
-	{
-		ft_putstr_fd(where, 2);
-		ft_putstr_fd(what, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
-	err = ft_strjoin(tmp, "\n");
-	if (!err)
-	{
-		free(tmp);
-		ft_putstr_fd(where, 2);
-		ft_putstr_fd(what, 2);
-		ft_putchar_fd('\n', 2);
-		return ;
-	}
-	free(tmp);
-	ft_putstr_fd(err, 2);
-	free(err);
 }
 
 int	init_stdin_stdout(int stdin, int stdout)

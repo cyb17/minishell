@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:19:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:39:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../../includes/builtins.h"
 
 static void	initialize_var(t_list **list, t_var *var, char *arg)
 {

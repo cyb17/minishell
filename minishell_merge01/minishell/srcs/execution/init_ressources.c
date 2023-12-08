@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 13:35:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:23:22 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	find_nb_process(t_process *prcs)
 static int	malloc_all_pipe(t_tab *tab)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < tab->nb_pipe)
 	{

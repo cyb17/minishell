@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:32:13 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 13:57:17 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:39:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../../includes/builtins.h"
 
 void	free_newvar(t_var *export, t_var *env)
 {

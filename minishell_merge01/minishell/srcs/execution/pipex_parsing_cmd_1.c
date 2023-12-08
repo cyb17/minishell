@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 12:43:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 16:23:47 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*sub_parsing_cmd2(char **env_main, char *cmd)
 	env_path = find_path(env_main, cmd);
 	if (!env_path)
 	{
-		ft_putstr_fd("Error: variable PATH not found\n",2);
+		ft_putstr_fd("Error: variable PATH not found\n", 2);
 		return (NULL);
 	}
 	i = 0;
