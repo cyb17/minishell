@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/07 16:49:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 12:29:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ static void	print_prcs(t_process *prcs)
 		printf("yes1\n");
 	while (tmp)
 	{
-		tmp2 = prcs->list_tokens;
+		tmp2 = tmp->list_tokens;
 		printf("1=CMD, 2=W, 3=INFILE, 4=OUTFILE, 5=REDIR_IN, 6=REDIR_OUT\n");
-		if (tmp2 == NULL)
-			printf("yes2\n");
 		while (tmp2)
 		{
 			printf("value: %s type: %d\n", tmp2->value, tmp2->type);

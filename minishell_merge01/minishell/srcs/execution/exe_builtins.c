@@ -6,13 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 11:22:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 12:46:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// Make cmd_tk a char ** to give builtins'sfonctions as parameter
+// Make cmd_tk a char ** to give builtins's fonctions as parameter
 static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 {
 	t_tokens	*tmp;
@@ -66,7 +66,7 @@ static int	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 	return (rslt);
 }
 
-// Return command exit status
+// Execute builtins and return their exit status
 int	exe_builtins(t_res *res, t_tokens *cmd)
 {
 	if (builtin_cmd_arg(cmd, res->blt) == -1)

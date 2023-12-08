@@ -6,19 +6,44 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/07 16:59:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 12:14:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+void	execute_cmd(t_res *res, t_tokens *list_tokens)
+{
+	t_tokens	*cmd;
+	int			exit_code;
+
+	cmd = check_cmd_tk(list_tokens);
+	if (!cmd)
+		return ;
+	if (isnot_builtins(cmd->value) == 1)
+	{
+		if (exe_no_builtins(res, cmd) == -1)
+		{
+			garbage_collector_parent(res);
+			exit(1);
+		}
+	}
+	else
+	{
+		exit_code = exe_builtins(res, cmd);
+		exit(exit_code);
+	}
+}
+
 void	exe_prcs(t_res *res, t_process *prcs, int i)
 {
 	int			fdin;
 	int			fdout;
+	int			status;
 
 	fdin = STDIN_FILENO;
 	fdout = STDOUT_FILENO;
+	status = 0;
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 	{
@@ -35,12 +60,21 @@ void	exe_prcs(t_res *res, t_process *prcs, int i)
 			exit(1);
 		}
 		redirection_multi_prcs(fdin, fdout, res->tab, i);
+		if (check_cmd_tk(prcs->list_tokens) == NULL)
+		{
+			clean_fds(fdin, fdout);
+			g_signal[0] = 1;
+			exit(0);
+		}
 		execute_cmd(res, prcs->list_tokens);
-		// close(STDIN_FILENO);
-		close(STDOUT_FILENO);
 	}
 	else
 		close_pipeline_fds(res->tab, i);
+	waitpid(prcs->pid, &status, 0);
+	if (WIFEXITED(status))
+		g_signal[0] = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_signal[0] = WTERMSIG(status);
 }
 
 void	close_pipeline_fds(t_tab *tab, int i)
@@ -79,14 +113,5 @@ void	multi_prcs(t_res *res)
 		exe_prcs(res, tmp, i);
 		tmp = tmp->next;
 		i++;
-	}
-	tmp = res->prcs;
-	while (tmp)
-	{
-		printf("%s : %d\n", tmp->section_cmd, tmp->pid);
-		if (tmp->pid != -1)
-			waitpid(tmp->pid, NULL, 0);
-		printf("waitpit succes\n");
-		tmp = tmp->next;
 	}
 }

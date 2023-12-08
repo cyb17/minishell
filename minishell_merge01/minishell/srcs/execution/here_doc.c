@@ -6,46 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/05 16:08:33 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:26:08 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
-
-// Ouvre infile en fdin
-void	redirect_in(int *fdin, char *infile)
-{
-	if (*fdin != STDIN_FILENO && *fdin != -1)
-		close(*fdin);
-	*fdin = open(infile, O_RDONLY);
-	if (*fdin == -1)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(infile, 2);
-		perror(" ");
-		return ;
-	}
-}
-
-// Ouvre fdout en outfile et possede 2 mode :
-// T pour O_TRUNC pour >
-// A pour O_APPEND pour >>
-void	redirect_out(int *fdout, char *outfile, char mode)
-{
-	if (*fdout != STDOUT_FILENO && *fdout != -1)
-		close(*fdout);
-	if (mode == 'T')
-		*fdout = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	else if (mode == 'A')
-		*fdout = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (*fdout == -1)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(outfile, 2);
-		perror(" ");
-		return ;
-	}
-}
 
 // /dev/urandom est un fichier qui est genere avec un contenu aleatoire
 // le choix du nom de fichier here_doc se fait a partir de ce fichier. 
@@ -73,6 +38,22 @@ static char	*create_hdname(void)
 	here_doc = ft_strjoin(tmp, name);
 	close(urandom_fd);
 	return (here_doc);
+}
+
+static int	ft_compare(char *limiter, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (limiter[i])
+	{
+		if (limiter[i] != str[i])
+			return (0);
+		i++;
+	}
+	if (limiter[i] == '\0' && str[i] == '\n')
+		return (1);
+	return (0);
 }
 
 // cette fonction lit l'entree std et

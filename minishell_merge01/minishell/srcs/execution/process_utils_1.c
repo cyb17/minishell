@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_utils.c                                    :+:      :+:    :+:   */
+/*   process_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/07 16:46:46 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:39:42 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-int	ft_compare(char *limiter, char *str)
+// If there is a infile or a outfile valid fd opened, close it.
+void	clean_fds(int fdin, int fdout)
 {
-	int	i;
-
-	i = 0;
-	while (limiter[i])
-	{
-		if (limiter[i] != str[i])
-			return (0);
-		i++;
-	}
-	if (limiter[i] == '\0' && str[i] == '\n')
-		return (1);
-	return (0);
+	if (fdin != STDIN_FILENO && fdin != -1)
+		close(fdin);
+	if (fdout != STDOUT_FILENO && fdout != -1)
+		close(fdout);
 }
 
 int	isnot_builtins(char *str)
@@ -53,23 +46,21 @@ t_tokens	*check_cmd_tk(t_tokens *list_tokens)
 	return (NULL);
 }
 
-void	execute_cmd(t_res *res, t_tokens *list_tokens)
+int	ft_execve(char **env, char *path, char *arg)
 {
-	t_tokens	*cmd;
+	char	**cmd;
 
-	cmd = check_cmd_tk(list_tokens);
-	if (!cmd)
-		return ;
-	if (isnot_builtins(cmd->value) == 1)
+	cmd = make_cmd(arg);
+	if (execve(path, cmd, env) == -1)
 	{
-		if (exe_no_builtins(res, cmd) == -1)
-		{
-			garbage_collector_parent(res);
-			exit(1);
-		}
+		perror("Error: execve");
+		free_tab(cmd);
+		free_tab(env);
+		free(arg);
+		free(path);
+		return (-1);
 	}
-	else
-		exe_builtins(res, cmd);
+	return (0);
 }
 
 void	ft_error(char *where, char *what)
@@ -97,4 +88,25 @@ void	ft_error(char *where, char *what)
 	free(tmp);
 	ft_putstr_fd(err, 2);
 	free(err);
+}
+
+int	init_stdin_stdout(int stdin, int stdout)
+{
+	if (dup2(stdin, STDIN_FILENO) == -1)
+	{
+		perror("Error: init_stdin_stdout: dup2");
+		close(stdin);
+		close(stdout);
+		return (-1);
+	}
+	close(stdin);
+	if (dup2(stdout, STDOUT_FILENO) == -1)
+	{
+		perror("Error: init_stdin_stdout: dup2");
+		close(stdin);
+		close(stdout);
+		return (-1);
+	}
+	close(stdout);
+	return (0);
 }

@@ -6,45 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 13:34:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:04:49 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// Parse cmd and find path for execution
-// char	*find_execve_path(t_res *res, char **env, char *argv_value)
-// {
-// 	char	*path;
-
-// 	path = parsing_cmd(env, argv_value);
-// 	if (!path)
-// 	{
-// 		garbage_collector(res);
-// 		free(argv_value);
-// 		exit (1);
-// 	}
-// 	return (path);
-// }
-
-// Execute the command
-// int	ft_execve(t_res *res, char **env, char *path, char *argv_value)
-// {
-// 	char	**cmd;
-
-// 	cmd = make_cmd(argv_value);
-// 	if (execve(path, cmd, env) == -1)
-// 	{
-// 		perror("Error: execve");
-// 		free_tab(cmd);
-// 		free_tab(env);
-// 		free(argv_value);
-// 		free(path);
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
-
+// Join 2 tokens with a space between them
 static char	*join_cmd_and_option(char *s1, char *s2)
 {
 	char	*tmp;
@@ -66,13 +34,12 @@ static char	*join_cmd_and_option(char *s1, char *s2)
 }
 
 
-// Convert cmd_tk to a char *
+// Make cmd_tk to a char * to give to parsing_cmd as parameter
 static char	*make_cmdtk_to_arg(t_tokens *tokens)
 {
 	char		*tmp;
 	char		*cmd;
 
-	tmp = NULL;
 	cmd = NULL;
 	while (tokens && (tokens->type == CMD || tokens->type == WORD))
 	{
@@ -110,7 +77,7 @@ static char	**allocate_a_tab(t_list *envlist)
 	return (env);
 }
 
-// Dup actual envlist to a char **env 
+// Make a char **env with actual envlist to give to parsing_cmd as parameter
 static char	**list_to_tab(t_list *envlist)
 {
 	int		i;
@@ -136,23 +103,6 @@ static char	**list_to_tab(t_list *envlist)
 	}
 	env[i] = NULL;
 	return (env);
-}
-
-static int	ft_execve(char **env, char *path, char *arg)
-{
-	char	**cmd;
-
-	cmd = make_cmd(arg);
-	if (execve(path, cmd, env) == -1)
-	{
-		perror("Error: execve");
-		free_tab(cmd);
-		free_tab(env);
-		free(arg);
-		free(path);
-		return (-1);
-	}
-	return (0);
 }
 
 int	exe_no_builtins(t_res *res, t_tokens *cmd)

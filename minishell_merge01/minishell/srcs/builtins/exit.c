@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 14:21:50 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 10:59:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	ft_exit(char **arg, t_res *res)
 	{
 		g_signal[0] = 0;
 		garbage_collector_child(res);
-		init_stdin_stdout(res->io->stdin, res->io->stdout);
+		if (res->io)
+			init_stdin_stdout(res->io->stdin, res->io->stdout);
 		exit(0);
 	}
 	if (is_correct_number(arg[1]) == 0 && ft_strcmp(arg[1], "0") == 0)
@@ -92,7 +93,8 @@ int	ft_exit(char **arg, t_res *res)
 		ft_putstr_fd(arg[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_signal[0] = 2;
-		init_stdin_stdout(res->io->stdin, res->io->stdout);
+		if (res->io)
+			init_stdin_stdout(res->io->stdin, res->io->stdout);
 		garbage_collector_child(res);
 		exit(2);
 	}
@@ -104,7 +106,8 @@ int	ft_exit(char **arg, t_res *res)
 	}
 	g_signal[0] = ft_atoi(arg[1]) % 256;
 	garbage_collector_child(res);
-	init_stdin_stdout(res->io->stdin, res->io->stdout);
+	if (res->io)
+		init_stdin_stdout(res->io->stdin, res->io->stdout);
 	exit(g_signal[0]);
 	return (0);
 }

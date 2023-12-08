@@ -6,13 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 13:54:58 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 12:43:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// Check if cmd accessible and executable
+// Check if cmd[0] is accessible and executable
 char	*sub_parsing_cmd1(char **split_cmd)
 {
 	char	*path;

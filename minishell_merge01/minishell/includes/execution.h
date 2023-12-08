@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/06 14:21:20 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:44:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,18 @@
 // garbage_collector
 void		garbage_collector_child(t_res *res);
 void		garbage_collector_parent(t_res *res);
-int			ft_compare(char *limiter, char *str);
 
 // init_ressources
-void		free_pipefd(int **pipefd, int nb_pipe);
-int			pipe_pipefd(t_tab *tab, int i);
 int			find_nb_process(t_process *process);
 t_tab		*fill_tab(t_process *process);
 t_builtins	*fill_builtins(char **env);
 
-// redirections_1
-void		redirect_in(int *fdin, char *infile);
-void		redirect_out(int *fdout, char *outfile, char mode);
+// here_doc
 char		*ft_here_doc(char *limiter);
-// redirections_2
+
+// redirections_prcs
 void		redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
-// void		redirection_single_prcs(int fdin, int fdout);
+int			redirection_single_prcs(int fdin, int fdout);
 
 // pipex_parsing_cmd_1
 char		*sub_parsing_cmd1(char **split_cmd);
@@ -51,9 +47,6 @@ char		**make_cmd(char *str);
 int			check_cmd(char *cmd);
 
 // exe_no_builtins
-// char		*find_execve_path(t_res *res, char **env, char *argv_value);
-// void		ft_execve(t_res *res, char **env, char *path, char *argv_value);
-// char		*make_cmdtk_to_arg(t_tokens *tokens);
 int			exe_no_builtins(t_res *res, t_tokens *cmd);
 
 // exe_builtins
@@ -67,12 +60,19 @@ void		multi_prcs(t_res *res);
 void		single_prcs(t_res *res);
 int			init_stdin_stdout(int stdin, int stdout);
 
-// process_utils
+// process_utils_1
 int			isnot_builtins(char *str);
 t_tokens	*check_cmd_tk(t_tokens *list_tokens);
 void		execute_cmd(t_res *res, t_tokens *list_tokens);
 void		clean_fds(int fdin, int fdout);
+int			ft_execve(char **env, char *path, char *arg);
 void		ft_error(char *where, char *what);
+int			init_stdin_stdout(int stdin, int stdout);
+// process_utils_2
+void		free_pipefd(int **pipefd, int nb_pipe);
+int			pipe_pipefd(t_tab *tab, int i);
+void		redirect_in(int *fdin, char *infile);
+void		redirect_out(int *fdout, char *outfile, char mode);
 
 // fonction for test
 t_process	*create_list_process(void);
