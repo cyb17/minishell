@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:42:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 16:13:44 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_tokens	*create_tokens(char *str, int id, t_p *p)
 	token_init(tokens);
 	tokens->value = ft_strdup(str);
 	tokens->id = id;
+	if (str)
+		free(str);
 	return (tokens);
 }
 

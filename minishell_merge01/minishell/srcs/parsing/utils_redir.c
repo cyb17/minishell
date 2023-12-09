@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:50:16 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 16:59:01 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ bool	redir_err2(char *s, t_all *all, int i, bool *flag)
 		if ((s[i + 1] == '\0' && i == 0) || (s[i + 1] == '\0'))
 		{
 			if (s[i] == '<')
-				return (ft_error(ERROR_REDIR4, all, 2));
+				return (ft_error(ERROR_NEWLINE, all, 2));
 			if (s[i] == '>')
-				return (ft_error(ERROR_REDIR3, all, 2));
+				return (ft_error(ERROR_NEWLINE, all, 2));
 		}
 	}
 	return (true);
@@ -96,9 +96,9 @@ bool	redir_err3(char *s, t_all *all, int *i, bool *flag)
 		if ((s[(*i) + 2] == '\0' && (*i) == 0) || s[(*i) + 2] == '\0')
 		{
 			if (s[(*i)] == '<')
-				return (ft_error(ERROR_REDIR2, all, 2));
+				return (ft_error(ERROR_NEWLINE, all, 2));
 			if (s[(*i)] == '>')
-				return (ft_error(ERROR_REDIR1, all, 2));
+				return (ft_error(ERROR_NEWLINE, all, 2));
 		}
 		(*i)++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:53:25 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:35:32 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:17:08 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ bool	syntax_token(t_process *process, t_all *all)
 	int			n;
 	t_tokens	*head;
 
+	if (!process->next && chk_rdi(all->p->s1, all) == false)
+		return (false);
 	while (process)
 	{
 		head = process->list_tokens;
@@ -106,5 +108,5 @@ bool	syntax_token(t_process *process, t_all *all)
 		process->list_tokens = head;
 		process = process->next;
 	}
-	return (true);
+	return (chk_rdi(all->p->s1, all));
 }

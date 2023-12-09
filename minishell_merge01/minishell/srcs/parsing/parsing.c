@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:16:34 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	end_parse(t_all *all, t_list *envlist)
 		ft_error(ERROR_M3, all, 1);
 		return (-1);
 	}
-	if (chk_rdi(all->p->s1, all) == false || chk_prc(all->p->s1, all) == false)
+	if (chk_prc(all->p->s1, all) == false)
 		return (-1);
 	make_process_list(all->p, &all->process);
 	if (!all->process)
