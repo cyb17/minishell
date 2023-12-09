@@ -6,11 +6,27 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:34:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
+
+bool	varcmp(char *model, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (model[i] && model[i] != '=')
+	{
+		if (model[i] != str[i])
+			return (0);
+		i++;
+	}
+	if (str[i] == '=')
+		return (1);
+	return (0);
+}
 
 char	*find_var(char *var, t_list *list)
 {
@@ -39,16 +55,34 @@ char	*my_getenv(char *var, t_list *list)
 		return (my_strjoin((str + (ft_strlen(var) + 1)), tmp));
 }
 
-void	expand_value_end(int i, char **tmp, int *j)
-{
-	(*j) = 0;
-	while ((*j) <= i)
-	{
-		(*tmp)++;
-		(*j)++;
-	}
-}
+// char	*expand_value(char *s, int i, t_list **envlist)
+// {
+// 	char	*to_expand;
+// 	char	*expanded;
+// 	char	*tmp;
+// 	int		j;
 
+// 	if (s[i + 1] == ' '
+// 		|| (s[i + 1] == '"' && between_quotes(s, i) > i))
+// 		return (ft_strdup_section(s, i, i + 1));
+// 	else if (s[i + 1] == '?' && ((s[i + 2] == '\0')
+// 		|| (s[i + 2] == '$')
+// 		|| ((s[i + 2] == '"' && between_quotes(s, i) > i))))
+// 		return (ft_strdup_section(s, i, i + 2));
+// 	j = 0;
+// 	tmp = s;
+// 	while (j <= i)
+// 	{
+// 		tmp++;
+// 		j++;
+// 	}
+// 	to_expand = get_var_to_exp(tmp);
+// 	expanded = my_getenv(to_expand, *envlist);
+// 	free(to_expand);
+// 	if (!expanded)
+// 		return (NULL);
+// 	return (expanded);
+// }
 char	*expand_value(char *s, int i, t_list **envlist)
 {
 	char	*to_expand;
@@ -56,19 +90,20 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	char	*tmp;
 	int		j;
 
-	j = 1;
-	while (s[i + j] == '$' || s[i + j] == '?')
-		j++;
-	if (j > 1)
-		return (ft_strdup_section(s, i, i + j));
 	if (s[i + 1] == ' ' || s[i + 1] == '\0'
-		|| (s[i + 1] == '"' && b_q(s, i) > i))
+		|| (s[i + 1] == '"' && between_quotes(s, i) > i))
 		return (ft_strdup_section(s, i, i + 1));
-	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' ')
-			|| ((s[i + 2] == '"' && b_q(s, i) > i))))
+	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' '
+			|| (s[i + 2] == '$')) || ((s[i + 2] == '"'
+			&& between_quotes(s, i) > i))))
 		return (ft_strdup_section(s, i, i + 2));
+	j = 0;
 	tmp = s;
-	expand_value_end(i, &tmp, &j);
+	while (j <= i)
+	{
+		tmp++;
+		j++;
+	}
 	to_expand = get_var_to_exp(tmp);
 	expanded = my_getenv(to_expand, *envlist);
 	free(to_expand);

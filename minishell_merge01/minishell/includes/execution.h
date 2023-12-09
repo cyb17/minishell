@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 16:19:37 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:33:43 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,6 @@ int			ft_execve(char **env, char *path, char *arg);
 int			init_stdin_stdout(int stdin, int stdout);
 
 // utils_3
-void		ft_error(char *where, char *what);
-
-
-
-
-
-
-
-
-
-
+// void		ft_error(char *where, char *what);
 
 #endif

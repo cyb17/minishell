@@ -10,25 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
 
-int	manage_num(char *s, int i)
+char	*delete_quotes(char *s)
 {
-	int	j;
+	int		i;
+	char	*cpy;
 
-	j = i;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	if (s[i] == '>' || s[i] == '<')
-		return (i);
-	else
-		return (j);
+	i = 0;
+	cpy = NULL;
+	while (*s && s[i] != '\0' && i < ((int)ft_strlen(s)))
+	{
+		if (s && (s[i] == '\'' && s[i + 1] == '\'') 
+			&& between_quotes(s, i + 1) == i)
+			i = i + 2;
+		else if (s && (s[i] == '"' && s[i + 1] == '"'
+				&& between_quotes(s, i + 1) == i))
+			i = i + 2;
+		else 
+		{
+			if (cpy == NULL)
+				cpy = ft_strdup_section(s, i, i + 1);
+			else
+				cpy = cpychar(s, i, cpy);
+			i++;
+		}
+	}
+	return (cpy);
 }
 
 char	*cpychar2(char *s, int i, char *cpy)
 {
 	char	*cpy2;
-	char	*tmp;
+	char	*tmp; 
 
 	if ((s[i - 1] != '>' || s[i - 1] != '<') && i > 0)
 	{
@@ -63,7 +77,7 @@ char	*cpychar3(char *s, int i, char *cpy)
 char	*add_blank(char *cpy)
 {
 	char	*cpy2;
-	char	*tmp;
+	char	*tmp; 
 
 	tmp = malloc(sizeof(char) * 2);
 	if (!tmp)
@@ -82,7 +96,7 @@ char	*add_blank(char *cpy)
 	return (cpy);
 }
 
-char	*add_space(char *s)
+char *add_space(char *s)
 {
 	int		i;
 	char	*cpy;
@@ -91,19 +105,19 @@ char	*add_space(char *s)
 	cpy = NULL;
 	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
 	{
-		if (b_q(s, i) == i && (s[i] >= '0' && s[i] <= '9'))
+		if (between_quotes(s, i) == i && (s[i] >= '0' && s[i] <= '9'))
 			i = manage_num(s, i);
 		if ((s[i] == '<' || s[i] == '>') && (i - 1 >= 0)
-			&& b_q(s, i) == i && s[i - 1] != ' '
+			&& between_quotes(s, i) == i && s[i - 1] != ' '
 			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
 		{
 			cpy = cpychar2(s, i, cpy);
 			i++;
 		}
 		if ((s[i] == '<' || s[i] == '>') && ((s[i + 1] != ' ')
-				&& (s[i + 1] != '<') && (s[i + 1] != '>') && (i - 1 >= 0)
-				&& (s[i - 1] != '<') && (s[i - 1] != '>'))
-			&& b_q(s, i) == i && s[i + 1] != '\0')
+			&& (s[i + 1] != '<') && (s[i + 1] != '>') && (i - 1 >= 0)
+			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
+			&& between_quotes(s, i) == i && s[i + 1] != '\0')
 			cpy = add_blank(cpy);
 		cpy = cpychar3(s, i, cpy);
 		i++;

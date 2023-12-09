@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:50:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ static void	start_data_init(t_res *res, t_all *all, char **env)
 	all->p = NULL;
 }
 
+// void	signal_handler(int signum)
+// {
+// 	if (signum == SIGINT)
+// 	{
+// 	}
+// 	else if (signum == SIGQUIT)
+// 		return ;
+// }
+
 int	main(int argc, char **argv, char **env)
 {
 	t_res		res;
@@ -65,19 +74,24 @@ int	main(int argc, char **argv, char **env)
 	start_data_init(&res, &all, env);
 	while (1)
 	{
+		
 		res.input = readline("\e[34;1mminishell> \e[0m");
 		if (res.input && res.input[0] != '\0')
 		{
 			add_history(res.input);
-			ft_parse(res.input, &all);
-			res.prcs = all.process;
-			// print_prcs(res.prcs);
-			if (find_nb_process(res.prcs) > 1)
-				multi_prcs(&res);
-			else
-				single_prcs(&res);
+			if (ft_parse(res.input, &all) == 0)
+			{
+				clean_pars(all.p);
+				res.prcs = all.process;
+				// print_prcs(res.prcs);
+				if (find_nb_process(res.prcs) > 1)
+					multi_prcs(&res);
+				else
+					single_prcs(&res);
+			}
 		}
 		garbage_collector_parent(&res);
+		// signal(SIGINT, signal_handler);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:06:38 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:25:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,35 @@ typedef struct s_tokens
 typedef struct s_process
 {
     char				*section_cmd;
-	char 				**cmds;
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
 	struct s_process	*next;
 }						t_process;
 
+typedef struct s_all	t_all;
+
 typedef struct s_p
 {
 	char				*s;
 	char				*s0;
 	char				*s1;
-	char				*s2;
+	char				*cpy2;
+	char				*s3;
 	int					len;
 	int					len1;
 	int					start;
-	int					id; 
+	int					id;
+	int					i;
+	int					z;
+	int					j;
+	int					k;
+	int					l;
+	int					max;
 	char				**words;
 	char				**tkn;
+	t_all				*all;
 }						t_p;
-
 
 typedef struct s_all
 {
@@ -127,6 +135,5 @@ typedef struct s_res
 	char		*input;
 	t_redir		*io;
 }				t_res;
-
 
 #endif

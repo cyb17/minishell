@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
 
 char	*ft_strdup_checking(char *s, int start, int end)
 {
@@ -51,7 +51,7 @@ char	*my_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = malloc(sizeof(char) * (my_strlen(s1) + my_strlen(s2) + 1));
 	if (!str)
 	{
 		ft_putstr_fd("error: create_process: malloc failed", 2);
@@ -80,7 +80,7 @@ bool	is_ok(char c)
 		return (false);
 }
 
-/* void	print_tab(char **tab)
+void	print_tab(char **tab)
 {
 	int	i;
 
@@ -93,4 +93,4 @@ bool	is_ok(char c)
 			i++;
 		}
 	}
-} */
+}

@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:42:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
 
 t_process	*create_process(t_p *p, int end)
 {
@@ -19,27 +19,20 @@ t_process	*create_process(t_p *p, int end)
 	process = (t_process *)malloc(sizeof(t_process));
 	if (!process)
 	{
-		ft_error(ERROR_M4, p->all, 1);
+		ft_putstr_fd("error: create_process: malloc failed", 2);
 		return (NULL);
 	}
 	process_init(process);
 	process->section_cmd = ft_strdup_section(p->s1, p->start, end);
-	if (!process->section_cmd)
-	{
-		ft_error(ERROR_M4, p->all, 1);
-		return (NULL);
-	}
+	process->cmds = ft_split_minishell(process->section_cmd, ' ');
 	process->section_cmd_id = p->id;
 	return (process);
 }
 
-bool	map_list(t_p *p, t_process **list_process, t_process *new, int i)
+void	map_list(t_p *p, t_process **list_process, t_process *new, int i)
 {
 	new = create_process(p, i);
-	if (!new)
-		return (ft_error(ERROR_M8, p->all, 1));
 	ft_procsadd_back(list_process, new);
-	return (true);
 }
 
 void	make_process_list(t_p *p, t_process **list_process)
@@ -49,11 +42,11 @@ void	make_process_list(t_p *p, t_process **list_process)
 
 	new = NULL;
 	i = 0;
-	while (p->s1[i] && i <= (int)ft_strlen(p->s1))
+	while (p->s1[i] && i <= (int)my_strlen(p->s1))
 	{
 		if (p->s1[i] == '|')
 		{
-			if (b_q(p->s1, i) == i)
+			if (between_quotes(p->s1, i) == i)
 			{
 				map_list(p, list_process, new, i);
 				p->start = i + 1;
@@ -63,52 +56,76 @@ void	make_process_list(t_p *p, t_process **list_process)
 		i++;
 	}
 	if (p->id == 1)
-		map_list(p, list_process, new, (int)ft_strlen(p->s1));
+		map_list(p, list_process, new, (int)my_strlen(p->s1));
 	else
-		map_list(p, list_process, new, (int)ft_strlen(p->s1));
+		map_list(p, list_process, new, (int)my_strlen(p->s1));
 }
 
-t_tokens	*create_tokens(char *str, int id, t_p *p)
+t_tokens	*create_tokens(char *str, int id)
 {
 	t_tokens	*tokens;
 
 	tokens = (t_tokens *)malloc(sizeof(t_tokens));
 	if (!tokens)
 	{
-		ft_error(ERROR_M5, p->all, 1);
+		ft_putstr_fd("error: create_tokens: malloc failed", 2);
 		return (NULL);
 	}
 	token_init(tokens);
 	tokens->value = ft_strdup(str);
+/* 	printf("token value = %s\n", tokens->value); */
 	tokens->id = id;
 	return (tokens);
 }
 
-bool	make_token_list(t_process *process, t_list *envlist, t_p *p)
+void	make_token_list(t_process *process, t_list *envlist, t_p *p)
 {
 	t_tokens	*new_token;
+	int			id;
 	int			i;
-	char		*tkn_word;
+	(void)envlist;
 
 	new_token = NULL;
 	while (process != NULL)
 	{
-		p->id = 0;
+		id = 0;
 		i = 0;
-		p->tkn = ft_split_minishell(process->section_cmd, ' ', p);
-		if (!p->tkn)
-			return (ft_error(ERROR_M6, p->all, 1));
+		p->tkn = ft_split_minishell(process->section_cmd, ' ');
 		while (p->tkn[i] != NULL)
 		{
-			tkn_word = clean_word(p->tkn[i], p, &envlist);
-			p->id++;
-			new_token = create_tokens(tkn_word, p->id, p);
-			if (!new_token)
-				return (ft_error(ERROR_M5, p->all, 1));
+			id++;
+			new_token = create_tokens(p->tkn[i], id);
 			ft_tokenadd_back(&process->list_tokens, new_token);
 			i++;
 		}
 		process = process->next;
 	}
-	return (true);
+}
+
+char *input_max(t_all *all, t_list *envlist)
+{
+	char 	*res;
+	int		i;
+	char 	*cleaned;
+	char	*cpy;
+	
+	i = 0;
+	res = NULL;
+	all->p->words = ft_split_minishell(all->p->s1, ' ');
+	while (all->p->words[i] != NULL)
+	{
+		cleaned = clean_word(all->p->words[i], &envlist);
+		/* printf("cleaned %d: %s\n", i, cleaned); */
+		if (res != NULL)
+			res = add_blank(res);
+		cpy = res;
+		res = my_strjoin(cpy, cleaned);
+		if (cpy)
+			free(cpy);
+		if (cleaned != NULL)
+			free(cleaned);
+		i++;
+	}
+	/* printf("RES: %s\n", res); */
+	return (res);
 }

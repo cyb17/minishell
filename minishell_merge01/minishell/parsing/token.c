@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:53:25 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:35:32 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
 
 void	read_value(char *value, t_tokens *token)
 {
@@ -65,7 +65,7 @@ void	ft_token(t_process *process)
 {
 	char		*s;
 	t_tokens	*head;
-
+	
 	while (process)
 	{
 		head = process->list_tokens;
@@ -85,26 +85,4 @@ void	ft_token(t_process *process)
 		process->list_tokens = head;
 		process = process->next;
 	}
-}
-
-bool	syntax_token(t_process *process, t_all *all)
-{
-	int			n;
-	t_tokens	*head;
-
-	while (process)
-	{
-		head = process->list_tokens;
-		while (process->list_tokens)
-		{
-			n = process->list_tokens->type;
-			if (!process->list_tokens->next && (n == REDIR_IN
-					|| n == REDIR_OUT || n == APPEN || n == HEREDOC))
-				return (ft_error(ERROR_PROCESS, all, 2));
-			process->list_tokens = process->list_tokens->next;
-		}
-		process->list_tokens = head;
-		process = process->next;
-	}
-	return (true);
 }

@@ -1,27 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fonctions_for_test.c                               :+:      :+:    :+:   */
+/*   utils_double.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 14:57:49 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Created: 2023/11/07 16:00:29 by achevala          #+#    #+#             */
+/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../../../includes/parsing.h"
 
-// void	clear_lst(t_list **list)
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*tmp;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp -> next != NULL)
+		tmp = tmp -> next;
+	tmp -> next = new;
+}
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new -> content = content;
+	new -> next = NULL;
+	return (new);
+}
+
+// void	clear_lst(t_list **lst)
 // {
-// 	t_list	*current;
+// 	t_list	*tmp;
 
-// 	current = NULL;
-// 	while (*list)
+// 	while (*lst != NULL)
 // 	{
-// 		current = *list;
-// 		*list = (*list)->next;
-// 		free(current);
+// 		tmp = (*lst)->next;
+// 		free(*lst);
+// 		*lst = tmp;
 // 	}
 // }
 
@@ -45,20 +71,4 @@
 // 		i++;
 // 	}
 // 	return (envlist);
-// }
-
-// int	ft_compare(char *limiter, char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (limiter[i])
-// 	{
-// 		if (limiter[i] != str[i])
-// 			return (0);
-// 		i++;
-// 	}
-// 	if (limiter[i] == '\0' && str[i] == '\n')
-// 		return (1);
-// 	return (0);
 // }

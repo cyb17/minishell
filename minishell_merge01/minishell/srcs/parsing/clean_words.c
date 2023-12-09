@@ -1,5 +1,5 @@
 /* ************************************************************************** */
-/*	                                                                        */
+/*	                                                                          */
 /*                                                        :::      ::::::::   */
 /*   clean_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -12,10 +12,37 @@
 
 #include "../../includes/parsing.h"
 
+char	*delete_quotes(char *s)
+{
+	int		i;
+	char	*cpy;
+
+	i = 0;
+	cpy = NULL;
+	while (*s && s[i] != '\0' && i < ((int)ft_strlen(s)))
+	{
+		if (s && s + 1 && (s[i] == '\'' && s[i + 1] == '\'')
+			&& b_q(s, i) == i)
+			i = i + 2;
+		if (s && s + 1 && (s[i] == '"' && s[i + 1] == '"'
+				&& b_q(s, i) == i))
+			i = i + 2;
+		else
+		{
+			if (cpy == NULL)
+				cpy = ft_strdup_section(s, i, i + 1);
+			else
+				cpy = cpychar(s, i, cpy);
+			i++;
+		}
+	}
+	return (cpy);
+}
+
 char	*cpychar(char *s, int i, char *cpy)
 {
 	char	*cpy2;
-	char	*tmp; 
+	char	*tmp;
 
 	if (cpy == NULL)
 		cpy = ft_strdup_section(s, i, i + 1);
@@ -30,6 +57,12 @@ char	*cpychar(char *s, int i, char *cpy)
 			free(tmp);
 	}
 	return (cpy);
+}
+
+void	deep_clean_in(char *s, int *i, char **cpy)
+{
+	(*cpy) = cpychar(s, *i, *cpy);
+	(*i)++;
 }
 
 char	*deepclean(char *s)
@@ -50,10 +83,7 @@ char	*deepclean(char *s)
 				j = check_quotes(s, s[i], i);
 				i++;
 				while (i < j)
-				{
-					cpy = cpychar(s, i, cpy);
-					i++;
-				}
+					deep_clean_in(s, &i, &cpy);
 			}
 		}
 		else
@@ -63,118 +93,22 @@ char	*deepclean(char *s)
 	return (cpy);
 }
 
-bool	is_exp_char(char c)
+char	*clean_word(char *s, t_p *p, t_list **envlist)
 {
-	if ((c >= '0' && c <= '9') || c == '_' || (c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z'))
-		return (true);
-	else
-		return (false);
-}
-
-char	*clean_word(char *s, t_list **envlist)
-{
-	int		len;
-	int		i;
-	char	*tmp;
 	char	*cpy;
-	char	*cpy2;
 
 	if (s)
-		len = my_strlen(s);
-	i = 0;
+		p->len1 = ft_strlen(s);
+	p->s3 = s;
+	p->i = 0;
 	cpy = NULL;
-	if (s && (s[i] == '"' && s[len - 1] == '"')
-		&& (check_quotes(s, s[i], i) == (len - 1)))
-	{
-		i++;
-		while (i < (len - 1))
-		{
-			if (s[i] != '$')
-			{
-				cpy = cpychar(s, i, cpy);
-				i++;
-			}
-			if (s[i] == '$')
-			{
-				tmp = expand_value(s, i, envlist);
-				i++;
-				if (tmp != NULL)
-				{
-					cpy2 = cpy;
-					cpy = my_strjoin(cpy2, tmp);
-					if (cpy2)
-						free(cpy2);
-					i++;
-				}
-				while (is_exp_char(s[i]) == true)
-					i++;
-			}
-		}
-		return (cpy);
-	}
-	if (s && (s[i] == '\'' && s[len - 1] == '\'') 
-		&& (check_quotes(s, s[i], i) == (len - 1)))
-	{
-		i++;
-		while (i < (len - 1))
-		{
-			cpy = cpychar(s, i, cpy);
-			i++;
-		}
-		return (cpy);
-	}
-	if (s)
-	{
-		while (i < len)
-		{
-			if (s[i] == '$')
-			{
-				tmp = expand_value(s, i, envlist);
-				i++;
-				if (tmp != NULL)
-				{
-					cpy2 = cpy;
-					cpy = my_strjoin(cpy2, tmp);
-					if (cpy2)
-						free(cpy2);
-					i++;
-				}
-				while (is_exp_char(s[i]) == true)
-					i++;
-			}
-			if (cpy == NULL && i < len)
-				cpy = ft_strdup_section(s, i, i + 1);
-			else if (i < len)
-			{
-				tmp = ft_strdup_section(s, i, i + 1);
-				cpy2 = cpy;
-				cpy = my_strjoin(cpy2, tmp);
-				if (cpy2)
-					free(cpy2);
-				if (tmp != NULL)
-					free(tmp);
-			}
-			i++;
-		}
-		if (cpy != NULL)
-		{
-			cpy2 = deepclean(cpy);
-			free(cpy);
-			return (cpy2);
-		}
-	}
+	if (p->s3 && (p->s3[p->i] == '"' && p->s3[p->len1 - 1] == '"')
+		&& (check_quotes(p->s3, p->s3[p->i], p->i) == (p->len1 - 1)))
+		return (manage_words_p1(p, envlist));
+	if (p->s3 && (p->s3[p->i] == '\'' && p->s3[p->len1 - 1] == '\'')
+		&& (check_quotes(p->s3, p->s3[p->i], p->i) == (p->len1 - 1)))
+		return (manage_words_p2(p));
+	if (p->s3)
+		cpy = manage_words_p3(p, envlist);
 	return (cpy);
-}
-
-size_t	my_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
 }

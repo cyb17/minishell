@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "../../../includes/parsing.h"
 
 int	check_quotes(char *input, char c, int i)
 {
@@ -20,7 +20,7 @@ int	check_quotes(char *input, char c, int i)
 	inside_quote = false;
 	j = i;
 	i++;
-	while (input[i] && i <= (int)ft_strlen(input))
+	while (input[i] && i <= (int)my_strlen(input))
 	{
 		if (input[i] == c)
 		{
@@ -35,14 +35,14 @@ int	check_quotes(char *input, char c, int i)
 	return (j);
 }
 
-int	b_q(char *l, int i)
+int	between_quotes(char *l, int i)
 {
 	int		j;
 
 	j = 0;
 	if (i < 0)
 		return (i);
-	while (l[j] && j <= (int)ft_strlen(l) && j < i)
+	while (l[j] && j <= (int)my_strlen(l) && j < i)
 	{
 		if (l[j] == '"' || l[j] == '\'')
 		{
@@ -55,7 +55,7 @@ int	b_q(char *l, int i)
 	}
 	return (i);
 }
-/* b_q returns the position of the second quote, after i, 
+/* between_quotes returns the position of the second quote, after i, 
 if l[i] is between quotes, otherwise, it returns i and the char is not
 between quotes  */
 
@@ -98,7 +98,7 @@ void	ft_tokenadd_back(t_tokens **lst, t_tokens *new)
 	t_tokens	*tmp;
 
 	tmp = NULL;
-	if (*lst == NULL)
+	if (*lst == NULL) 
 	{
 		*lst = new;
 		return ;
