@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/09 14:50:40 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/10 14:54:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		
-		res.input = readline("\e[34;1mminishell> \e[0m");
+		res.input = readline("minishell> ");
 		if (res.input && res.input[0] != '\0')
 		{
 			add_history(res.input);
