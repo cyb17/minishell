@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:22:59 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 18:03:21 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,6 @@ char	**write_in(char **tab, char *s, char c, t_p *p)
 	tab[max] = NULL;
 	return (tab);
 }
-
-void	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (tab != NULL)
-	{
-		while (tab[i])
-		{
-			printf("%s -> len = %ld\n", tab[i], strlen(tab[i]));
-			i++;
-		}
-	}
-} 
 
 char	**ft_split_minishell(char *s, char c, t_p *p)
 {

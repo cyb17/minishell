@@ -19,15 +19,15 @@ char	*delete_quotes(char *s)
 
 	i = 0;
 	cpy = NULL;
-	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
+	while (*s && s[i] != '\0' && i < ((int)ft_strlen(s)))
 	{
-		if (s[i] && s [i + 1] && (s[i] == '\'' && s[i + 1] == '\'')
+		if (s && s + 1 && (s[i] == '\'' && s[i + 1] == '\'')
 			&& b_q(s, i) == i)
 			i = i + 2;
-		else if (s[i] && s [i + 1] && (s[i] == '"' && s[i + 1] == '"'
+		if (s && s + 1 && (s[i] == '"' && s[i + 1] == '"'
 				&& b_q(s, i) == i))
 			i = i + 2;
-		else if (s[i] != '\0') 
+		else
 		{
 			if (cpy == NULL)
 				cpy = ft_strdup_section(s, i, i + 1);
@@ -36,8 +36,6 @@ char	*delete_quotes(char *s)
 			i++;
 		}
 	}
-	if (cpy == NULL)
-		cpy = ft_strdup("' '");
 	return (cpy);
 }
 

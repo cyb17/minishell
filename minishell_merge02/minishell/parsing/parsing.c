@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/12/11 17:25:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/10 15:06:34 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ bool	chk_rdi(char *s, t_all *all)
 	return (true);
 }
 
+bool	is_only_space(char *s, t_all *all)
+{
+	int	i;
+	
+	i = 0;
+	while (s[i] && s[i] != '\0')
+	{
+		if (s[i] != ' ')
+			return (true);
+		i++;
+	}
+	clean_pars(all->p);
+	return (false);
+	
+}
+
 int	ft_parse(char *line, t_all *all)
 {
 	t_list		*envlist;
@@ -104,14 +120,14 @@ int	ft_parse(char *line, t_all *all)
 	free(line);
 	if (first_readind(all->p->s, all) == false)
 		return (-1);
+	if (is_only_space(all->p->s, all) == false)
+		return (-1);
 	all->p->s0 = delete_quotes(all->p->s);
 	if (!all->p->s0)
 	{
 		ft_error(ERROR_M2, all, 1);
 		return (-1);
 	}
-	if (is_only_space(all->p->s0, all) == false)
-		return (-1);
 	return (end_parse(all, envlist));
 }
 

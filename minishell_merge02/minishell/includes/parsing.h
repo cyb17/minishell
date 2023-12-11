@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:37:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 17:20:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool		first_readind(char *input, t_all *all);
 int			ft_parse(char *line, t_all *all);
 bool		chk_rdi(char *s, t_all *all);
 bool		chk_prc(char *s, t_all *all);
+bool		is_only_space(char *s, t_all *all);
 int			end_parse(t_all *all, t_list *envlist);
 
 /* utils_parsing.c*/
