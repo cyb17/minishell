@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:14:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	ft_compare(char *limiter, char *str)
 }
 
 // cette fonction lit l'entree std et
-// ecrit e contenu dans here_doc.
+// ecrit le contenu dans here_doc.
 static int	write_to_hd(int here_doc, char *limiter)
 {
 	char	*line;

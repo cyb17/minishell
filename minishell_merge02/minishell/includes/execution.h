@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/09 14:33:43 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:47:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char		*ft_here_doc(char *limiter);
 int			find_nb_process(t_process *process);
 t_tab		*fill_tab(t_process *process);
 t_builtins	*fill_builtins(char **env);
+void		start_data_init(t_res *res, t_all *all, char **env);
 
 // multi_prcs
 void		multi_prcs(t_res *res);
@@ -70,8 +71,10 @@ int			isnot_builtins(char *str);
 t_tokens	*check_cmd_tk(t_tokens *list_tokens);
 int			ft_execve(char **env, char *path, char *arg);
 int			init_stdin_stdout(int stdin, int stdout);
-
 // utils_3
-// void		ft_error(char *where, char *what);
+void		signal_handler(int signum);
+void		signal_handler_hd(int signum);
+void		ft_ctrl_d(void);
+void		waitpid_and_fixe_exit_code(t_res *res);
 
 #endif

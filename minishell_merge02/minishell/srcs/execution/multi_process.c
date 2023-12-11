@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:07:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	execute_cmd(t_res *res, t_tokens *list_tokens)
 	}
 }
 
-static void	parent_task(t_tab *tab, int i, t_process *prcs, int *status)
+static void	close_unused_fds(t_tab *tab, int i)
 {
 	if (i == 0)
 		close(tab->pipefd[i][1]);
@@ -53,11 +53,6 @@ static void	parent_task(t_tab *tab, int i, t_process *prcs, int *status)
 		close(tab->pipefd[i][1]);
 		close(tab->pipefd[i - 1][0]);
 	}
-	waitpid(prcs->pid, status, 0);
-	if (WIFEXITED(*status))
-		g_signal[0] = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-		g_signal[0] = WTERMSIG(*status);
 }
 
 static void	exe_prcs(t_res *res, t_process *prcs, int i)
@@ -86,7 +81,7 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 		execute_cmd(res, prcs->list_tokens);
 	}
 	else
-		parent_task(res->tab, i, prcs, &status);
+		close_unused_fds(res->tab, i);
 }
 
 void	multi_prcs(t_res *res)
@@ -113,4 +108,5 @@ void	multi_prcs(t_res *res)
 		tmp = tmp->next;
 		i++;
 	}
+	waitpid_and_fixe_exit_code(res);
 }

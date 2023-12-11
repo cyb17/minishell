@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/10 17:25:48 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:24:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,43 +36,15 @@
 
 int	g_signal[2];
 
-static void	start_data_init(t_res *res, t_all *all, char **env)
+static void	execution(t_res *res, t_all *all)
 {
-	ft_memset(g_signal, 0, 2);
-	res->prcs = NULL;
-	res->blt = fill_builtins(env);
-	if (env && !res->blt)
-	{
-		ft_putstr_fd("Error: fill_builtins: malloc failed\n", 2);
-		g_signal[0] = 1;
-	}
-	res->tab = NULL;
-	res->input = NULL;
-	res->io = NULL;
-	all->process = NULL;
-	all->envlist = res->blt->envlist;
-	all->process = NULL;
-	all->p = NULL;
-}
-
-void	signal_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		// rl_clear_history();
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	// else if (signum == SIGQUIT)
-		
-}
-
-void	ft_ctrl_d(void)
-{
-	g_signal[0] = 0;
-	printf("exit\n");
-	exit(0);
+	clean_pars(all->p);
+	res->prcs = all->process;
+	if (find_nb_process(res->prcs) > 1)
+		multi_prcs(res);
+	else
+		single_prcs(res);
+	garbage_collector_parent(res);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -84,29 +56,20 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	start_data_init(&res, &all, env);
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		signal(SIGINT, signal_handler);
-		signal(SIGQUIT, signal_handler);
 		res.input = readline("minishell> ");
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, SIG_IGN);
+		add_history(res.input);
 		if (!res.input)
 			ft_ctrl_d();
 		if (res.input[0] != '\0')
 		{
 			if (ft_parse(res.input, &all) == 0)
-			{
-				clean_pars(all.p);
-				res.prcs = all.process;
-				// print_prcs(res.prcs);
-				if (find_nb_process(res.prcs) > 1)
-					multi_prcs(&res);
-				else
-					single_prcs(&res);
-			}
+				execution(&res, &all);
 		}
-		add_history(res.input);
-		garbage_collector_parent(&res);
 	}
 	return (0);
 }

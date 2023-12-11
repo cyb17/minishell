@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:10:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,23 @@ t_builtins	*fill_builtins(char **env)
 	}
 	builtins->arg = NULL;
 	return (builtins);
+}
+
+void	start_data_init(t_res *res, t_all *all, char **env)
+{
+	ft_memset(g_signal, 0, 2);
+	res->prcs = NULL;
+	res->blt = fill_builtins(env);
+	if (env && !res->blt)
+	{
+		ft_putstr_fd("Error: fill_builtins: malloc failed\n", 2);
+		g_signal[0] = 1;
+	}
+	res->tab = NULL;
+	res->input = NULL;
+	res->io = NULL;
+	all->process = NULL;
+	all->envlist = res->blt->envlist;
+	all->process = NULL;
+	all->p = NULL;
 }
