@@ -36,6 +36,8 @@ char	*delete_quotes(char *s)
 			i++;
 		}
 	}
+	if (cpy == NULL)
+		cpy = ft_strdup("' '");
 	return (cpy);
 }
 

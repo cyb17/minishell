@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:58:13 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:41:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 09:17:59 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,20 @@ void	init_in_write_in(t_p *p)
 	p->i = 0;
 	p->j = 0;
 	p->k = 0;
+}
+
+bool	is_only_space(char *s, t_all *all)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != '\0')
+	{
+		if (s[i] != ' ')
+			return (true);
+		i++;
+	}
+	clean_pars(all->p);
+	return (false);
+
 }

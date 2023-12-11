@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 16:13:44 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:10:09 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ bool	make_token_list(t_process *process, t_list *envlist, t_p *p)
 	{
 		p->id = 0;
 		i = 0;
+		if (p->tkn)
+			freetab(p->tkn);
 		p->tkn = ft_split_minishell(process->section_cmd, ' ', p);
 		if (!p->tkn)
 			return (ft_error(ERROR_M6, p->all, 1));

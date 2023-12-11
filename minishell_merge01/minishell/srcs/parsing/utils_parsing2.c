@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 22:37:36 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*cpychar2(char *s, int i, char *cpy)
 	char	*cpy2;
 	char	*tmp;
 
-	if ((s[i - 1] != '>' || s[i - 1] != '<') && i > 0)
+	if (i > 0 && (s[i - 1] != '>' || s[i - 1] != '<'))
 	{
 		tmp = malloc(sizeof(char) * 2);
 		if (!tmp)
@@ -51,11 +51,27 @@ char	*cpychar2(char *s, int i, char *cpy)
 	return (cpy);
 }
 
+int	my_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
 char	*cpychar3(char *s, int i, char *cpy)
 {
-	if (*s && (i > 0) && s[i - 1] && (s[i - 1] == '>' || s[i - 1] == '<')
-		&& (s[i] != '>' && s[i] != '<') && (i - 1 >= 0))
+	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1] 
+		&& (s[i - 1] == '>' 
+		|| s[i - 1] == '<')
+		&& (s[i] != '>' && s[i] != '<') && (i - 1 >= 0) && s[i + 1]
+		&& s[i + 1] != '\0')
 		cpy = add_blank(cpy);
+	if (i < my_strlen(s))
 	cpy = cpychar(s, i, cpy);
 	return (cpy);
 }
@@ -70,7 +86,7 @@ char	*add_blank(char *cpy)
 	{
 		ft_putstr_fd("error: add_blanc: malloc failed", 2);
 		return (NULL);
-	}
+	} 
 	tmp[0] = ' ';
 	tmp[1] = '\0';
 	cpy2 = cpy;
@@ -86,26 +102,26 @@ char	*add_space(char *s)
 {
 	int		i;
 	char	*cpy;
+	int		len;
 
+	len = my_strlen(s);
 	i = 0;
 	cpy = NULL;
-	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
+	while (*s && s[i] != '\0' && i < len)
 	{
 		if (b_q(s, i) == i && (s[i] >= '0' && s[i] <= '9'))
-			i = manage_num(s, i);
-		if ((s[i] == '<' || s[i] == '>') && (i - 1 >= 0)
-			&& b_q(s, i) == i && s[i - 1] != ' '
+			i = (manage_num(s, i) - 1);
+		else if ((s[i] == '<' || s[i] == '>') && (i - 1 >= 0)
+			&& b_q(s, i) == i && (s[i - 1] != ' ' || s[i + 1] != ' ')
 			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
-		{
 			cpy = cpychar2(s, i, cpy);
-			i++;
-		}
-		if ((s[i] == '<' || s[i] == '>') && ((s[i + 1] != ' ')
-				&& (s[i + 1] != '<') && (s[i + 1] != '>') && (i - 1 >= 0)
-				&& (s[i - 1] != '<') && (s[i - 1] != '>'))
-			&& b_q(s, i) == i && s[i + 1] != '\0')
-			cpy = add_blank(cpy);
-		cpy = cpychar3(s, i, cpy);
+		/* else if (s[i + 1] != '\0' && (i - 1 >= 0) && (s[i] == '<'
+				|| s[i] == '>') && ((s[i + 1] != ' ') && (s[i + 1] != '<')
+				&& (s[i + 1] != '>') && (s[i - 1] != '<') && (s[i - 1] != '>'))
+				&& b_q(s, i) == i )
+			cpy = add_blank(cpy); */
+		else
+			cpy = cpychar3(s, i, cpy);
 		i++;
 	}
 	return (cpy);
