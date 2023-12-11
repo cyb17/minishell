@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 14:37:34 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/11 09:35:24 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void		ft_procsadd_back(t_process **lst, t_process *new);
 void		ft_tokenadd_back(t_tokens **lst, t_tokens *new);
 
 /* utils_parsing2.c */
+int			manage_num(char *s, int i);
 char		*cpychar2(char *s, int i, char *cpy);
 char		*cpychar3(char *s, int i, char *cpy);
 char		*add_space(char *s);
 char		*add_blank(char *cpy);
-int			manage_num(char *s, int i);
 
 /* utils_parsing3.c */
 char		*manage_expand(t_p *p, t_list **envlist, char *cpy);
@@ -69,6 +69,7 @@ void		process_init(t_process *process);
 int			pars_init(t_p *p, char *line, t_all *all);
 void		token_init(t_tokens *tokens);
 void		init_in_write_in(t_p *p);
+bool		is_only_space(char *s, t_all *all);
 
 /* split_input.c */
 void		make_process_list(t_p *p, t_process **list_process);
