@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/11 14:56:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 13:14:08 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	sub_child_prcs(int *fdin, int *fdout, t_res *res, t_tokens *cmd)
 {
-	if (open_fdin_fdout(fdin, fdout, res->prcs->list_tokens) == -1
+	if (open_fdin_fdout(fdin, fdout, res->prcs) == -1
 		|| redirection_single_prcs(*fdin, *fdout) == -1)
 	{
 		clean_fds(*fdin, *fdout);
@@ -81,7 +81,7 @@ static int	parent_prcs(t_res *res, t_tokens *cmd)
 	if (init_intput_output(&io) == -1)
 		return (1);
 	res->io = &io;
-	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1
+	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs) == -1
 		|| redirection_single_prcs(io.fdin, io.fdout) == -1)
 	{
 		if (io.fdin != STDIN_FILENO)
@@ -108,7 +108,7 @@ void	single_prcs(t_res *res)
 	{
 		io.fdin = STDIN_FILENO;
 		io.fdout = STDOUT_FILENO;
-		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs->list_tokens) == -1)
+		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs) == -1)
 		{
 			clean_fds(io.fdin, io.fdout);
 			g_signal[0] = 1;

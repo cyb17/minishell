@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/09 14:25:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 11:43:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_process
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
+	char 				*heredoc;
 	struct s_process	*next;
 }						t_process;
 

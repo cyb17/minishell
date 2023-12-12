@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/11 12:47:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 15:38:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		free_pipefd(int **pipefd, int nb_pipe);
 int			pipe_pipefd(t_tab *tab, int i);
 void		redirect_in(int *fdin, char *infile);
 void		redirect_out(int *fdout, char *outfile, char mode);
-int			open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens);
+int			open_fdin_fdout(int *fdin, int *fdout, t_process *prcs);
 // utils_2
 void		clean_fds(int fdin, int fdout);
 int			isnot_builtins(char *str);
@@ -72,9 +72,9 @@ t_tokens	*check_cmd_tk(t_tokens *list_tokens);
 int			ft_execve(char **env, char *path, char *arg);
 int			init_stdin_stdout(int stdin, int stdout);
 // utils_3
-void		signal_handler(int signum);
-void		signal_handler_hd(int signum);
-void		ft_ctrl_d(void);
+// void		signal_handler(int signum);
+// void		signal_handler_hd(int signum);
+// void		ft_ctrl_d(void);
 void		waitpid_and_fixe_exit_code(t_res *res);
 
 #endif

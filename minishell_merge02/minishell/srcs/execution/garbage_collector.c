@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 12:33:43 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ static void	clear_prcs_list(t_process **process)
 			free(tmp->section_cmd);
 		if (tmp->list_tokens)
 			clear_tk_list(&tmp->list_tokens);
+		if (tmp->heredoc)
+		{
+			if (unlink(tmp->heredoc) == -1)
+				perror("Error: clear_prcs_list: unlink");
+			free(tmp->heredoc);
+		}
 		free(tmp);
 	}
 }

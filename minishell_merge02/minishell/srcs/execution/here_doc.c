@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/11 16:14:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 18:01:58 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ static int	ft_compare(char *limiter, char *str)
 	return (0);
 }
 
+static void	signal_handler_hd(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_signal[0] = 130;
+		close(STDIN_FILENO);
+		printf("\n");
+	}
+}
+
 // cette fonction lit l'entree std et
 // ecrit le contenu dans here_doc.
 static int	write_to_hd(int here_doc, char *limiter)
@@ -66,19 +76,21 @@ static int	write_to_hd(int here_doc, char *limiter)
 	while (1)
 	{
 		ft_putstr_fd("> ", 1);
+		signal(SIGINT, signal_handler_hd);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 		{
-			ft_putstr_fd("Error: write_to_hd: get_next_line", 2);
+			if (isatty(STDIN_FILENO) == 1)
+				ft_putstr_fd("Error: write_to_hd: get_next_line", 2);
 			return (-1);
 		}
-		write(here_doc, line, ft_strlen(line) + 1);
 		if (ft_compare(limiter, line) == 1)
 		{
 			close(here_doc);
 			free(line);
 			break ;
 		}
+		write(here_doc, line, ft_strlen(line) + 1);
 		free(line);
 	}
 	return (0);
@@ -106,6 +118,7 @@ char	*ft_here_doc(char *limiter)
 	}
 	if (write_to_hd(here_doc, limiter) == -1)
 	{
+		close(here_doc);
 		free(hd_path);
 		return (NULL);
 	}

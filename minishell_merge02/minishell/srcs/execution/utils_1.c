@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:17:31 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/11 15:42:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/12 13:17:59 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ void	redirect_out(int *fdout, char *outfile, char mode)
 // if <infile is found it's will be opened
 // if there is another <infile the precedent will be closed and fdin=newone
 // same for outfile
-int	open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
+int	open_fdin_fdout(int *fdin, int *fdout, t_process *prcs)
 {
-	char	*here_doc;
+	t_tokens	*tokens;
 
+	tokens = prcs->list_tokens;
 	while (tokens)
 	{
 		if (tokens->type == REDIR_IN && tokens->next->type == INFILE)
@@ -93,11 +94,7 @@ int	open_fdin_fdout(int *fdin, int *fdout, t_tokens *tokens)
 		else if (tokens->type == APPEN && tokens->next->type == OUTFILE)
 			redirect_out(fdout, tokens->next->value, 'A');
 		else if (tokens->type == HEREDOC)
-		{
-			here_doc = ft_here_doc(tokens->next->value);
-			redirect_in(fdin, here_doc);
-			free(here_doc);
-		}
+			redirect_in(fdin, prcs->heredoc);
 		if ((*fdin == -1) || (*fdout == -1))
 			return (-1);
 		tokens = tokens->next;
