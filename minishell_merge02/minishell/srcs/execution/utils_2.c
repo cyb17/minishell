@@ -6,14 +6,29 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 14:18:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+// If there is a cmd, return a pointer on cmd
+t_tokens	*check_cmd_tk(t_tokens *list_tokens)
+{
+	t_tokens	*tmp;
+
+	tmp = list_tokens;
+	while (tmp)
+	{
+		if (tmp->type == CMD)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 // If there is a infile or a outfile valid fd opened, close it.
-void	clean_fds(int fdin, int fdout)
+void	clean_fdin_fdout(int fdin, int fdout)
 {
 	if (fdin != STDIN_FILENO && fdin != -1)
 		close(fdin);
@@ -29,21 +44,6 @@ int	isnot_builtins(char *str)
 		|| (ft_strcmp("pwd", str) == 1))
 		return (0);
 	return (1);
-}
-
-// If there is a cmd, return a pointer on cmd
-t_tokens	*check_cmd_tk(t_tokens *list_tokens)
-{
-	t_tokens	*tmp;
-
-	tmp = list_tokens;
-	while (tmp)
-	{
-		if (tmp->type == CMD)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 int	ft_execve(char **env, char *path, char *arg)

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 13:14:21 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 	if (prcs->pid == -1)
 	{
 		perror("Error: exe_prcs: fork failed");
-		g_signal[0] = 1;
+		g_signal = 1;
 		return ;
 	}
 	else if (prcs->pid == 0)
@@ -94,7 +94,7 @@ void	multi_prcs(t_res *res)
 	res->tab = fill_tab(res->prcs);
 	if (!res->tab)
 	{
-		g_signal[0] = 1;
+		g_signal = 1;
 		return ;
 	}
 	while (tmp)

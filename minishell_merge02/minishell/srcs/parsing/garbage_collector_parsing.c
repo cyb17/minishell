@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector_parsing.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/09 17:46:03 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	clean_loop(t_all *all)
 
 bool	ft_error(char *s, t_all *all, int code)
 {
-	g_signal[0] = code;
+	g_signal = code;
 	printf("%s", s);
 	clean_loop(all);
 	return (false);

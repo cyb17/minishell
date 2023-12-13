@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 13:14:08 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 14:30:33 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	sub_child_prcs(int *fdin, int *fdout, t_res *res, t_tokens *cmd)
 	if (open_fdin_fdout(fdin, fdout, res->prcs) == -1
 		|| redirection_single_prcs(*fdin, *fdout) == -1)
 	{
-		clean_fds(*fdin, *fdout);
+		clean_fdin_fdout(*fdin, *fdout);
 		garbage_collector_child(res);
 		exit(1);
 	}
@@ -41,16 +41,16 @@ static void	child_prcs(t_res *res, t_tokens *cmd)
 	if (res->prcs->pid == -1)
 	{
 		perror("Error : child_prcs: fork");
-		g_signal[0] = 1;
+		g_signal = 1;
 		return ;
 	}
 	else if (res->prcs->pid == 0)
 		sub_child_prcs(&fdin, &fdout, res, cmd);
 	waitpid(res->prcs->pid, &status, 0);
 	if (WIFEXITED(status))
-		g_signal[0] = WEXITSTATUS(status);
+		g_signal = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_signal[0] = WTERMSIG(status);
+		g_signal = WTERMSIG(status);
 }
 
 static int	init_intput_output(t_redir *io)
@@ -84,17 +84,15 @@ static int	parent_prcs(t_res *res, t_tokens *cmd)
 	if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs) == -1
 		|| redirection_single_prcs(io.fdin, io.fdout) == -1)
 	{
-		if (io.fdin != STDIN_FILENO)
-			close(io.fdin);
-		if (io.fdout != STDOUT_FILENO)
-			close(io.fdout);
+		clean_fdin_fdout(io.fdin, io.fdout);
 		close(io.stdin);
 		close(io.stdout);
 		garbage_collector_parent(res);
 		return (1);
 	}
 	rslt = exe_builtins(res, cmd);
-	init_stdin_stdout(io.stdin, io.stdout);
+	if (init_stdin_stdout(io.stdin, io.stdout) == -1)
+		return (1);
 	return (rslt);
 }
 
@@ -107,18 +105,18 @@ void	single_prcs(t_res *res)
 	if (!cmd)
 	{
 		io.fdin = STDIN_FILENO;
-		io.fdout = STDOUT_FILENO;
+		io.fdout = STDOUT_FILENO; 
 		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs) == -1)
 		{
-			clean_fds(io.fdin, io.fdout);
-			g_signal[0] = 1;
+			clean_fdin_fdout(io.fdin, io.fdout);
+			g_signal = 1;
 			return ;
 		}
-		clean_fds(io.fdin, io.fdout);
-		g_signal[0] = 0;
+		clean_fdin_fdout(io.fdin, io.fdout);
+		g_signal = 0;
 	}
 	else if (cmd && isnot_builtins(cmd->value) == 1)
 		child_prcs(res, cmd);
 	else if (cmd && isnot_builtins(cmd->value) == 0)
-		g_signal[0] = parent_prcs(res, cmd);
+		g_signal = parent_prcs(res, cmd);
 }

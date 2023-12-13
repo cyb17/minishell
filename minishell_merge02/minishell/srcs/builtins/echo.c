@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 15:37:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	print_echo_arg(char *argv)
 	{
 		if (argv[j + 1] && argv[j] == '$' && argv[j + 1] == '?')
 		{
-			ft_putnbr_fd(g_signal[0], STDOUT_FILENO);
+			ft_putnbr_fd(g_signal, STDOUT_FILENO);
 			j++;
 		}
 		else

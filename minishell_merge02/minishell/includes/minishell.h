@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 11:43:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:40:19 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # include <readline/history.h>
 # include "../srcs/libft/libft.h"
 
-extern int	g_signal[2];
+extern int	g_signal;
 
 enum tokens_type
 {

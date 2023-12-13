@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 10:59:38 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_exit(char **arg, t_res *res)
 {
 	if (arg[1] == NULL)
 	{
-		g_signal[0] = 0;
+		g_signal = 0;
 		garbage_collector_child(res);
 		if (res->io)
 			init_stdin_stdout(res->io->stdin, res->io->stdout);
@@ -92,7 +92,7 @@ int	ft_exit(char **arg, t_res *res)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		g_signal[0] = 2;
+		g_signal = 2;
 		if (res->io)
 			init_stdin_stdout(res->io->stdin, res->io->stdout);
 		garbage_collector_child(res);
@@ -100,14 +100,14 @@ int	ft_exit(char **arg, t_res *res)
 	}
 	if (check_nb_arg(arg) == -1)
 	{
-		g_signal[0] = 1;
+		g_signal = 1;
 		garbage_collector_parent(res);
 		return (1);
 	}
-	g_signal[0] = ft_atoi(arg[1]) % 256;
+	g_signal = ft_atoi(arg[1]) % 256;
 	garbage_collector_child(res);
 	if (res->io)
 		init_stdin_stdout(res->io->stdin, res->io->stdout);
-	exit(g_signal[0]);
+	exit(g_signal);
 	return (0);
 }

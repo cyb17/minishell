@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*sub_parsing_cmd1(char **split_cmd)
 	path = NULL;
 	if (access(split_cmd[0], F_OK | R_OK | X_OK) == -1)
 	{
-		g_signal[0] = 126;
+		g_signal = 126;
 		perror("Error");
 	}
 	else
@@ -72,7 +72,7 @@ char	*parsing_cmd(char **env_main, char *cmd)
 		ft_putstr_fd("Error : ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": Command not found\n", 2);
-		g_signal[0] = 127;
+		g_signal = 127;
 		return (NULL);
 	}
 	split_cmd = make_cmd(cmd);
@@ -84,7 +84,7 @@ char	*parsing_cmd(char **env_main, char *cmd)
 	}
 	path = sub_parsing_cmd2(env_main, split_cmd[0]);
 	if (!path)
-		g_signal[0] = 1;
+		g_signal = 1;
 	free_tab(split_cmd);
 	return (path);
 }

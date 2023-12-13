@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:14:53 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 18:01:58 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 14:02:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,30 @@ static int	ft_compare(char *limiter, char *str)
 	return (0);
 }
 
-static void	signal_handler_hd(int signum)
+static int	mini_task(int *save_stdin, int task_num)
 {
-	if (signum == SIGINT)
+	if (task_num == 0)
 	{
-		g_signal[0] = 130;
-		close(STDIN_FILENO);
-		printf("\n");
+		*save_stdin = dup(STDIN_FILENO);
+		if (*save_stdin == -1)
+		{
+			perror("Error: write_to_hd: dup");
+			g_signal = 1;
+			return (-1);
+		}
 	}
+	else if (task_num == 1)
+	{
+		if (isatty(STDIN_FILENO) == 1)
+			ft_putstr_fd("Error: write_to_hd: get_next_line\n", 2);
+		if (dup2(*save_stdin, STDIN_FILENO) == -1)
+		{
+			perror("Error: write_to_hd: dup2");
+			g_signal = 1;
+		}
+		close(*save_stdin);
+	}
+	return (0);
 }
 
 // cette fonction lit l'entree std et
@@ -71,24 +87,24 @@ static void	signal_handler_hd(int signum)
 static int	write_to_hd(int here_doc, char *limiter)
 {
 	char	*line;
+	int		save_stdin;
 
 	line = NULL;
+	if (mini_task(&save_stdin, 0) == -1)
+		return (-1);
 	while (1)
 	{
 		ft_putstr_fd("> ", 1);
 		signal(SIGINT, signal_handler_hd);
+		signal(SIGQUIT, SIG_IGN);
 		line = get_next_line(STDIN_FILENO);
-		if (!line)
-		{
-			if (isatty(STDIN_FILENO) == 1)
-				ft_putstr_fd("Error: write_to_hd: get_next_line", 2);
+		if (!line && mini_task(&save_stdin, 1) == 0)
 			return (-1);
-		}
+		close(save_stdin);
 		if (ft_compare(limiter, line) == 1)
 		{
-			close(here_doc);
 			free(line);
-			break ;
+			return (0);
 		}
 		write(here_doc, line, ft_strlen(line) + 1);
 		free(line);
@@ -106,7 +122,7 @@ char	*ft_here_doc(char *limiter)
 	hd_path = create_hdname();
 	if (!hd_path)
 	{
-		ft_putstr_fd("Error: ft_here_doc: creat_hdname", 2);
+		ft_putstr_fd("Error: ft_here_doc: creat_hdname\n", 2);
 		return (NULL);
 	}
 	here_doc = open(hd_path, O_CREAT | O_RDWR | O_APPEND, 0644);
@@ -122,5 +138,6 @@ char	*ft_here_doc(char *limiter)
 		free(hd_path);
 		return (NULL);
 	}
+	close(here_doc);
 	return (hd_path);
 }

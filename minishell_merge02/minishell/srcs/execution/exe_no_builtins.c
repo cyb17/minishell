@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	exe_no_builtins(t_res *res, t_tokens *cmd)
 		free_tab(env);
 		free(arg);
 		garbage_collector_child(res);
-		exit(g_signal[0]);
+		exit(g_signal);
 	}
 	if (ft_execve(env, path, arg) == -1)
 		return (-1);
