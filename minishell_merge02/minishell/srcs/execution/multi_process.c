@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 15:10:42 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	error_task(int fdin, int fdout, t_res *res, int exit_code)
 {
-	clean_fds(fdin, fdout);
+	clean_fdin_fdout(fdin, fdout);
 	garbage_collector_child(res);
 	exit(exit_code);
 }
@@ -69,7 +69,7 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 	{
 		perror("Error: exe_prcs: fork failed");
 		g_signal = 1;
-		return ;
+		close_unused_fds(res->tab, i);
 	}
 	else if (prcs->pid == 0)
 	{

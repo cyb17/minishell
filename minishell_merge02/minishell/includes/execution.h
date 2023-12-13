@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 14:17:11 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 17:29:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char		**make_cmd(char *str);
 int			check_cmd(char *cmd);
 
 // redirections_prcs
-void		redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
+int			redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
 int			redirection_single_prcs(int fdin, int fdout);
 
 // single_prcs

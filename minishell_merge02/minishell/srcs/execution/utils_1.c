@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:17:31 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/12 13:17:59 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/13 15:04:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	pipe_pipefd(t_tab *tab, int i)
 		if ((pipe(tab->pipefd[i])) < 0)
 		{
 			if (i != 0)
-			{
 				close(tab->pipefd[i - 1][0]);
-				close(tab->pipefd[i - 1][1]);
-			}
 			return (-1);
 		}
 	}
