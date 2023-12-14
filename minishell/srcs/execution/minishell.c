@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 14:22:42 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:22:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	print_prcs(t_process *prcs)
 				printf("REDIR_OUT\n");
 			else if (tmp2->type == 7)
 				printf("APPEN\n");
-			else if (tmp2->type == 2)
+			else if (tmp2->type == 8)
 				printf("HEREDOC\n");
 			tmp2 = tmp2->next;
 		}

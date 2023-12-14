@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 12:44:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:33:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	execute_cmd(t_res *res, t_tokens *list_tokens)
 	else
 	{
 		exit_code = exe_builtins(res, cmd);
+		garbage_collector_child(res);
 		exit(exit_code);
 	}
 }
