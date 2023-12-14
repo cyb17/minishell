@@ -6,7 +6,7 @@
 /*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/13 14:16:02 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/14 16:21:35 by nap              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 			free(p->cpy2);
 		p->i++;
 	}
+	if (p->s3[p->i] ==  '\0' || p->s3[p->i] ==  '$')
+		return (cpy);
 	if (is_exp_char(p->s3[p->i]) == true)
 	{
 		while (is_exp_char(p->s3[p->i]) == true)
