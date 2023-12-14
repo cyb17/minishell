@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 12:31:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 12:44:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 	}
 	else if (prcs->pid == 0)
 	{
-		if (open_fdin_fdout(&fdin, &fdout, prcs) == -1)
+		if (open_fdin_fdout(&fdin, &fdout, prcs) == -1
+			|| redirection_multi_prcs(fdin, fdout, res->tab, i) == -1)
 			error_task(fdin, fdout, res, 1);
-		redirection_multi_prcs(fdin, fdout, res->tab, i);
 		if (check_cmd_tk(prcs->list_tokens) == NULL)
 			error_task(fdin, fdout, res, 0);
 		execute_cmd(res, prcs->list_tokens);

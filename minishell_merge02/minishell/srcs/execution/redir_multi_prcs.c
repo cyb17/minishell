@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_prcs.c                                :+:      :+:    :+:   */
+/*   redir_multi_prcs2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:30:43 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 12:16:56 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,25 @@ void	redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i)
 }
 
 // redirect io if there is a infile or outfile opened
-int	redirection_single_prcs(int fdin, int fdout)
-{
-	if (fdin != STDIN_FILENO)
-	{
-		if (dup2(fdin, STDIN_FILENO) == -1)
-		{
-			perror("Error: redirection_single_prcs: fdin: dup2");
-			return (-1);
-		}
-		close(fdin);
-	}
-	if (fdout != STDOUT_FILENO)
-	{
-		if (dup2(fdout, STDOUT_FILENO) == -1)
-		{
-			perror("Error: redirection_single_prcs: fdout: dup2");
-			return (-1);
-		}
-		close(fdout);
-	}
-	return (0);
-}
+// int	redirection_single_prcs(int fdin, int fdout)
+// {
+// 	if (fdin != STDIN_FILENO)
+// 	{
+// 		if (dup2(fdin, STDIN_FILENO) == -1)
+// 		{
+// 			perror("Error: redirection_single_prcs: fdin: dup2");
+// 			return (-1);
+// 		}
+// 		close(fdin);
+// 	}
+// 	if (fdout != STDOUT_FILENO)
+// 	{
+// 		if (dup2(fdout, STDOUT_FILENO) == -1)
+// 		{
+// 			perror("Error: redirection_single_prcs: fdout: dup2");
+// 			return (-1);
+// 		}
+// 		close(fdout);
+// 	}
+// 	return (0);
+// }

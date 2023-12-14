@@ -6,11 +6,21 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:11:25 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 14:03:27 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:05:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	isnot_builtins(char *str)
+{
+	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
+		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
+		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
+		|| (ft_strcmp("pwd", str) == 1))
+		return (0);
+	return (1);
+}
 
 void	signal_handler_main(int signum)
 {

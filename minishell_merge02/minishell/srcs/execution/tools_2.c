@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 14:18:13 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:06:15 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ void	clean_fdin_fdout(int fdin, int fdout)
 		close(fdout);
 }
 
-int	isnot_builtins(char *str)
-{
-	if ((ft_strcmp("echo", str) == 1) || (ft_strcmp("cd", str) == 1)
-		|| (ft_strcmp("env", str) == 1) || (ft_strcmp("exit", str) == 1)
-		|| (ft_strcmp("export", str) == 1) || (ft_strcmp("unset", str) == 1)
-		|| (ft_strcmp("pwd", str) == 1))
-		return (0);
-	return (1);
-}
-
 int	ft_execve(char **env, char *path, char *arg)
 {
 	char	**cmd;
@@ -58,6 +48,26 @@ int	ft_execve(char **env, char *path, char *arg)
 		free_tab(env);
 		free(arg);
 		free(path);
+		return (-1);
+	}
+	return (0);
+}
+
+int	init_io(t_redir *io)
+{
+	io->fdin = STDIN_FILENO;
+	io->fdout = STDOUT_FILENO;
+	io->stdin = dup(STDIN_FILENO);
+	if (io->stdin == -1)
+	{
+		perror("Error: save_stdin_stdout: dup");
+		return (-1);
+	}
+	io->stdout = dup(STDOUT_FILENO);
+	if (io->stdout == -1)
+	{
+		perror("Error: save_stdin_stdout: dup");
+		close(io->stdin);
 		return (-1);
 	}
 	return (0);
