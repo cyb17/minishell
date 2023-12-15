@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ressources.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/15 09:58:42 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_builtins	*fill_builtins(char **env)
 	return (builtins);
 }
 
-void	start_data_init(t_res *res, t_all *all, char **env)
+void	start_data_init(t_res *res, t_all *all, char **env, char **argv)
 {
 	g_signal = 0;
 	res->prcs = NULL;
@@ -116,4 +116,5 @@ void	start_data_init(t_res *res, t_all *all, char **env)
 	all->envlist = res->blt->envlist;
 	all->process = NULL;
 	all->p = NULL;
+	all->argv0 = argv[0];
 }

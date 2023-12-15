@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/14 13:02:32 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/15 10:18:05 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 	{
 		p->cpy2 = cpy;
 		cpy = my_strjoin(p->cpy2, tmp);
+		free(tmp);
 		if (p->cpy2)
 			free(p->cpy2);
 		p->i++;
 	}
+	if (p->s3[p->i] ==  '\0' || p->s3[p->i] ==  '$')
+		return (cpy);
 	if (is_exp_char(p->s3[p->i]) == true)
 	{
 		while (is_exp_char(p->s3[p->i]) == true)

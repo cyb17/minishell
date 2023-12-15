@@ -1,0 +1,10 @@
+ignore_readline.supp
+includes
+infile
+infile2
+makefile
+minishell
+minishell_note
+out
+outfile
+srcs

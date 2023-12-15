@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 12:24:39 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/15 09:59:23 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		*ft_here_doc(char *limiter);
 int			find_nb_process(t_process *process);
 t_tab		*fill_tab(t_process *process);
 t_builtins	*fill_builtins(char **env);
-void		start_data_init(t_res *res, t_all *all, char **env);
+void		start_data_init(t_res *res, t_all *all, char **env, char **argv);
 
 // multi_prcs
 void		multi_prcs(t_res *res);

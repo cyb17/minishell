@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/11 18:40:25 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/15 09:52:27 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ char	*cpychar3(char *s, int i, char *cpy)
 	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1]
 		&& (s[i - 1] == '>' || s[i - 1] == '<')
 		&& (s[i] != '>' && s[i] != '<')
-		&& (i - 1 >= 0) && s[i + 1]
-		&& s[i + 1] != '\0')
+		&& (i - 1 >= 0))
 		cpy = add_blank(cpy);
 	if (i < my_strlen(s))
-	cpy = cpychar(s, i, cpy);
+		cpy = cpychar(s, i, cpy);
 	return (cpy);
 }
 
@@ -130,12 +129,11 @@ char *add_space(char *s)
 			cpy = cpychar2(s, i, cpy);
 			i++;
 		}
-		
-		if ((s[i] == '<' || s[i] == '>') && ((s[i + 1] != ' ')
-			&& (s[i + 1] != '<') && (s[i + 1] != '>') && (i - 1 >= 0)
-			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
-			&& b_q(s, i) == i && s[i + 1] != '\0')
-			cpy = add_blank(cpy);
+		if (i + 1 <= ((int)ft_strlen(s)) && (i - 1 >= 0) && ((s[i] == '<'
+			|| s[i] == '>') && ((s[i + 1] != ' ') && (s[i + 1] != '<') 
+			&& (s[i + 1] != '>') && (s[i - 1] != '<') && (s[i - 1] != '>'))
+			&& b_q(s, i) == i))
+				cpy = add_blank(cpy);
 		cpy = cpychar3(s, i, cpy);
 		i++;
 	}
