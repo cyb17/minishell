@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:06:41 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/01 13:29:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:21:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	clear_lst(t_list **list)
 	{
 		current = *list;
 		*list = (*list)->next;
+		if (current->content)
+			free(current->content);
 		free(current);
 	}
 }
@@ -36,7 +38,7 @@ t_list	*env_to_envlist(char **env)
 	envlist = NULL;
 	while (env[i])
 	{
-		tmp = ft_lstnew(env[i]);
+		tmp = ft_lstnew(ft_strdup(env[i]));
 		if (!tmp)
 		{
 			clear_lst(&envlist);

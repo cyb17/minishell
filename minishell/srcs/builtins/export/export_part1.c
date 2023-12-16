@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 16:39:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:17:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static void	update_two_list(t_var *export, t_var *env)
 	if (env->equal_i >= 0)
 		ft_lstadd_back(env->list, env->newvar);
 	else
+	{
+		free(env->newvar->content);
 		free(env->newvar);
+	}
 }
 
 int	export_arg(t_list **envlist, t_list **explist, char *arg)
@@ -86,24 +89,26 @@ int	export_arg(t_list **envlist, t_list **explist, char *arg)
 int	ft_export(t_list **envlist, t_list **explist, char **arg)
 {
 	int		i;
-	t_list	*tmp;
 
 	i = 1;
-	tmp = NULL;
 	if (!arg[1])
 	{
-		tmp = *explist;
-		while (tmp)
-		{
-			printf("export : %s\n", (char *)tmp->content);
-			tmp = tmp->next;
-		}
+		print_explist(*explist);
 		return (0);
 	}
 	while (arg[i])
 	{
-		if (export_arg(envlist, explist, arg[i]) == -1)
-			return (1);
+		if (ft_isalpha(arg[i][0]) == 0)
+		{
+			ft_putstr_fd("Error: export: ", 2);
+			ft_putstr_fd(arg[i], 2);
+			ft_putstr_fd(": not a valid identifier\n", 2);
+		}
+		else
+		{
+			if (export_arg(envlist, explist, arg[i]) == -1)
+				return (1);
+		}
 		i++;
 	}
 	return (0);

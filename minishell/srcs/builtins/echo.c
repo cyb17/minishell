@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 14:35:41 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/16 16:12:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	is_op(char *str)
 	if (*str == '-')
 	{	
 		str++;
+		if (*str == '\0')
+			return (0);
 		while (*str)
 		{
 			if (*str != 'n')

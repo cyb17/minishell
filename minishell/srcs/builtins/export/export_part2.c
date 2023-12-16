@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 16:39:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:19:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static void	replace_var(t_list **list, t_list *newvar, int oldvar_i)
 	t_list	*current;
 
 	i = 0;
-	tmp = NULL;
 	current = *list;
 	if (oldvar_i == 0)
 	{
 		newvar->next = (current)->next;
 		*list = newvar;
+		free(current->content);
 		free(current);
 		return ;
 	}
@@ -71,6 +71,7 @@ static void	replace_var(t_list **list, t_list *newvar, int oldvar_i)
 	}
 	tmp->next = newvar;
 	newvar->next = current->next;
+	free(current->content);
 	free(current);
 }
 

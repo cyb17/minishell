@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:20:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:10:23 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	delete_var(t_list **list, int oldvar_i)
 
 	j = 0;
 	current = *list;
-	tmp = NULL;
 	if (oldvar_i == 0)
 	{
 		if ((*list)->next != NULL)
 			*list = (*list)->next;
 		else
 			*list = NULL;
+		free(current->content);
 		free(current);
 		return ;
 	}
@@ -37,6 +37,7 @@ static void	delete_var(t_list **list, int oldvar_i)
 		j++;
 	}
 	tmp->next = current->next;
+	free(current->content);
 	free(current);
 }
 
