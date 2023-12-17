@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/17 19:27:48 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 19:59:01 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*manage_words_p1(t_p *p, t_list **envlist)
 {
 	char	*cpy;
-	char	*tmp;
+	//char	*tmp;
 	char	*cpy2;
 
 	cpy = NULL;
@@ -30,12 +30,12 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 		else if (p->s3[p->i] == '$')
 		{
 			tmp = manage_expand(p, envlist, cpy);
-			cpy2 = cpy;
+			/* cpy2 = cpy;
 			cpy = my_strjoin(cpy2, tmp);
 			if (cpy2)
 				free(cpy2);
 			if (tmp != NULL)
-				free(tmp);
+				free(tmp); */
 		}
 	}
 	return (cpy);
@@ -123,7 +123,7 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 {
 	char	*cpy;
 	char	*cpy2;
-	char	*tmp;
+	//char	*tmp;
 
 	cpy = NULL;
 	cpy2 = NULL;
@@ -137,13 +137,13 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 		}
 		else if (p->s3[p->i] == '$')
 		{
-			tmp = manage_expand(p, envlist, cpy);
-			cpy2 = cpy;
+			cpy = manage_expand(p, envlist, cpy);
+			/* cpy2 = cpy;
 			cpy = my_strjoin(cpy2, tmp);
 			if (cpy2)
 				free(cpy2);
 			if (tmp != NULL)
-				free(tmp);
+				free(tmp); */
 		}
 	}
 	if (cpy != NULL)
