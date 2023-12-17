@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/17 17:23:35 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 19:27:48 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 	}
 	else if (p->s3[p->i] >= '1' && p->s3[p->i] <= '9')
 		p->i++;
+	else
+		return (ft_strdup_part(p->s3, p->i - 1, p->i));
 	return (cpy);
 }
 
