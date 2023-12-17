@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/11 16:50:28 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/14 13:05:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # include <readline/history.h>
 # include "../srcs/libft/libft.h"
 
-extern int	g_signal[2];
+extern int	g_signal;
 
 enum tokens_type
 {
@@ -62,6 +62,7 @@ typedef struct s_process
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
+	char 				*heredoc;
 	struct s_process	*next;
 }						t_process;
 
@@ -94,7 +95,7 @@ typedef struct s_all
 	t_process	*process;
 	t_p			*p;
 	t_list		*envlist;
-	char 		*argv0;
+	char		*argv0;
 }				t_all;
 
 typedef struct s_builtins

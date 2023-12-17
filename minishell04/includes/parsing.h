@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/11 17:03:21 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:58:24 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			end_parse(t_all *all, t_list *envlist);
 /* utils_parsing.c*/
 int			check_quotes(char *input, char c, int i);
 int			b_q(char *l, int i);
-char		*ft_strdup_section(char *s, int start, int end);
+char		*ft_strdup_part(char *s, int start, int end);
 void		ft_procsadd_back(t_process **lst, t_process *new);
 void		ft_tokenadd_back(t_tokens **lst, t_tokens *new);
 
@@ -88,6 +88,7 @@ char		*get_var_to_exp(char *s);
 /* expand_utils.c */
 bool		varcmp(char *model, char *str);
 bool		is_exp_char(char c);
+int			b_q_exp(char *l, int i);
 
 /* clean_words.c */
 char		*clean_word(char *s, t_p *p, t_list **envlist);
@@ -112,8 +113,8 @@ void		end_split_mini(char **s3, char *s, t_p *p);
 /* utils_write_in.c */
 void		first_loop(t_p *p, char ***tab, char **s2, char *s);
 void		second_loop(t_p *p, char ***tab, char **s2, char *s);
-int	        my_strlen(char *s);
-bool        manage_tkn(t_process *process, t_p *p);
+int			my_strlen(char *s);
+bool		manage_tkn(t_process *process, t_p *p);
 
 /* utils_cleaning.c */
 char		*ft_strdup_checking(char *s, int start, int end);
