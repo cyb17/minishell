@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 15:19:51 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/11 16:59:08 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:15:17 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,23 @@ bool	is_exp_char(char c)
 		return (false);
 }
 
+int	b_q_exp(char *l, int i)
+{
+	int		j;
+
+	j = 0;
+	if (i < 0)
+		return (i);
+	while (l[j] && j <= (int)ft_strlen(l) && j < i)
+	{
+		if (l[j] == '\'')
+		{
+			if (check_quotes(l, l[j], j) > i)
+				return (check_quotes(l, l[j], j));
+			else
+				j = check_quotes(l, l[j], j);
+		}
+		j++;
+	}
+	return (i);
+}

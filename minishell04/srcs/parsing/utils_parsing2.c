@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/14 16:39:56 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/17 15:13:56 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ char	*cpychar3(char *s, int i, char *cpy)
 	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1]
 		&& (s[i - 1] == '>' || s[i - 1] == '<')
 		&& (s[i] != '>' && s[i] != '<')
-		&& (i - 1 >= 0) && s[i + 1]
-		&& s[i + 1] != '\0')
+		&& (i - 1 >= 0))
 		cpy = add_blank(cpy);
 	if (i < my_strlen(s))
-	cpy = cpychar(s, i, cpy);
+		cpy = cpychar(s, i, cpy);
 	return (cpy);
 }
 
@@ -86,33 +85,7 @@ char	*add_blank(char *cpy)
 	return (cpy);
 }
 
-/* char	*add_space(char *s)
-{
-	int		i;
-	char	*cpy;
-	int		len;
-
-	len = my_strlen(s);
-	i = 0;
-	cpy = NULL;
-	while (*s && s[i] != '\0' && i < len)
-	{
-		if (b_q(s, i) == i && (s[i] >= '0' && s[i] <= '9'))
-			i = (manage_num(s, i) - 1);
-		else if ((s[i] == '<' || s[i] == '>') && (i - 1 >= 0)
-			&& b_q(s, i) == i && (s[i - 1] != ' ' || s[i + 1] != ' ')
-			&& (s[i - 1] != '<') && (s[i - 1] != '>'))
-			cpy = cpychar2(s, i, cpy);
-		else if (b_q(s, i) == i)
-			cpy = cpychar3(s, i, cpy);
-		else if (b_q(s, i) > i)
-			cpy = cpychar(s, i, cpy);
-		i++;
-	}
-	return (cpy);
-} */
-
-char *add_space(char *s)
+char	*add_space(char *s)
 {
 	int		i;
 	char	*cpy;
@@ -130,10 +103,10 @@ char *add_space(char *s)
 			cpy = cpychar2(s, i, cpy);
 			i++;
 		}
-		if (i + 1 <= ((int)ft_strlen(s)) && (s[i] == '<' || s[i] == '>')
-			&& ((s[i + 1] != ' ') && (s[i + 1] != '<') && (s[i + 1] != '>')
-			&& (i - 1 >= 0) && (s[i - 1] != '<') && (s[i - 1] != '>'))
-			&& b_q(s, i) == i)
+		if (i + 1 <= ((int)ft_strlen(s)) && (i - 1 >= 0) && ((s[i] == '<'
+					|| s[i] == '>') && (s[i + 1] != ' ' && s[i + 1] != '<'
+					&& s[i + 1] != '>' && s[i - 1] != '<'
+					&& s[i - 1] != '>') && b_q(s, i) == i))
 			cpy = add_blank(cpy);
 		cpy = cpychar3(s, i, cpy);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split_minishell.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 17:27:06 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/09 14:31:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/17 14:50:30 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	nb_words_end(char *s, int *i, char **s0, char c)
 		(*s0)++;
 		(*i)++;
 	}
-	if (*(*s0) != c && *(*s0) != '\0'
-		&& (b_q(s, (*i) - 1) == (*i) - 1))
+	if (*(*s0) != c && *(*s0) != '\0' && (b_q(s, (*i) - 1) == (*i) - 1))
 		m++;
 	while (*(*s0) != '\0' && *(*s0) != c)
 	{
@@ -41,6 +40,7 @@ void	size_word_end(char *s, int *l, char **s1, char c)
 {
 	(*s1)++;
 	(*l)++;
+	(void)c;
 	if (b_q(s, (*l)) > (*l) && *(*s1) != '\0')
 	{
 		while (b_q(s, (*l)) > (*l) && *(*s1) != '\0')
@@ -55,12 +55,12 @@ void	size_word_end(char *s, int *l, char **s1, char c)
 			}
 		}
 	}
-	while (*(*s1) != '\0' && *(*s1) != c && b_q(s, (*l)) == (*l)
+	/* while (*(*s1) != '\0' && *(*s1) != c && b_q(s, (*l)) == (*l)
 		&& (*(*s1) != '\'' && *(*s1) != '"'))
 	{
 		(*l)++;
 		(*s1)++;
-	}
+	} */
 }
 
 bool	split_mini_loop(char ***tab, t_p *p, char **s3, char *s)

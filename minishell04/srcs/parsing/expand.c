@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/13 14:02:46 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/17 15:14:34 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,13 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	int		j;
 
 	j = 1;
-	/* while (s[i + j] == '$' || s[i + j] == '?')
-		j++;
-	if (j > 1)
-		return (ft_strdup_section(s, i, i + j)); */
-	if (s[i + 1] == ' ' || s[i + 1] == '\0'
-		|| (s[i + 1] == '"' && b_q(s, i) > i))
-		return (ft_strdup_section(s, i, i + 1));
-	else if (s[i + 1] == '?' && ((s[i + 2] == '\0') || (s[i + 2] == ' ')
-			|| ((s[i + 2] == '"' && b_q(s, i) > i))))
-		return (ft_strdup_section(s, i, i + 2));
+	if (s[i + 1] == ' ')
+		return (ft_strdup_part(s, i, i + 2));
+	if ((s[i + 1] == '$' || s[i + 1] == '\'' || s[i + 1] == '"'
+			|| s[i + 1] == '\0'))
+		return (ft_strdup_part(s, i, i + 1));
+	if (s[i + 1] == '?' || s[i + 1] == '0')
+		return (NULL);
 	tmp = s;
 	expand_value_end(i, &tmp, &j);
 	to_expand = get_var_to_exp(tmp);

@@ -3,67 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 11:28:32 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/15 09:59:07 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// static void	print_prcs(t_process *prcs)
-// {
-// 	t_process	*tmp;
-// 	t_tokens	*tmp2;
-
-// 	tmp = prcs;
-// 	if (tmp == NULL)
-// 		printf("yes1\n");
-// 	while (tmp)
-// 	{
-// 		tmp2 = tmp->list_tokens;
-// 		printf("1=CMD, 2=W, 3=INFILE, 4=OUTFILE, 5=REDIR_IN, 6=REDIR_OUT\n");
-// 		while (tmp2)
-// 		{
-// 			printf("value: %s type: %d\n", tmp2->value, tmp2->type);
-// 			tmp2 = tmp2->next;
-// 		}
-// 		tmp = tmp->next;
-// 		printf("\n");
-// 	}
-// }
-
-int	g_signal[2];
-
-static void	start_data_init(t_res *res, t_all *all, char **env, char **argv)
+static void	print_prcs(t_process *prcs)
 {
-	ft_memset(g_signal, 0, 2);
-	res->prcs = NULL;
-	res->blt = fill_builtins(env);
-	if (env && !res->blt)
+	t_process	*tmp;
+	t_tokens	*tmp2;
+
+	tmp = prcs;
+	while (tmp)
 	{
-		ft_putstr_fd("Error: fill_builtins: malloc failed\n", 2);
-		g_signal[0] = 1;
+		tmp2 = tmp->list_tokens;
+		while (tmp2)
+		{
+			printf("value: %s  type ", tmp2->value);
+			if (tmp2->type == 1)
+				printf("CMD\n");
+			else if (tmp2->type == 2)
+				printf("WORD\n");
+			else if (tmp2->type == 3)
+				printf("INFILE\n");
+			else if (tmp2->type == 4)
+				printf("OUTFILE\n");
+			else if (tmp2->type == 5)
+				printf("REDIR_IN\n");
+			else if (tmp2->type == 6)
+				printf("REDIR_OUT\n");
+			else if (tmp2->type == 7)
+				printf("APPEN\n");
+			else if (tmp2->type == 8)
+				printf("HEREDOC\n");
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+		printf("\n");
 	}
-	res->tab = NULL;
-	res->input = NULL;
-	res->io = NULL;
-	all->process = NULL;
-	all->envlist = res->blt->envlist;
-	all->process = NULL;
-	all->p = NULL;
-	all->argv0 = argv[0];
 }
 
-// void	signal_handler(int signum)
-// {
-// 	if (signum == SIGINT)
-// 	{
-// 	}
-// 	else if (signum == SIGQUIT)
-// 		return ;
-// }
+int	g_signal;
+
+// Browse list_tokens of each process, if there a heredoc,
+// prepare the heredoc and save it's path in process
+static int	fill_heredoc(t_res *res)
+{
+	t_process	*prcs;
+	t_tokens	*tk;
+
+	prcs = res->prcs;
+	while (prcs)
+	{
+		tk = prcs->list_tokens;
+		while (tk)
+		{
+			if (tk->type == HEREDOC)
+			{
+				if (prcs->heredoc)
+					free(prcs->heredoc);
+				prcs->heredoc = ft_here_doc(tk->next->value);
+				if (!prcs->heredoc)
+					return (-1);
+			}
+			tk = tk->next;
+		}
+		prcs = prcs->next;
+	}
+	return (0);
+}
+
+static void	execution(t_res *res, t_all *all)
+{
+	clean_pars(all->p);
+	res->prcs = all->process;
+	if (fill_heredoc(res) == 0)
+	{
+		print_prcs(res->prcs);
+		if (find_nb_process(res->prcs) > 1)
+			multi_prcs(res);
+		else
+			single_prcs(res);
+	}
+	garbage_collector_parent(res);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -73,26 +100,19 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	start_data_init(&res, &all, env, argv);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		
-		res.input = readline("\e[34;1mminishell> \e[0m");
-		if (res.input && res.input[0] != '\0')
+		signal(SIGINT, signal_handler_main);
+		res.input = readline("minishell> ");
+		add_history(res.input);
+		if (!res.input)
+			ft_ctrl_d();
+		if (res.input[0] != '\0')
 		{
-			add_history(res.input);
 			if (ft_parse(res.input, &all) == 0)
-			{
-				clean_pars(all.p);
-				res.prcs = all.process;
-				// print_prcs(res.prcs);
-				if (find_nb_process(res.prcs) > 1)
-					multi_prcs(&res);
-				else
-					single_prcs(&res);
-			}
+				execution(&res, &all);
 		}
-		garbage_collector_parent(&res);
-		// signal(SIGINT, signal_handler);
 	}
 	return (0);
 }

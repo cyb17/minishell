@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/14 16:21:35 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/17 15:06:54 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 char	*manage_words_p1(t_p *p, t_list **envlist)
 {
 	char	*cpy;
+	char	*tmp;
+	char	*cpy2;
 
 	cpy = NULL;
 	p->i++;
@@ -25,8 +27,16 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 			cpy = cpychar(p->s3, p->i, cpy);
 			p->i++;
 		}
-		if (p->s3[p->i] == '$')
-			cpy = manage_expand(p, envlist, cpy);
+		else if (p->s3[p->i] == '$')
+		{
+			tmp = manage_expand(p, envlist, cpy);
+			cpy2 = cpy;
+			cpy = my_strjoin(cpy2, tmp);
+			if (cpy2)
+				free(cpy2);
+			if (tmp != NULL)
+				free(tmp);
+		}
 	}
 	return (cpy);
 }
@@ -41,11 +51,12 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 	{
 		p->cpy2 = cpy;
 		cpy = my_strjoin(p->cpy2, tmp);
+		free(tmp);
 		if (p->cpy2)
 			free(p->cpy2);
 		p->i++;
 	}
-	if (p->s3[p->i] ==  '\0' || p->s3[p->i] ==  '$')
+	if (p->s3[p->i] == '\0')
 		return (cpy);
 	if (is_exp_char(p->s3[p->i]) == true)
 	{
@@ -55,12 +66,12 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 	else if (p->s3[p->i] == '0')
 	{
 		p->i++;
-		return(ft_strdup_section(p->all->argv0, 2, ft_strlen(p->all->argv0)));
+		return (ft_strdup_part(p->all->argv0, 2, ft_strlen(p->all->argv0)));
 	}
 	else if (p->s3[p->i] == '?')
 	{
 		p->i++;
-		return (ft_itoa(g_signal[0]));
+		return (ft_itoa(g_signal));
 	}
 	else if (p->s3[p->i] >= '1' && p->s3[p->i] <= '9')
 		p->i++;
@@ -81,22 +92,57 @@ char	*manage_words_p2(t_p *p)
 	return (cpy);
 }
 
+/* char 	*in_manage_words(t_p *p, t_list **envlist)
+{
+	char	*cpy;
+	char	*cpy2;
+	char	*tmp;
+
+	cpy = NULL;
+	cpy2 = NULL;
+	if (p->s3[p->i] != '$')
+	{
+		cpy = cpychar(p->s3, p->i, cpy);
+		p->i++;
+	}
+	else if (p->s3[p->i] == '$')
+	{
+		tmp = manage_expand(p, envlist, cpy);
+		cpy2 = cpy;
+		cpy = my_strjoin(cpy2, tmp);
+		if (cpy2)
+			free(cpy2);
+		if (tmp != NULL)
+			free(tmp);
+	}
+} */
+
 char	*manage_words_p3(t_p *p, t_list **envlist)
 {
 	char	*cpy;
 	char	*cpy2;
+	char	*tmp;
 
 	cpy = NULL;
 	cpy2 = NULL;
 	while (p->i < p->len1)
 	{
-		if (p->s3[p->i] == '$')
-			cpy = manage_expand(p, envlist, cpy);
-		if (cpy == NULL && p->i < p->len1)
-			cpy = ft_strdup_section(p->s3, p->i, p->i + 1);
-		else if (p->i < p->len1)
-			cpy = manage_words_p4(p, cpy);
-		p->i++;
+		if (p->s3[p->i] != '$' || ((b_q_exp(p->s3, p->i) > p->i)
+				&& p->s3[p->i] == '$'))
+		{
+			cpy = cpychar(p->s3, p->i, cpy);
+			p->i++;
+		}
+		else if (p->s3[p->i] == '$')
+		{
+			tmp = manage_expand(p, envlist, cpy);
+			cpy2 = cpy;
+			cpy = my_strjoin(cpy2, tmp);
+			if (cpy2)
+				free(cpy2);
+			if (tmp != NULL)
+				free(tmp);
+		}
 	}
 	if (cpy != NULL)
 	{
@@ -112,7 +158,7 @@ char	*manage_words_p4(t_p *p, char *cpy)
 	char	*tmp;
 	char	*cpy2;
 
-	tmp = ft_strdup_section(p->s3, p->i, p->i + 1);
+	tmp = ft_strdup_part(p->s3, p->i, p->i + 1);
 	cpy2 = cpy;
 	cpy = my_strjoin(cpy2, tmp);
 	if (cpy2)

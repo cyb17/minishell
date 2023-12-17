@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:50:56 by nap               #+#    #+#             */
-/*   Updated: 2023/12/09 16:06:24 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:58:24 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	b_q(char *l, int i)
 if l[i] is between quotes, otherwise, it returns i and the char is not
 between quotes  */
 
-char	*ft_strdup_section(char *s, int start, int end)
+char	*ft_strdup_part(char *s, int start, int end)
 {
 	char	*str;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/12/11 16:24:59 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:58:24 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_process	*create_process(t_p *p, int end)
 		return (NULL);
 	}
 	process_init(process);
-	process->section_cmd = ft_strdup_section(p->s1, p->start, end);
+	process->section_cmd = ft_strdup_part(p->s1, p->start, end);
 	if (!process->section_cmd)
 	{
 		ft_error(ERROR_M4, p->all, 1);

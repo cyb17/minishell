@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:33:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	error_task(int fdin, int fdout, t_res *res, int exit_code)
 {
-	clean_fds(fdin, fdout);
+	clean_fdin_fdout(fdin, fdout);
 	garbage_collector_child(res);
 	exit(exit_code);
 }
@@ -38,11 +38,12 @@ static void	execute_cmd(t_res *res, t_tokens *list_tokens)
 	else
 	{
 		exit_code = exe_builtins(res, cmd);
+		garbage_collector_child(res);
 		exit(exit_code);
 	}
 }
 
-static void	parent_task(t_tab *tab, int i, t_process *prcs, int *status)
+static void	close_unused_fds(t_tab *tab, int i)
 {
 	if (i == 0)
 		close(tab->pipefd[i][1]);
@@ -53,11 +54,6 @@ static void	parent_task(t_tab *tab, int i, t_process *prcs, int *status)
 		close(tab->pipefd[i][1]);
 		close(tab->pipefd[i - 1][0]);
 	}
-	waitpid(prcs->pid, status, 0);
-	if (WIFEXITED(*status))
-		g_signal[0] = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-		g_signal[0] = WTERMSIG(*status);
 }
 
 static void	exe_prcs(t_res *res, t_process *prcs, int i)
@@ -73,20 +69,20 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 	if (prcs->pid == -1)
 	{
 		perror("Error: exe_prcs: fork failed");
-		g_signal[0] = 1;
-		return ;
+		g_signal = 1;
+		close_unused_fds(res->tab, i);
 	}
 	else if (prcs->pid == 0)
 	{
-		if (open_fdin_fdout(&fdin, &fdout, prcs->list_tokens) == -1)
+		if (open_fdin_fdout(&fdin, &fdout, prcs) == -1
+			|| redirection_multi_prcs(fdin, fdout, res->tab, i) == -1)
 			error_task(fdin, fdout, res, 1);
-		redirection_multi_prcs(fdin, fdout, res->tab, i);
 		if (check_cmd_tk(prcs->list_tokens) == NULL)
 			error_task(fdin, fdout, res, 0);
 		execute_cmd(res, prcs->list_tokens);
 	}
 	else
-		parent_task(res->tab, i, prcs, &status);
+		close_unused_fds(res->tab, i);
 }
 
 void	multi_prcs(t_res *res)
@@ -99,7 +95,7 @@ void	multi_prcs(t_res *res)
 	res->tab = fill_tab(res->prcs);
 	if (!res->tab)
 	{
-		g_signal[0] = 1;
+		g_signal = 1;
 		return ;
 	}
 	while (tmp)
@@ -113,4 +109,5 @@ void	multi_prcs(t_res *res)
 		tmp = tmp->next;
 		i++;
 	}
+	waitpid_and_fixe_exit_code(res);
 }
