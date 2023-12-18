@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 17:31:02 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:37:32 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 			cpy = cpychar(p->s3, p->i, cpy);
 			p->i++;
 		}
-		else if (p->s3[p->i] == '$' && p)
+		else if (p->s3[p->i] == '$')
 		{
 			tmp = manage_expand(p, envlist, cpy);
 			cpy2 = cpy;
