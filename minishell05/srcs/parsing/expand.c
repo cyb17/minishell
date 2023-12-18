@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/17 15:14:34 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:42:01 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	j = 1;
 	if (s[i + 1] == ' ')
 		return (ft_strdup_part(s, i, i + 2));
-	if ((s[i + 1] == '$' || s[i + 1] == '\'' || s[i + 1] == '"'
-			|| s[i + 1] == '\0'))
-		return (ft_strdup_part(s, i, i + 1));
 	if (s[i + 1] == '?' || s[i + 1] == '0')
 		return (NULL);
 	tmp = s;

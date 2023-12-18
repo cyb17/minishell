@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 15:19:51 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 15:57:05 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:14:50 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,27 @@ int	b_q_exp(char *l, int i)
 	while (l[j] && j <= (int)ft_strlen(l) && j < i)
 	{
 		if (l[j] == '\'')
+		{
+			if (check_quotes(l, l[j], j) > i)
+				return (check_quotes(l, l[j], j));
+			else
+				j = check_quotes(l, l[j], j);
+		}
+		j++;
+	}
+	return (i);
+}
+
+int	b_q_exp2(char *l, int i)
+{
+	int		j;
+
+	j = 0;
+	if (i < 0)
+		return (i);
+	while (l[j] && j <= (int)ft_strlen(l) && j < i)
+	{
+		if (l[j] == '"')
 		{
 			if (check_quotes(l, l[j], j) > i)
 				return (check_quotes(l, l[j], j));

@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 19:31:59 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:40:11 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 {
 	char	*tmp;
 
+	(void)cpy;
 	if ((p->s3[p->i + 1] == '\'' && p->s3[p->i + 2] == '\'')
 		|| (p->s3[p->i + 1] == '"' && p->s3[p->i + 2] == '"'))
 	{
 		p->i = p->i + 3;
 		return (NULL);
 	}
-	if (p->s3[p->i + 1] == '\'' || p->s3[p->i + 1] == '"')
+	if (b_q_exp2(p->s3, p->i) == p->i && (p->s3[p->i + 1] == '\'' || p->s3[p->i + 1] == '"'))
 	{
 		p->i++;
 		return (NULL);
@@ -61,6 +62,12 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 		p->i = p->i + 2;
 		return (NULL);
 	}
+	if ((p->s3[p->i + 1] == '$' || p->s3[p->i + 1] == '\'' || p->s3[p->i + 1] == '"'
+			|| p->s3[p->i + 1] == '\0'))
+		{
+			p->i++;
+			return (ft_strdup_part(p->s3, p->i, p->i + 1));
+		}
 	tmp = expand_value(p->s3, p->i, envlist);
 	p->i++;
 	if (tmp != NULL)
@@ -86,7 +93,7 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 	}
 	else
 		return (ft_strdup_part(p->s3, p->i - 1, p->i));
-	return (cpy);
+	return (tmp);
 }
 
 char	*manage_words_p2(t_p *p)
