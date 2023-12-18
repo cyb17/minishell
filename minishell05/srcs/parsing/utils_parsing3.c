@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/17 19:59:01 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:14:58 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*manage_words_p1(t_p *p, t_list **envlist)
 {
 	char	*cpy;
-	//char	*tmp;
+	char	*tmp;
 	char	*cpy2;
 
 	cpy = NULL;
@@ -30,12 +30,12 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 		else if (p->s3[p->i] == '$')
 		{
 			tmp = manage_expand(p, envlist, cpy);
-			/* cpy2 = cpy;
+			cpy2 = cpy;
 			cpy = my_strjoin(cpy2, tmp);
 			if (cpy2)
 				free(cpy2);
 			if (tmp != NULL)
-				free(tmp); */
+				free(tmp);
 		}
 	}
 	return (cpy);
@@ -45,23 +45,23 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 {
 	char	*tmp;
 
+	if (p->s3[p->i + 1] >= '1' && p->s3[p->i + 1] <= '9')
+	{
+		p->i = p->i + 2;
+		return (NULL);
+	}
 	tmp = expand_value(p->s3, p->i, envlist);
 	p->i++;
 	if (tmp != NULL)
 	{
-		p->cpy2 = cpy;
-		cpy = my_strjoin(p->cpy2, tmp);
-		free(tmp);
-		if (p->cpy2)
-			free(p->cpy2);
-		p->i++;
+		if (p->i >= p->len1 || p->s3[p->i] == '\0')
+			return (tmp);
 	}
-	if (p->i >= p->len1 || p->s3[p->i] == '\0')
-		return (cpy);
 	if (is_exp_char(p->s3[p->i]) == true)
 	{
-		while (is_exp_char(p->s3[p->i]) == true)
+		while (is_exp_char2(p->s3[p->i]) == true)
 			p->i++;
+		return (tmp);
 	}
 	else if (p->s3[p->i] == '0')
 	{
@@ -73,8 +73,6 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 		p->i++;
 		return (ft_itoa(g_signal));
 	}
-	else if (p->s3[p->i] >= '1' && p->s3[p->i] <= '9')
-		p->i++;
 	else
 		return (ft_strdup_part(p->s3, p->i - 1, p->i));
 	return (cpy);
@@ -123,7 +121,7 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 {
 	char	*cpy;
 	char	*cpy2;
-	//char	*tmp;
+	char	*tmp;
 
 	cpy = NULL;
 	cpy2 = NULL;
@@ -137,13 +135,13 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 		}
 		else if (p->s3[p->i] == '$')
 		{
-			cpy = manage_expand(p, envlist, cpy);
-			/* cpy2 = cpy;
+			tmp = manage_expand(p, envlist, cpy);
+			cpy2 = cpy;
 			cpy = my_strjoin(cpy2, tmp);
 			if (cpy2)
 				free(cpy2);
 			if (tmp != NULL)
-				free(tmp); */
+				free(tmp);
 		}
 	}
 	if (cpy != NULL)

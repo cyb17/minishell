@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 15:19:51 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/17 15:15:17 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:57:05 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,19 @@ bool	varcmp(char *model, char *str)
 	return (0);
 }
 
+bool	is_exp_char2(char c)
+{
+	if (c == '_' || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+		return (true);
+	else
+		return (false);
+}
+
 bool	is_exp_char(char c)
 {
-	if (c == '_' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if (c == '_' || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
 		return (true);
 	else
 		return (false);
