@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 16:14:58 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:51:31 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 	p->i++;
 	while (p->i < (p->len1 - 1))
 	{
-		if (p->s3[p->i] != '$')
+		if (p->s3[p->i] != '$' || ((p-> i - 1) && p->s3[p->i - 1] == '\\'
+				&& p->s3[p->i] == '$'))
 		{
 			cpy = cpychar(p->s3, p->i, cpy);
 			p->i++;
@@ -127,13 +128,14 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 	cpy2 = NULL;
 	while (p->i < p->len1)
 	{
-		if (p->s3[p->i] != '$' || ((b_q_exp(p->s3, p->i) > p->i)
+		if (p->s3[p->i] != '$' || (((b_q_exp(p->s3, p->i) > p->i)
+				|| ((p-> i - 1) && p->s3[p->i - 1] == '\\'))
 				&& p->s3[p->i] == '$'))
 		{
 			cpy = cpychar(p->s3, p->i, cpy);
 			p->i++;
 		}
-		else if (p->s3[p->i] == '$')
+		else if (p->s3[p->i] == '$' && p)
 		{
 			tmp = manage_expand(p, envlist, cpy);
 			cpy2 = cpy;
