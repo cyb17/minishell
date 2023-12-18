@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/18 16:01:52 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:15:13 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ bool		varcmp(char *model, char *str);
 bool		is_exp_char(char c);
 bool		is_exp_char2(char c);
 int			b_q_exp(char *l, int i);
+int	        b_q_exp2(char *l, int i);
+
 
 /* clean_words.c */
 char		*clean_word(char *s, t_p *p, t_list **envlist);
