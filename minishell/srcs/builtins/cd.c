@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 15:58:47 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:15:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int	go_to(t_list **envlist, char *var_name)
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(var_name, 2);
 		ft_putstr_fd(" not set\n", 2);
-		return (-1);
+		return (1);
 	}
 	if (chdir(var->content + (ft_strlen(var_name) + 1)) == -1)
 	{
 		perror("minishell: cd: go_to: chdir");
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
@@ -44,11 +44,12 @@ static int	check_arg(char **arg)
 	if (i > 2)
 	{
 		ft_putstr_fd("minishell: cd: too any arguments\n", 2);
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
 
+// If getcwd == NULL, return a empty string "\0"
 static char	*ft_getcwd(void)
 {
 	char	*tmp;
@@ -57,66 +58,67 @@ static char	*ft_getcwd(void)
 
 	tmp = getcwd(buffer, GETCWD_SIZE);
 	if (!tmp)
-	{
-		perror("Error: cd: ft_getcwd");
-		return (NULL);
-	}
-	current_path = ft_strdup(tmp);
-	if (!current_path)
-	{
-		perror("Error: cd: ft_getcwd");
-		return (NULL);
-	}
+		current_path = ft_strdup("");
+	else
+		current_path = ft_strdup(tmp);
 	return (current_path);
 }
 
-static void	update_path(t_list **list, char *oldpwd)
+static void	update_path(t_list **list, char *oldpwd, char *pwd)
 {
 	t_list	*oldpwd_found;
 	t_list	*pwd_found;
 
-	oldpwd_found = find_oldvar("OLDPWD", *list, NULL);
-	if (!oldpwd_found)
-		ft_putstr_fd("OLDPWD not update because variable not found\n", 2);
-	else
+	if (oldpwd && oldpwd[0] != '\0')
 	{
-		oldpwd_found->content = ft_strjoin("OLDPWD=", oldpwd);
-		if (!oldpwd_found->content)
-			ft_putstr_fd("Error: update OLDPWD: ft_strjoin: malloc failed\n",2);
+		oldpwd_found = find_oldvar("OLDPWD", *list, NULL);
+		if (oldpwd_found)
+		{
+			free(oldpwd_found->content);
+			oldpwd_found->content = ft_strjoin("OLDPWD=", oldpwd);
+			if (!oldpwd_found->content)
+				ft_putstr_fd("Error: update OLDPWD: ft_strjoin: malloc failed\n",2);
+		}
 	}
-	pwd_found = find_oldvar("PWD", *list, NULL);
-	if (!pwd_found)
-		ft_putstr_fd("PWD not update because variable not found\n", 2);
-	else
+	if (pwd && pwd[0] != '\0')
 	{
-		pwd_found->content = ft_strjoin("PWD=", ft_getcwd());
-		if (!pwd_found->content)
-			ft_putstr_fd("Error: update PWD: ft_strjoin: malloc failed\n",2);
+		pwd_found = find_oldvar("PWD", *list, NULL);
+		if (pwd_found)
+		{
+			free(pwd_found->content);
+			pwd_found->content = ft_strjoin("PWD=", pwd);
+			if (!pwd_found->content)
+				ft_putstr_fd("Error: update PWD: ft_strjoin: malloc failed\n",2);
+		}
 	}
 }
 
 // Error = 1 || succes = 0
-int	ft_cd(t_list **envlist, t_list **explist, char **arg)
+int	ft_cd(t_list **envlist, t_list **explist, t_builtins *blt)
 {
 	int		rslt;
-	char	*oldpwd;
 
-	oldpwd = ft_getcwd();
-	if (check_arg(arg) == -1 || !oldpwd)
+	rslt = 0;
+	if (check_arg(blt->arg) == -1)
 		return (1);
-	if (arg[1] == NULL)
+	blt->oldpwd = ft_getcwd();
+	if (blt->arg[1] == NULL)
 		rslt = go_to(envlist, "HOME");
-	else if (arg[1][0] == '-')
+	else if (blt->arg[1][0] == '-')
 		rslt = go_to(envlist, "OLDPWD");
 	else
 	{
-		rslt = chdir(arg[1]);
+		rslt = chdir(blt->arg[1]);
 		if (rslt == -1)
-			perror("minishell: cd: chdir");
+			perror("Error: ft_cd: chdir");
 	}
-	if (rslt == -1)
-		return (1);
-	update_path(envlist, oldpwd);
-	update_path(explist, oldpwd);
-	return (0);
+	if (rslt == 0)
+	{
+		blt->pwd = ft_getcwd();
+		update_path(envlist, blt->oldpwd, blt->pwd);
+		update_path(explist, blt->oldpwd, blt->pwd);
+		free(blt->pwd);
+	}
+	free(blt->oldpwd);
+	return (rslt);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ressources.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:30:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/15 09:58:42 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:12:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_builtins	*fill_builtins(char **env)
 		return (NULL);
 	}
 	builtins->arg = NULL;
+	builtins->pwd = NULL;
+	builtins->oldpwd = NULL;
 	return (builtins);
 }
 

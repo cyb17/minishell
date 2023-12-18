@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 13:05:10 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:11:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct s_builtins
 	t_list	*envlist;
 	t_list	*explist;
 	char	**arg;
+	char	*pwd;
+	char	*oldpwd;
 }				t_builtins;
 
 typedef struct s_tab

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 16:41:12 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:16:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*find_oldvar(char *var, t_list *list, int *i);
 int		ft_echo(char **arg);
 
 // cd
-int		ft_cd(t_list **envlist, t_list **explist, char **arg);
+int		ft_cd(t_list **envlist, t_list **explist, t_builtins *blt);
 
 // env
 int		ft_env(char **arg, t_list *envlist);

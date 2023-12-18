@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:58:13 by nap               #+#    #+#             */
-/*   Updated: 2023/12/11 16:54:00 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 11:10:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	process_init(t_process *process)
 	process->list_tokens = NULL;
 	process->pid = -1;
 	process->next = NULL;
+	process->heredoc = NULL;
 }
 
 int	pars_init(t_p *p, char *line, t_all *all)

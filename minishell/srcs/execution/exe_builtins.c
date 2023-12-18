@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:12:42 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	exe_which_cmd(t_res *res, t_tokens *cmd_tk)
 	if (ft_strcmp("echo", cmd_tk->value) == 1)
 		rslt = ft_echo(res->blt->arg);
 	else if (ft_strcmp("cd", cmd_tk->value) == 1)
-		rslt = ft_cd(&res->blt->envlist, &res->blt->explist, res->blt->arg);
+		rslt = ft_cd(&res->blt->envlist, &res->blt->explist, res->blt);
 	else if (ft_strcmp("env", cmd_tk->value) == 1)
 		rslt = ft_env(res->blt->arg, res->blt->envlist);
 	else if (ft_strcmp("export", cmd_tk->value) == 1)

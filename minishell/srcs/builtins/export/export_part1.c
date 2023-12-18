@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 17:17:50 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/18 16:29:49 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	ft_export(t_list **envlist, t_list **explist, char **arg)
 	}
 	while (arg[i])
 	{
-		if (ft_isalpha(arg[i][0]) == 0)
+		if (ft_isalpha(arg[i][0]) == 0 && arg[i][0] != '_' )
 		{
 			ft_putstr_fd("Error: export: ", 2);
 			ft_putstr_fd(arg[i], 2);
