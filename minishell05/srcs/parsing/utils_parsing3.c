@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 16:51:31 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:31:02 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 {
 	char	*cpy;
 	char	*tmp;
-	char	*cpy2;
 
 	cpy = NULL;
 	p->i++;
 	while (p->i < (p->len1 - 1))
 	{
-		if (p->s3[p->i] != '$' || ((p-> i - 1) && p->s3[p->i - 1] == '\\'
+		if (p->s3[p->i] != '$' || (p->s3[p->i - 1] == '\\'
 				&& p->s3[p->i] == '$'))
 		{
 			cpy = cpychar(p->s3, p->i, cpy);
@@ -31,10 +30,10 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 		else if (p->s3[p->i] == '$')
 		{
 			tmp = manage_expand(p, envlist, cpy);
-			cpy2 = cpy;
-			cpy = my_strjoin(cpy2, tmp);
-			if (cpy2)
-				free(cpy2);
+			p->cpy2 = cpy;
+			cpy = my_strjoin(p->cpy2, tmp);
+			if (p->cpy2)
+				free(p->cpy2);
 			if (tmp != NULL)
 				free(tmp);
 		}
@@ -129,7 +128,7 @@ char	*manage_words_p3(t_p *p, t_list **envlist)
 	while (p->i < p->len1)
 	{
 		if (p->s3[p->i] != '$' || (((b_q_exp(p->s3, p->i) > p->i)
-				|| ((p-> i - 1) && p->s3[p->i - 1] == '\\'))
+				|| ((p-> i - 1 >= 0) && p->s3[p->i - 1] == '\\'))
 				&& p->s3[p->i] == '$'))
 		{
 			cpy = cpychar(p->s3, p->i, cpy);
