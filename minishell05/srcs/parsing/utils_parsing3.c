@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 20:40:11 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:50:35 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*manage_expand(t_p *p, t_list **envlist, char *cpy)
 			|| p->s3[p->i + 1] == '\0'))
 		{
 			p->i++;
-			return (ft_strdup_part(p->s3, p->i, p->i + 1));
+			return (ft_strdup_part(p->s3, p->i - 1, p->i));
 		}
 	tmp = expand_value(p->s3, p->i, envlist);
 	p->i++;
