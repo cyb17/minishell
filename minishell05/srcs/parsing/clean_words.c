@@ -23,7 +23,7 @@ char	*delete_quotes(char *s)
 	{
 		if (i > 0 && s[i - 1] != '$' && s[i] && s [i + 1] && ((s[i] == '\''
 			&& s[i + 1] == '\'') || (s[i] == '"' && s[i + 1] == '"'))
-			&& b_q(s, i) == i)
+			&& b_q(s, i) == i && check_quotes(s, s[i], i) != i + 1)
 			i = i + 2;
 		else if (i == 0 && s[i] && s [i + 1] && ((s[i] == '\''
 				&& s[i + 1] == '\'') || (s[i] == '"' && s[i + 1] == '"'))
