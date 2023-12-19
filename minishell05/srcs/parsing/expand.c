@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/18 20:42:01 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:55:49 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_var_to_exp(char *s)
 	i = 0;
 	j = 0;
 	s0 = s;
-	while (is_exp_char(*s0) == true)
+	while (is_exp_char2(*s0) == true)
 	{
 		s0++;
 		i++;
