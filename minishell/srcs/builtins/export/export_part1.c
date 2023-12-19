@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/18 16:29:49 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 16:15:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static int	create_newvar(t_var *export, t_var *env, char *arg)
 
 static void	update_two_list(t_var *export, t_var *env)
 {
+	if (check_plus(export->newvar->content) == 1)
+	{
+		export->newvar->content = revome_plus(export->newvar->content);
+		env->newvar->content = revome_plus(env->newvar->content);
+	}
 	ft_lstadd_back(export->list, export->newvar);
 	if (env->equal_i >= 0)
 		ft_lstadd_back(env->list, env->newvar);

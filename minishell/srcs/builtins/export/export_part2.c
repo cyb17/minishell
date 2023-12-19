@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:02:28 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 17:19:46 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 16:48:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	join_newvar_oldvar(t_var *var, int i)
 			ft_putstr_fd("Error: joint_newvar_oldvar: malloc failed\n", 2);
 			return (-1);
 		}
+		free(tmp);
 		free(var->newvar->content);
 	}
 	return (0);
@@ -35,7 +36,7 @@ static int	join_newvar_oldvar(t_var *var, int i)
 static int	add_var_to_envlist(t_var *env, t_var *export)
 {
 	free(env->newvar->content);
-	env->newvar->content = ft_strdup(export->newvar->content);
+	env->newvar->content = ft_strdup(export->oldvar->content);
 	if (!env->newvar->content)
 	{
 		ft_putstr_fd("Error: add_var_to_envlist: malloc failed\n", 2);

@@ -6,11 +6,28 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:00:34 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 17:10:23 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 15:48:17 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
+
+static int	check_name(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!arg || (ft_isalpha(arg[0]) == 0 && arg[0] != '_'))
+		return (-1);
+	while (arg[i])
+	{
+		if (ft_isalpha(arg[i]) == 0 && arg[i] != '_'
+			&& ft_isdigit(arg[i]) == 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 static void	delete_var(t_list **list, int oldvar_i)
 {
@@ -73,7 +90,8 @@ int	ft_unset(t_list **envlist, t_list **explist, char **arg)
 		return (0);
 	while (arg[i])
 	{
-		unset_arg(envlist, explist, arg[i]);
+		if (check_name(arg[i]) == 0)
+			unset_arg(envlist, explist, arg[i]);
 		i++;
 	}
 	return (0);

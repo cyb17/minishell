@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 11:58:19 by yachen            #+#    #+#             */
-/*   Updated: 2023/05/12 13:37:39 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 13:01:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	ft_convert(long nb, char *str, size_t len, int sign)
 		str[0] = '-';
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long n)
 {
 	char	*str;
 	long	nb;
@@ -62,16 +62,17 @@ char	*ft_itoa(int n)
 	ft_convert(nb, str, ft_lenstr(nb, sign), sign);
 	return (str);
 }
-/*
-#include <stdio.h>
 
-int	main()
-{
-	printf("%s\n", ft_itoa(-0));
-	printf("%s\n", ft_itoa(0));
-	printf("%s\n", ft_itoa(-123));
-	printf("%s\n", ft_itoa(123));
-	printf("%s\n", ft_itoa(2147483647));
-	printf("%s\n", ft_itoa(-2147483648));
-}
-*/
+// #include <stdio.h>
+// #include <limits.h>
+// int	main(void)
+// {
+// 	// printf("%s\n", ft_itoa(-0));
+// 	// printf("%s\n", ft_itoa(0));
+// 	// printf("%s\n", ft_itoa(-123));
+// 	// printf("%s\n", ft_itoa(123));
+// 	// printf("%s\n", ft_itoa(2147483647));
+// 	// printf("%s\n", ft_itoa(-2147483648));
+// 	printf("%s\n%s\n", ft_itoa(LLONG_MAX), ft_itoa(-9223372036854775808));
+// }
+

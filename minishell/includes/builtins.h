@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/18 15:16:05 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 16:15:52 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		replace_and_update(t_var *env, t_var *export);
 // export_part_3
 void	free_newvar(t_var *export, t_var *env);
 void	print_explist(t_list *explist);
+int		check_plus(char *str);
+char	*revome_plus(char *str);
 
 // unset
 int		ft_unset(t_list **envlist, t_list **explist, char **arg);
