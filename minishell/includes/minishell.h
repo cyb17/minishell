@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/18 15:11:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:44:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,13 @@ typedef struct s_tab
 
 typedef struct s_var
 {
-	t_list	**list;
-	t_list	*oldvar;
-	t_list	*newvar;
-	int		oldvar_i;
-	int		equal_i;
-	int		plus_i;
+	char	*nm;
+	char	*val;
+	int		eq;
+	int		pl;
+	int		len;
+	// t_list	*old;
+	// t_list	*new;
 }			t_var;
 
 typedef struct s_redir

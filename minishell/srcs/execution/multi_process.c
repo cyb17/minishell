@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 16:33:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/20 15:11:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,9 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 {
 	int			fdin;
 	int			fdout;
-	int			status;
 
 	fdin = STDIN_FILENO;
 	fdout = STDOUT_FILENO;
-	status = 0;
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 	{
