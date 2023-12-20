@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/18 20:15:13 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:37:31 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char		*manage_words_p2(t_p *p);
 char		*manage_words_p3(t_p *p, t_list **envlist);
 char		*manage_words_p4(t_p *p, char *cpy);
 
+/* utils_parsing4.c */
+
 /* init.c */
 void		process_init(t_process *process);
 int			pars_init(t_p *p, char *line, t_all *all);
@@ -90,8 +92,9 @@ bool		varcmp(char *model, char *str);
 bool		is_exp_char(char c);
 bool		is_exp_char2(char c);
 int			b_q_exp(char *l, int i);
-int	        b_q_exp2(char *l, int i);
+int			b_q_exp2(char *l, int i);
 
+/* expand_utils2.c */
 
 /* clean_words.c */
 char		*clean_word(char *s, t_p *p, t_list **envlist);
@@ -122,7 +125,9 @@ bool		manage_tkn(t_process *process, t_p *p);
 /* utils_cleaning.c */
 char		*ft_strdup_checking(char *s, int start, int end);
 char		*my_strjoin(char *s1, char *s2);
+void	    my_strjoin_end(char *s2, int i, int *j, char **str);
 char		*ft_cpy(char *str, char *s, int *i);
+bool        to_delete(char *s, int i);
 
 /* garbage_collector.c */
 void		clear_process_list(t_process *process);
