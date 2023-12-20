@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
+#    By: achevala <achevala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/12/14 12:24:28 by yachen           ###   ########.fr        #
+#    Updated: 2023/12/20 19:27:18 by achevala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ PARSING = parsing init utils_parsing ft_split_minishell utils_cleaning \
 		  split_input expand clean_words utils_parsing2 \
 		  garbage_collector_parsing token utils_parsing3 utils_split_minishell \
 		  utils_write_in redir utils_redir expand_utils \
+		  utils_parsing4 expand_utils2 \
 
 BUILTINS = cd echo env export/export_part1 export/export_part2 export/export_part3 pwd unset utils exit \
 
