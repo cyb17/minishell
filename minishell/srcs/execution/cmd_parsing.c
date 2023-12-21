@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_parsing_cmd_2.c                              :+:      :+:    :+:   */
+/*   cmd_parsing_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/25 17:51:02 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/08 17:05:49 by yachen           ###   ########.fr       */
+/*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
+/*   Updated: 2023/12/21 15:07:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	tab_strjoin(char **tab, char *str)
 
 /* find and split environnement variable PATH, than join each path with "/cmd"
 return NULL if (PATH don't find | ft_split failed * | tab_join failed */
-char	**find_path(char **env, char *cmd)
+static char	**find_path(char **env, char *cmd)
 {
 	int		i;
 	char	**path;
@@ -60,32 +60,67 @@ char	**find_path(char **env, char *cmd)
 	return (path);
 }
 
-/* split cmd and options in char **
-return NULL if ft_split failed */
-char	**make_cmd(char *str)
+// Check if cmd[0] is accessible and executable
+static char	*sub_parsing_cmd1(char *cmd)
 {
-	char	**cmd;
+	char	*path;
 
-	cmd = ft_split(str, ' ');
 	if (!cmd)
-	{
-		ft_putstr_fd("Error: make_cmd: malloc failed\n", 2);
 		return (NULL);
+	path = NULL;
+	if (access(cmd, F_OK | R_OK | X_OK) == -1)
+	{
+		g_signal = 126;
+		perror("Error");
 	}
-	return (cmd);
+	else
+		path = ft_strdup(cmd);
+	return (path);
 }
 
-/* return 0 if cmd is "" | "   " */
-int	check_cmd(char *cmd)
+static char	*sub_parsing_cmd2(char **env_main, char *cmd)
 {
-	int	i;
+	int		i;
+	char	*path;
+	char	**env_path;
 
-	if (!cmd)
-		return (0);
+	env_path = find_path(env_main, cmd);
+	if (!env_path)
+	{
+		ft_putstr_fd("Error: variable PATH not found\n", 2);
+		return (NULL);
+	}
 	i = 0;
-	while (cmd[i] && cmd[i] == ' ')
+	while (env_path[i] && access(env_path[i], F_OK | R_OK | X_OK) == -1)
 		i++;
-	if (!cmd[i])
-		return (0);
-	return (1);
+	if (!(env_path[i]))
+	{
+		ft_putstr_fd("Error : ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Command not found\n", 2);
+		free_tab(env_path);
+		return (NULL);
+	}
+	path = ft_strdup(env_path[i]);
+	free_tab(env_path);
+	return (path);
+}
+
+/* if cmd start with /../..cmd or ./cmd, use sub_parsing_cmd1
+else use sub_parsing_cmd2 
+return NULL if there is any error*/
+char	*parsing_cmd(char **env_main, char **cmd)
+{
+	char	*path;
+
+	path = NULL;
+	if (cmd[0][0] == '/' || cmd[0][0] == '.')
+	{
+		path = sub_parsing_cmd1(cmd[0]);
+		return (path);
+	}
+	path = sub_parsing_cmd2(env_main, cmd[0]);
+	if (!path)
+		g_signal = 1;
+	return (path);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   tools_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 11:06:15 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:00:00 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,13 @@ void	clean_fdin_fdout(int fdin, int fdout)
 		close(fdout);
 }
 
-int	ft_execve(char **env, char *path, char *arg)
+int	ft_execve(char **env, char *path, char **arg)
 {
-	char	**cmd;
-
-	cmd = make_cmd(arg);
-	if (execve(path, cmd, env) == -1)
+	if (execve(path, arg, env) == -1)
 	{
 		perror("Error: execve");
-		free_tab(cmd);
 		free_tab(env);
-		free(arg);
+		free_tab(arg);
 		free(path);
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:30:43 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 12:51:00 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:14:59 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_perror(char *msg, int *rslt)
 static int	redir_first_process(int fdin, int fdout, int *pipefd)
 {
 	int	rslt;
-	
+
 	rslt = 0;
 	close(pipefd[0]);
 	if (fdin != STDIN_FILENO)
@@ -48,7 +48,7 @@ static int	redir_first_process(int fdin, int fdout, int *pipefd)
 static int	redir_last_process(int fdin, int fdout, int *pipefd)
 {
 	int	rslt;
-	
+
 	rslt = 0;
 	if (fdin != STDIN_FILENO)
 	{
@@ -71,7 +71,7 @@ static int	redir_last_process(int fdin, int fdout, int *pipefd)
 	return (rslt);
 }
 
-static int	redir_medium_prcs(int fdin, int fdout, int *previous, int *current)
+static int	redir_med_prcs(int fdin, int fdout, int *previous, int *current)
 {
 	static int	rslt;
 
@@ -112,7 +112,7 @@ int	redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i)
 	else
 	{
 		close(tab->pipefd[i][0]);
-		rslt = redir_medium_prcs(fdin, fdout, tab->pipefd[i - 1], tab->pipefd[i]);
+		rslt = redir_med_prcs(fdin, fdout, tab->pipefd[i - 1], tab->pipefd[i]);
 		close(tab->pipefd[i - 1][0]);
 		close(tab->pipefd[i][1]);
 	}

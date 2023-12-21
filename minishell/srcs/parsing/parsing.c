@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nap <nap@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/12/14 16:27:08 by nap              ###   ########.fr       */
+/*   Updated: 2023/12/21 14:10:08 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int	ft_parse(char *line, t_all *all)
 int	end_parse(t_all *all, t_list *envlist)
 {
 	all->p->s1 = add_space(all->p->s0);
-	printf("S! : %s \n", all->p->s1);
 	if (!all->p->s1)
 	{
 		ft_error(ERROR_M3, all, 1);

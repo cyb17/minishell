@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/15 09:59:23 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:08:58 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,8 @@ void		start_data_init(t_res *res, t_all *all, char **env, char **argv);
 // multi_prcs
 void		multi_prcs(t_res *res);
 
-// cmd_parsing_1
-char		*sub_parsing_cmd1(char **split_cmd);
-char		*sub_parsing_cmd2(char **env_main, char *cmd);
-char		*parsing_cmd(char **env_main, char *cmd);
-char		**find_path(char **env, char *cmd);
-// cmd_parsing_2
-char		**find_path(char **env, char *cmd);
-char		**make_cmd(char *str);
-int			check_cmd(char *cmd);
+// cmd_parsing
+char		*parsing_cmd(char **env_main, char **cmd);
 
 // redir_multi_prcs
 int			redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
@@ -67,7 +60,7 @@ int			open_fdin_fdout(int *fdin, int *fdout, t_process *prcs);
 // utils_2
 void		clean_fdin_fdout(int fdin, int fdout);
 t_tokens	*check_cmd_tk(t_tokens *list_tokens);
-int			ft_execve(char **env, char *path, char *arg);
+int			ft_execve(char **env, char *path, char **arg);
 int			init_io(t_redir *io);
 int			init_stdin_stdout(int stdin, int stdout);
 // utils_3

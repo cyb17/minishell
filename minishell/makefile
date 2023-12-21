@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 14:39:57 by yachen            #+#    #+#              #
-#    Updated: 2023/12/21 12:52:59 by yachen           ###   ########.fr        #
+#    Updated: 2023/12/21 15:06:41 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ PARSING = parsing init utils_parsing ft_split_minishell utils_cleaning \
 BUILTINS = cd echo env pwd unset utils exit export/export export/export_tools \
 
 EXECUTION = minishell single_prcs garbage_collector init_ressources \
-			ft_here_doc redir_multi_prcs cmd_parsing_1 cmd_parsing_2 \
+			ft_here_doc redir_multi_prcs cmd_parsing \
 			exe_no_builtins exe_builtins multi_process tools_1 tools_2 tools_3 \
 			
 RM = rm -rf

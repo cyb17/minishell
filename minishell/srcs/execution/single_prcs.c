@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/14 11:06:15 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:13:55 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	single_prcs(t_res *res)
 	if (!cmd)
 	{
 		io.fdin = STDIN_FILENO;
-		io.fdout = STDOUT_FILENO; 
+		io.fdout = STDOUT_FILENO;
 		if (open_fdin_fdout(&io.fdin, &io.fdout, res->prcs) == -1)
 		{
 			clean_fdin_fdout(io.fdin, io.fdout);

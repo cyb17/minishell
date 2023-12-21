@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/19 15:20:42 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:12:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static unsigned long	minishell_atoi(const char *str)
 // Check if is a numerique number between LLONG_MIN and LLONG_MAX
 static int	is_numerique_arg(char *arg)
 {
-	int		i;
-	int		sign;
+	int				i;
+	int				sign;
 	unsigned long	nb;
-	
+
 	i = 0;
 	nb = 0;
 	sign = 1;

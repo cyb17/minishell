@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/18 15:15:36 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:13:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	update_path(t_list **list, char *oldpwd, char *pwd)
 			free(oldpwd_found->content);
 			oldpwd_found->content = ft_strjoin("OLDPWD=", oldpwd);
 			if (!oldpwd_found->content)
-				ft_putstr_fd("Error: update OLDPWD: ft_strjoin: malloc failed\n",2);
+				ft_putstr_fd("Error: update OLDPWD: malloc failed\n", 2);
 		}
 	}
 	if (pwd && pwd[0] != '\0')
@@ -88,7 +88,7 @@ static void	update_path(t_list **list, char *oldpwd, char *pwd)
 			free(pwd_found->content);
 			pwd_found->content = ft_strjoin("PWD=", pwd);
 			if (!pwd_found->content)
-				ft_putstr_fd("Error: update PWD: ft_strjoin: malloc failed\n",2);
+				ft_putstr_fd("Error: update PWD: malloc failed\n", 2);
 		}
 	}
 }

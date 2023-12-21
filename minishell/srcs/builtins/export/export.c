@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:53:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 12:45:25 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:13:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	export_arg(t_list **envlist, t_list **explist, char *arg)
 	free(var.val);
 	return (rslt);
 }
-
 
 // Error = 1 || succes = 0
 int	ft_export(t_list **envlist, t_list **explist, char **arg)

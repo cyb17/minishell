@@ -6,54 +6,53 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/13 12:37:09 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:03:35 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// Join 2 tokens with a space between them
-static char	*join_cmd_and_option(char *s1, char *s2)
+static int	find_len(t_tokens *cmd)
 {
-	char	*tmp;
-	char	*cmd;
+	int			len;
+	t_tokens	*tokens;
 
-	tmp = NULL;
-	cmd = NULL;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	tmp = ft_strjoin(s1, " ");
-	cmd = ft_strjoin(tmp, s2);
-	if (tmp)
-		free(tmp);
-	return (cmd);
-}
-
-// Make cmd_tk to a char * to give to parsing_cmd as parameter
-static char	*make_cmdtk_to_arg(t_tokens *tokens)
-{
-	char		*tmp;
-	char		*cmd;
-
-	cmd = NULL;
+	len = 0;
+	tokens = cmd;
 	while (tokens && (tokens->type == CMD || tokens->type == WORD))
 	{
-		tmp = cmd;
-		cmd = join_cmd_and_option(cmd, tokens->value);
-		if (tmp)
-			free(tmp);
-		if (!cmd)
+		len++;
+		tokens = tokens->next;
+	}
+	return (len);
+}
+
+static char	**make_cmdtk_to_arg(t_tokens *cmd)
+{
+	int			i;
+	char		**arg;
+
+	arg = (char **)malloc(sizeof(char *) * (find_len(cmd) + 1));
+	if (!arg)
+	{
+		ft_putstr_fd("Error: make_cmtk_to_arg: malloc failed\n", 2);
+		return (NULL);
+	}
+	i = 0;
+	while (cmd && (cmd->type == CMD || cmd->type == WORD))
+	{
+		arg[i] = ft_strdup(cmd->value);
+		if (!arg[i])
 		{
+			free_tab(arg);
 			ft_putstr_fd("Error: make_cmtk_to_arg: malloc failed\n", 2);
 			return (NULL);
 		}
-		tokens = tokens->next;
+		i++;
+		cmd = cmd->next;
 	}
-	return (cmd);
+	arg[i] = NULL;
+	return (arg);
 }
 
 // allocate memory for my char **env
@@ -106,7 +105,7 @@ static char	**list_to_tab(t_list *envlist)
 
 int	exe_no_builtins(t_res *res, t_tokens *cmd)
 {
-	char	*arg;
+	char	**arg;
 	char	*path;
 	char	**env;
 
@@ -123,7 +122,7 @@ int	exe_no_builtins(t_res *res, t_tokens *cmd)
 	if (!path)
 	{
 		free_tab(env);
-		free(arg);
+		free_tab(arg);
 		garbage_collector_child(res);
 		exit(g_signal);
 	}

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/16 16:12:31 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:15:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ static int	is_op(char *str)
 static int	print_echo_arg(char *argv)
 {
 	int	j;
-	
+
 	j = 0;
-	
 	while (argv[j])
 	{
 		if (argv[j + 1] && argv[j] == '$' && argv[j + 1] == '?')
