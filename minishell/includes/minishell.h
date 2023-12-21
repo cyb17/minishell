@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:29:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 12:23:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:17:14 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 extern int	g_signal;
 
-enum tokens_type
+enum e_tokens_type
 {
 	CMD = 1,
 	WORD = 2,
@@ -52,17 +52,17 @@ typedef struct s_tokens
 {
 	int				id;
 	int				type;
-	char 			*value;
+	char			*value;
 	struct s_tokens	*next;
 }					t_tokens;
 
 typedef struct s_process
 {
-    char				*section_cmd;
+	char				*section_cmd;
 	int					section_cmd_id;
 	t_tokens			*list_tokens;
 	pid_t				pid;
-	char 				*heredoc;
+	char				*heredoc;
 	struct s_process	*next;
 }						t_process;
 

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:44:32 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 12:53:20 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:52:17 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	print_explist(t_list *explist)
 	{
 		printf("export : %s\n", (char *)tmp->content);
 		tmp = tmp->next;
+		if (tmp->next == NULL)
+			break ;
 	}
+	printf("export : %s\n", (char *)tmp->content);
 }
 
 // Check if var's name is correct to be exported

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:13:55 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:52:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ static int	redirection_single_prcs(int fdin, int fdout)
 	}
 	return (0);
 }
+
+// static void	signal_handler_child(int signum)
+// {
+// 	if (signum == SIGINT)
+// 	{
+// 		g_signal = 130;
+// 		exit(g_signal);
+// 	}
+// }
 
 static void	sub_child_prcs(int *fdin, int *fdout, t_res *res, t_tokens *cmd)
 {

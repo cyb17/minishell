@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_parsing_2.c                                    :+:      :+:    :+:   */
+/*   cmd_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:07:03 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:36:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static char	*sub_parsing_cmd1(char *cmd)
 	if (access(cmd, F_OK | R_OK | X_OK) == -1)
 	{
 		g_signal = 126;
-		perror("Error");
+		ft_putstr_fd("Error: ", 2);
+		perror(cmd);
 	}
 	else
 		path = ft_strdup(cmd);

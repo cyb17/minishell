@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:08:58 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:55:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include "minishell.h"
 # include "builtins.h"
 # include "parsing.h"
-
-
-/* EXECUTION */
 
 // exe_builtins
 int			exe_builtins(t_res *res, t_tokens *cmd);

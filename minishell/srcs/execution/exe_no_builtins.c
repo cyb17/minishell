@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:41:08 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:03:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:01:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,14 @@ static char	**list_to_tab(t_list *envlist)
 	return (env);
 }
 
+// static void handler(int signum)
+// {
+// 	if (signum == SIGINT)
+// 	{
+// 		return ;
+// 	}
+// }
+
 int	exe_no_builtins(t_res *res, t_tokens *cmd)
 {
 	char	**arg;
@@ -126,6 +134,8 @@ int	exe_no_builtins(t_res *res, t_tokens *cmd)
 		garbage_collector_child(res);
 		exit(g_signal);
 	}
+	// if (res->prcs->pid == 0)
+	// 	signal(SIGINT, handler);
 	if (ft_execve(env, path, arg) == -1)
 		return (-1);
 	return (0);

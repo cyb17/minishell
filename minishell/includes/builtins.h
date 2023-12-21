@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 12:52:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:55:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int		ft_unset(t_list **envlist, t_list **explist, char **arg);
 int		ft_pwd(void);
 
 // exit
-int	ft_exit(char **arg, t_res *res);
+int		ft_exit(char **arg, t_res *res);
 
 #endif

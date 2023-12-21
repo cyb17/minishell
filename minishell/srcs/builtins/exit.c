@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:12:29 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:18:35 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static void	exit_succes(t_res *res, char **arg)
 	if (res->io)
 		init_stdin_stdout(res->io->stdin, res->io->stdout);
 	garbage_collector_child(res);
+	printf("exit\n");
 	exit(g_signal);
 }
 
@@ -93,11 +94,12 @@ int	ft_exit(char **arg, t_res *res)
 		if (res->io)
 			init_stdin_stdout(res->io->stdin, res->io->stdout);
 		garbage_collector_child(res);
+		printf("exit\n");
 		exit(g_signal = 0);
 	}
 	if (is_numerique_arg(arg[1]) == -1)
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd("exit\nminishell: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		if (res->io)
