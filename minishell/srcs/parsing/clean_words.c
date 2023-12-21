@@ -21,16 +21,15 @@ char	*delete_quotes(char *s)
 	cpy = NULL;
 	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
 	{
-		if (s[i] && s [i + 1] && (s[i] == '\'' && s[i + 1] == '\'')
-			&& b_q(s, i) == i)
+		if (i > 0 && s[i - 1] != '$' && to_delete(s, i) == true
+			&& check_quotes(s, s[i], i) != i + 1)
 			i = i + 2;
-		else if (s[i] && s [i + 1] && (s[i] == '"' && s[i + 1] == '"'
-				&& b_q(s, i) == i))
+		else if (i == 0 && to_delete(s, i) == true)
 			i = i + 2;
 		else if (s[i] != '\0')
 		{
 			if (cpy == NULL)
-				cpy = ft_strdup_section(s, i, i + 1);
+				cpy = ft_strdup_part(s, i, i + 1);
 			else
 				cpy = cpychar(s, i, cpy);
 			i++;
@@ -47,10 +46,10 @@ char	*cpychar(char *s, int i, char *cpy)
 	char	*tmp;
 
 	if (cpy == NULL)
-		cpy = ft_strdup_section(s, i, i + 1);
+		cpy = ft_strdup_part(s, i, i + 1);
 	else
 	{
-		tmp = ft_strdup_section(s, i, i + 1);
+		tmp = ft_strdup_part(s, i, i + 1);
 		cpy2 = cpy;
 		cpy = my_strjoin(cpy2, tmp);
 		if (cpy2)

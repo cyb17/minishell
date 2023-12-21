@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/12/21 14:10:08 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 16:56:26 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,3 +143,5 @@ int	end_parse(t_all *all, t_list *envlist)
 		return (-1);
 	return (0);
 }
+
+/* printf("S! : %s \n", all->p->s1); */

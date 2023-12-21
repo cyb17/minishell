@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:45:48 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/11 17:02:36 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:47:32 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ char	*ft_cpy(char *str, char *s, int *i)
 	return (str);
 }
 
+void	my_strjoin_end(char *s2, int i, int *j, char **str)
+{
+	while (s2[(*j)] != '\0')
+	{
+		(*str)[i + (*j)] = s2[(*j)];
+		(*j)++;
+	}
+}
+
 char	*my_strjoin(char *s1, char *s2)
 {
 	int		i;
@@ -63,23 +72,18 @@ char	*my_strjoin(char *s1, char *s2)
 	if (s1)
 		str = ft_cpy(str, s1, &i);
 	if (s2)
-	{
-		while (s2[j] != '\0')
-		{
-			str[i + j] = s2[j];
-			j++;
-		}
-	}
+		my_strjoin_end(s2, i, &j, &str);
 	str[i + j] = '\0';
 	return (str);
 }
 
-bool	is_ok(char c)
+bool	to_delete(char *s, int i)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
+	if (s[i] && s [i + 1] && ((s[i] == '\''
+				&& s[i + 1] == '\'') || (s[i] == '"'
+				&& s[i + 1] == '"')) && b_q(s, i) == i)
 		return (true);
-	else
-		return (false);
+	return (false);
 }
 
 /* void	print_tab(char **tab)
