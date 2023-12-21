@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/19 16:15:52 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/21 12:52:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,14 @@ int		ft_cd(t_list **envlist, t_list **explist, t_builtins *blt);
 // env
 int		ft_env(char **arg, t_list *envlist);
 
-// export_part_1
-int		export_arg(t_list **envlist, t_list **explist, char *arg);
+// export
 int		ft_export(t_list **envlist, t_list **explist, char **arg);
-//export_part_2
-int		join_and_update(t_var *env, t_var *export);
-int		replace_and_update(t_var *env, t_var *export);
-// export_part_3
-void	free_newvar(t_var *export, t_var *env);
+// export_tools
 void	print_explist(t_list *explist);
-int		check_plus(char *str);
-char	*revome_plus(char *str);
+int		check_var_name(char *arg);
+int		mallc(char **name, char **value, int n_l, int v_l);
+void	cpy_until_c(char *dest, char *src, char c);
+int		split_arg(char *arg, t_var *var);
 
 // unset
 int		ft_unset(t_list **envlist, t_list **explist, char **arg);
