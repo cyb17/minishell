@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 17:27:54 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 19:05:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	execution(t_res *res, t_all *all)
 	res->prcs = all->process;
 	if (fill_heredoc(res) == 0)
 	{
-		// print_prcs(res->prcs);
 		if (find_nb_process(res->prcs) > 1)
 			multi_prcs(res);
 		else

@@ -6,14 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 14:04:12 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 19:19:16 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// Make cmd_tk a char ** to give builtins's fonctions as parameter
-static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
+static int	find_arg_size(t_tokens *cmd_tk)
 {
 	t_tokens	*tmp;
 	int			i;
@@ -26,6 +25,15 @@ static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 			i++;
 		tmp = tmp->next;
 	}
+	return (i);
+}
+
+// Make cmd_tk a char ** to give builtins's fonctions as parameter
+static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
+{
+	int			i;
+
+	i = find_arg_size(cmd_tk);
 	builtins->arg = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!builtins->arg)
 		return (-1);

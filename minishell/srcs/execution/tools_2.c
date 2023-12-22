@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 17:00:50 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 19:25:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,29 @@ void	clean_fdin_fdout(int fdin, int fdout)
 int	ft_execve(char **env, char *path, char **arg)
 {
 	DIR	*dir;
+	int	rslt;
 
+	rslt = 0;
 	dir = opendir(arg[0]);
 	if (dir)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(arg[0], 2);
 		ft_putstr_fd(": Is a directory", 2);
-		free_tab(env);
-		free_tab(arg);
-		free(path);
-		closedir(dir);
+		rslt = -1;
 		g_signal = 126;
-		return (-1);
 	}
 	else if (execve(path, arg, env) == -1)
 	{
 		perror("Error: execve");
-		free_tab(env);
-		free_tab(arg);
-		free(path);
-		closedir(dir);
+		rslt = -1;
 		g_signal = 1;
-		return (-1);
 	}
-	return (0);
+	free_tab(env);
+	free_tab(arg);
+	free(path);
+	closedir(dir);
+	return (rslt);
 }
 
 int	init_io(t_redir *io)
