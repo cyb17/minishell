@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/20 15:11:44 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 13:32:42 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static void	exe_prcs(t_res *res, t_process *prcs, int i)
 	}
 	else if (prcs->pid == 0)
 	{
+		signal(SIGINT, signal_handler_child);
 		if (open_fdin_fdout(&fdin, &fdout, prcs) == -1
 			|| redirection_multi_prcs(fdin, fdout, res->tab, i) == -1)
 			error_task(fdin, fdout, res, 1);
@@ -104,6 +105,7 @@ void	multi_prcs(t_res *res)
 			break ;
 		}
 		exe_prcs(res, tmp, i);
+		signal(SIGINT, SIG_IGN);
 		tmp = tmp->next;
 		i++;
 	}

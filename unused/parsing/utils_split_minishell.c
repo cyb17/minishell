@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 17:27:06 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/21 20:52:34 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:50:30 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void	size_word_end(char *s, int *l, char **s1, char c)
 			}
 		}
 	}
+	/* while (*(*s1) != '\0' && *(*s1) != c && b_q(s, (*l)) == (*l)
+		&& (*(*s1) != '\'' && *(*s1) != '"'))
+	{
+		(*l)++;
+		(*s1)++;
+	} */
 }
 
 bool	split_mini_loop(char ***tab, t_p *p, char **s3, char *s)

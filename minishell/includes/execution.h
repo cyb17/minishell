@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:18:57 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 17:55:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 13:38:32 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,26 @@ int			redirection_multi_prcs(int fdin, int fdout, t_tab *tab, int i);
 // single_prcs
 void		single_prcs(t_res *res);
 
-// utils_1
+// tools_1
 void		free_pipefd(int **pipefd, int nb_pipe);
 int			pipe_pipefd(t_tab *tab, int i);
 void		redirect_in(int *fdin, char *infile);
 void		redirect_out(int *fdout, char *outfile, char mode);
 int			open_fdin_fdout(int *fdin, int *fdout, t_process *prcs);
-// utils_2
+// tools_2
 void		clean_fdin_fdout(int fdin, int fdout);
 t_tokens	*check_cmd_tk(t_tokens *list_tokens);
 int			ft_execve(char **env, char *path, char **arg);
 int			init_io(t_redir *io);
 int			init_stdin_stdout(int stdin, int stdout);
-// utils_3
-int			isnot_builtins(char *str);
+// tools_3
+void		signal_handler_child(int signum);
 void		signal_handler_main(int signum);
 void		signal_handler_hd(int signum);
-void		ft_ctrl_d(void);
+void		fixe_child_exit_code(int *status);
 void		waitpid_and_fixe_exit_code(t_res *res);
+// tools_4
+int			isnot_builtins(char *str);
+void		ft_ctrl_d(void);
 
 #endif

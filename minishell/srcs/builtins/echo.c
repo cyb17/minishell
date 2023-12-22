@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:21:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 17:13:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 11:51:52 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ int	ft_echo(char **arg)
 	if (!arg[i])
 		return (0);
 	while (arg[i])
-		printf("%s ", arg[i++]);
+	{
+		if (arg[i + 1])
+			printf("%s ", arg[i++]);
+		else
+			printf("%s", arg[i++]);
+	}
+		
 	if (op_flag == 0)
 		printf("\n");
 	return (0);

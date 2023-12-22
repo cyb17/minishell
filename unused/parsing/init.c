@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:58:13 by nap               #+#    #+#             */
-/*   Updated: 2023/12/21 21:05:19 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:23:02 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	pars_init(t_p *p, char *line, t_all *all)
 	p->j = 0;
 	p->k = 0;
 	p->l = 0;
-	p->n = 0;
-	p->tkn_word = NULL;
 	p->words = NULL;
 	p->tkn = NULL;
 	p->all = all;

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:47:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 18:18:35 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 12:39:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	check_nb_arg(char **arg)
 		i++;
 	if (i > 2)
 	{
-		ft_putstr_fd("minishell: exit: too any arguments\n", 2);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (-1);
 	}
 	return (0);

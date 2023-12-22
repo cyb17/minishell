@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/22 14:41:01 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:13:56 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*cpychar3(char *s, int i, char *cpy)
 	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1]
 		&& (s[i - 1] == '>' || s[i - 1] == '<')
 		&& (s[i] != '>' && s[i] != '<')
-		&& (i - 1 >= 0) && b_q(s, i) == i)
+		&& (i - 1 >= 0))
 		cpy = add_blank(cpy);
 	if (i < my_strlen(s))
 		cpy = cpychar(s, i, cpy);
@@ -92,7 +92,7 @@ char	*add_space(char *s)
 
 	i = 0;
 	cpy = NULL;
-	while (i <= ((int)ft_strlen(s)) && *s && s[i] != '\0')
+	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
 	{
 		if (b_q(s, i) == i && (s[i] >= '0' && s[i] <= '9'))
 			i = manage_num(s, i);

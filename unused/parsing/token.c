@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:53:25 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/22 15:09:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:17:08 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ void	read_value(char *value, t_tokens *token)
 	if (ft_strcmp(value, "<") == 1)
 	{
 		token->type = 5;
-		while (token->next)
-		{
+		if (token->next)
 			token->next->type = 3;
-			token = token->next;
-		}
 	}
 	if (ft_strcmp(value, ">") == 1)
 	{
@@ -33,10 +30,14 @@ void	read_value(char *value, t_tokens *token)
 	{
 		token->type = 7;
 		if (token->next)
-			token->next->type = 4;
+			token->next->type = 3;
 	}
 	if (ft_strcmp(value, "<<") == 1)
+	{
 		token->type = 8;
+		if (token->next)
+			token->next->type = 4;
+	}
 }
 
 void	cmd_value(t_tokens *token)

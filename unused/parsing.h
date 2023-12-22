@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/21 22:14:36 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:37:31 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,13 @@ char		*add_space(char *s);
 char		*add_blank(char *cpy);
 
 /* utils_parsing3.c */
+char		*manage_expand(t_p *p, t_list **envlist, char *cpy);
 char		*manage_words_p1(t_p *p, t_list **envlist);
 char		*manage_words_p2(t_p *p);
 char		*manage_words_p3(t_p *p, t_list **envlist);
 char		*manage_words_p4(t_p *p, char *cpy);
-char		*in_manage_p3(t_p *p, t_list **envlist, char **cpy, char **cpy2);
 
 /* utils_parsing4.c */
-bool		is_only_space2(char *s);
 
 /* init.c */
 void		process_init(t_process *process);
@@ -96,8 +95,6 @@ int			b_q_exp(char *l, int i);
 int			b_q_exp2(char *l, int i);
 
 /* expand_utils2.c */
-char		*manage_exp_end(t_p *p, t_list **envlist);
-char		*manage_expand(t_p *p, t_list **envlist);
 
 /* clean_words.c */
 char		*clean_word(char *s, t_p *p, t_list **envlist);
@@ -128,9 +125,9 @@ bool		manage_tkn(t_process *process, t_p *p);
 /* utils_cleaning.c */
 char		*ft_strdup_checking(char *s, int start, int end);
 char		*my_strjoin(char *s1, char *s2);
-void		my_strjoin_end(char *s2, int i, int *j, char **str);
+void	    my_strjoin_end(char *s2, int i, int *j, char **str);
 char		*ft_cpy(char *str, char *s, int *i);
-bool		to_delete(char *s, int i);
+bool        to_delete(char *s, int i);
 
 /* garbage_collector.c */
 void		clear_process_list(t_process *process);

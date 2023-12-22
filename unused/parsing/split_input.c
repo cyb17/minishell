@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:58:07 by nap               #+#    #+#             */
-/*   Updated: 2023/12/22 16:16:06 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/17 14:58:24 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,34 @@ t_tokens	*create_tokens(char *str, int id, t_p *p)
 	tokens->id = id;
 	if (str)
 		free(str);
-	str = NULL;
 	return (tokens);
 }
 
 bool	make_token_list(t_process *process, t_list *envlist, t_p *p)
 {
 	t_tokens	*new_token;
+	int			i;
+	char		*tkn_word;
 
 	new_token = NULL;
 	while (process != NULL)
 	{
 		p->id = 0;
-		p->n = 0;
+		i = 0;
 		if (manage_tkn(process, p) == false)
 			return (false);
-		while (p->tkn[p->n] != NULL)
+		while (p->tkn[i] != NULL)
 		{
-			p->tkn_word = clean_word(p->tkn[p->n], p, &envlist);
-			if (p->tkn_word != NULL)
+			tkn_word = clean_word(p->tkn[i], p, &envlist);
+			if (tkn_word != NULL)
 			{
 				p->id++;
-				new_token = create_tokens(p->tkn_word, p->id, p);
+				new_token = create_tokens(tkn_word, p->id, p);
 				if (!new_token)
 					return (ft_error(ERROR_M5, p->all, 1));
 				ft_tokenadd_back(&process->list_tokens, new_token);
 			}
-			p->n++;
+			i++;
 		}
 		process = process->next;
 	}

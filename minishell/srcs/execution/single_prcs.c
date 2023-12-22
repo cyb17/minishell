@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 17:52:54 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 13:40:02 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,6 @@ static int	redirection_single_prcs(int fdin, int fdout)
 	}
 	return (0);
 }
-
-// static void	signal_handler_child(int signum)
-// {
-// 	if (signum == SIGINT)
-// 	{
-// 		g_signal = 130;
-// 		exit(g_signal);
-// 	}
-// }
 
 static void	sub_child_prcs(int *fdin, int *fdout, t_res *res, t_tokens *cmd)
 {
@@ -78,12 +69,13 @@ static void	child_prcs(t_res *res, t_tokens *cmd)
 		return ;
 	}
 	else if (res->prcs->pid == 0)
+	{
+		signal(SIGINT, signal_handler_child);
 		sub_child_prcs(&fdin, &fdout, res, cmd);
+	}
+	signal(SIGINT, SIG_IGN);
 	waitpid(res->prcs->pid, &status, 0);
-	if (WIFEXITED(status))
-		g_signal = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_signal = WTERMSIG(status);
+	fixe_child_exit_code(&status);
 }
 
 static int	parent_prcs(t_res *res, t_tokens *cmd)

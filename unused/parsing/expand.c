@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:32:42 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/22 16:04:57 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/19 13:55:49 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,8 @@ char	*expand_value(char *s, int i, t_list **envlist)
 	expanded = my_getenv(to_expand, *envlist);
 	free(to_expand);
 	to_expand = NULL;
-	if (!expanded || is_only_space2(expanded) == false)
-	{
-		if (expanded)
-			free(expanded);
-		expanded = NULL;
+	if (!expanded)
 		return (NULL);
-	}
 	return (expanded);
 }
 

@@ -6,46 +6,46 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:21:18 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 18:52:10 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 16:39:18 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-// static void	print_prcs(t_process *prcs)
-// {
-// 	t_process	*tmp;
-// 	t_tokens	*tmp2;
+static void	print_prcs(t_process *prcs)
+{
+	t_process	*tmp;
+	t_tokens	*tmp2;
 
-// 	tmp = prcs;
-// 	while (tmp)
-// 	{
-// 		tmp2 = tmp->list_tokens;
-// 		while (tmp2)
-// 		{
-// 			printf("value: %s  type ", tmp2->value);
-// 			if (tmp2->type == 1)
-// 				printf("CMD\n");
-// 			else if (tmp2->type == 2)
-// 				printf("WORD\n");
-// 			else if (tmp2->type == 3)
-// 				printf("INFILE\n");
-// 			else if (tmp2->type == 4)
-// 				printf("OUTFILE\n");
-// 			else if (tmp2->type == 5)
-// 				printf("REDIR_IN\n");
-// 			else if (tmp2->type == 6)
-// 				printf("REDIR_OUT\n");
-// 			else if (tmp2->type == 7)
-// 				printf("APPEN\n");
-// 			else if (tmp2->type == 8)
-// 				printf("HEREDOC\n");
-// 			tmp2 = tmp2->next;
-// 		}
-// 		tmp = tmp->next;
-// 		printf("\n");
-// 	}
-// }
+	tmp = prcs;
+	while (tmp)
+	{
+		tmp2 = tmp->list_tokens;
+		while (tmp2)
+		{
+			printf("value: %s  type ", tmp2->value);
+			if (tmp2->type == 1)
+				printf("CMD\n");
+			else if (tmp2->type == 2)
+				printf("WORD\n");
+			else if (tmp2->type == 3)
+				printf("INFILE\n");
+			else if (tmp2->type == 4)
+				printf("OUTFILE\n");
+			else if (tmp2->type == 5)
+				printf("REDIR_IN\n");
+			else if (tmp2->type == 6)
+				printf("REDIR_OUT\n");
+			else if (tmp2->type == 7)
+				printf("APPEN\n");
+			else if (tmp2->type == 8)
+				printf("HEREDOC\n");
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+		printf("\n");
+	}
+}
 
 int	g_signal;
 
@@ -83,6 +83,7 @@ static void	execution(t_res *res, t_all *all)
 	res->prcs = all->process;
 	if (fill_heredoc(res) == 0)
 	{
+		print_prcs(res->prcs);
 		if (find_nb_process(res->prcs) > 1)
 			multi_prcs(res);
 		else

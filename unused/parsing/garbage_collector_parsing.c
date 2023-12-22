@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector_parsing.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:15:48 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 16:15:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/17 17:50:57 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	clear_tokens_list(t_tokens *list)
 		list = (list)->next;
 		if (tmp->value)
 			free(tmp->value);
-		tmp->value = NULL;
 		free(tmp);
 	}
 }

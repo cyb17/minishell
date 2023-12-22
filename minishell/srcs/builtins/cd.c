@@ -6,33 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:17:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:13:28 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 12:37:35 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
-
-static int	go_to(t_list **envlist, char *var_name)
-{
-	t_list	*var;
-	t_list	*tmp;
-
-	tmp = *envlist;
-	var = find_oldvar(var_name, tmp, NULL);
-	if (!var)
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(var_name, 2);
-		ft_putstr_fd(" not set\n", 2);
-		return (1);
-	}
-	if (chdir(var->content + (ft_strlen(var_name) + 1)) == -1)
-	{
-		perror("minishell: cd: go_to: chdir");
-		return (1);
-	}
-	return (0);
-}
 
 static int	check_arg(char **arg)
 {
@@ -43,8 +21,8 @@ static int	check_arg(char **arg)
 		i++;
 	if (i > 2)
 	{
-		ft_putstr_fd("minishell: cd: too any arguments\n", 2);
-		return (1);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		return (-1);
 	}
 	return (0);
 }
@@ -93,6 +71,14 @@ static void	update_path(t_list **list, char *oldpwd, char *pwd)
 	}
 }
 
+static void	update_all_list(t_list **envlist, t_list **explist, t_builtins *blt)
+{
+	blt->pwd = ft_getcwd();
+	update_path(envlist, blt->oldpwd, blt->pwd);
+	update_path(explist, blt->oldpwd, blt->pwd);
+	free(blt->pwd);
+}
+
 // Error = 1 || succes = 0
 int	ft_cd(t_list **envlist, t_list **explist, t_builtins *blt)
 {
@@ -108,17 +94,14 @@ int	ft_cd(t_list **envlist, t_list **explist, t_builtins *blt)
 		rslt = go_to(envlist, "OLDPWD");
 	else
 	{
-		rslt = chdir(blt->arg[1]);
-		if (rslt == -1)
+		if (chdir(blt->arg[1]) == -1)
+		{
+			rslt = 1;
 			perror("Error: ft_cd: chdir");
+		}
 	}
 	if (rslt == 0)
-	{
-		blt->pwd = ft_getcwd();
-		update_path(envlist, blt->oldpwd, blt->pwd);
-		update_path(explist, blt->oldpwd, blt->pwd);
-		free(blt->pwd);
-	}
+		update_all_list(envlist, explist, blt);
 	free(blt->oldpwd);
 	return (rslt);
 }

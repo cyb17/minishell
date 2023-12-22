@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:45:45 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/20 17:49:25 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 14:04:12 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,26 @@ static int	builtin_cmd_arg(t_tokens *cmd_tk, t_builtins *builtins)
 
 	i = 0;
 	tmp = cmd_tk;
-	while (tmp && (tmp->type == CMD || tmp->type == WORD))
+	while (tmp)
 	{
-		i++;
+		if (tmp->type == CMD || tmp->type == WORD)
+			i++;
 		tmp = tmp->next;
 	}
 	builtins->arg = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!builtins->arg)
 		return (-1);
 	i = 0;
-	while (cmd_tk && (cmd_tk->type == CMD || cmd_tk->type == WORD))
+	while (cmd_tk)
 	{
-		builtins->arg[i] = ft_strdup(cmd_tk->value);
-		if (!builtins->arg[i])
-			return (-1);
+		if (cmd_tk->type == CMD || cmd_tk->type == WORD)
+		{
+			builtins->arg[i] = ft_strdup(cmd_tk->value);
+			if (!builtins->arg[i])
+				return (-1);
+			i++;
+		}
 		cmd_tk = cmd_tk->next;
-		i++;
 	}
 	builtins->arg[i] = NULL;
 	return (0);

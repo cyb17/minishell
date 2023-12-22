@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:53:35 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 15:13:45 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 11:59:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,10 @@ int	export_arg(t_list **envlist, t_list **explist, char *arg)
 int	ft_export(t_list **envlist, t_list **explist, char **arg)
 {
 	int		i;
+	int		rslt;
 
 	i = 1;
+	rslt = 0;
 	if (!arg[1])
 		print_explist(*explist);
 	else
@@ -124,12 +126,12 @@ int	ft_export(t_list **envlist, t_list **explist, char **arg)
 				ft_putstr_fd("Error: export: ", 2);
 				ft_putstr_fd(arg[i], 2);
 				ft_putstr_fd(": not a valid identifier\n", 2);
-				i++;
+				rslt = 1;
 			}
 			else if (export_arg(envlist, explist, arg[i]) == -1)
 				return (1);
 			i++;
 		}
 	}
-	return (0);
+	return (rslt);
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:58:07 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 17:55:24 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 12:34:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 
 # define GETCWD_SIZE 4096
 
-// builtins_utils1
+// utils1
 void	clear_lst(t_list **lst);
 t_list	*env_to_envlist(char **env);
 int		find_caracter(char *str, char c);
 int		stringcmp(char *model, char *str);
 t_list	*find_oldvar(char *var, t_list *list, int *i);
+// utils2
+int		go_to(t_list **envlist, char *var_name);
 
 // echo
 int		ft_echo(char **arg);
