@@ -21,8 +21,7 @@ char	*delete_quotes(char *s)
 	cpy = NULL;
 	while (*s && s[i] != '\0' && i <= ((int)ft_strlen(s)))
 	{
-		if (i > 0 && s[i - 1] != '$' && to_delete(s, i) == true
-			&& check_quotes(s, s[i], i) != i + 1)
+		if (i > 0 && s[i - 1] != '$' && to_delete(s, i) == true)
 			i = i + 2;
 		else if (i == 0 && to_delete(s, i) == true)
 			i = i + 2;

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:59:17 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 17:36:25 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:08:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ static char	*sub_parsing_cmd1(char *cmd)
 	path = NULL;
 	if (access(cmd, F_OK | R_OK | X_OK) == -1)
 	{
-		g_signal = 126;
+		if (access(cmd, F_OK) == -1)
+			g_signal = 127;
+		else if (access(cmd, R_OK | X_OK) == -1)
+			g_signal = 126;
 		ft_putstr_fd("Error: ", 2);
 		perror(cmd);
 	}
@@ -98,7 +101,7 @@ static char	*sub_parsing_cmd2(char **env_main, char *cmd)
 	{
 		ft_putstr_fd("Error : ", 2);
 		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": Command not found\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 		free_tab(env_path);
 		return (NULL);
 	}
@@ -122,6 +125,6 @@ char	*parsing_cmd(char **env_main, char **cmd)
 	}
 	path = sub_parsing_cmd2(env_main, cmd[0]);
 	if (!path)
-		g_signal = 1;
+		g_signal = 127;
 	return (path);
 }

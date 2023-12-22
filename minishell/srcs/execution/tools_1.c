@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:17:31 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 15:53:33 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:18:07 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	open_fdin_fdout(int *fdin, int *fdout, t_process *prcs)
 			while (tokens->next && tokens->next->type == INFILE)
 			{
 				redirect_in(fdin, tokens->next->value);
+				if (*fdin == -1)
+					break ;
 				if (tokens->next)
 					tokens = tokens->next;
 			}

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:57:26 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/21 18:56:53 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:00:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int	ft_execve(char **env, char *path, char **arg)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(arg[0], 2);
-		ft_putstr_fd(": is a directory", 2);
+		ft_putstr_fd(": Is a directory", 2);
 		free_tab(env);
 		free_tab(arg);
 		free(path);
 		closedir(dir);
+		g_signal = 126;
 		return (-1);
 	}
 	else if (execve(path, arg, env) == -1)
@@ -59,6 +60,7 @@ int	ft_execve(char **env, char *path, char **arg)
 		free_tab(arg);
 		free(path);
 		closedir(dir);
+		g_signal = 1;
 		return (-1);
 	}
 	return (0);

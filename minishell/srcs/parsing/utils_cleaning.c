@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:45:48 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/22 16:25:26 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 18:25:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ char	*my_strjoin(char *s1, char *s2)
 bool	to_delete(char *s, int i)
 {
 	if (s[i] && s [i + 1] && ((s[i] == '\''
-				&& s[i + 1] == '\'') || (s[i] == '"'
-				&& s[i + 1] == '"')) && b_q(s, i) == i)
+				&& s[i + 1] == '\'') || (s[i] == '"' && s[i + 1] == '"'))
+				&& check_quotes(s, s[i], i) == i + 1)
 		return (true);
 	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/22 14:41:01 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:25:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*cpychar2(char *s, int i, char *cpy)
 char	*cpychar3(char *s, int i, char *cpy)
 {
 	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1]
-		&& (s[i - 1] == '>' || s[i - 1] == '<')
-		&& (s[i] != '>' && s[i] != '<')
+		&& (s[i - 1] == '>' || s[i - 1] == '<') && (s[i] != '>'
+		&& s[i] != '<') && ((s[i] != '\'' && s[i] != '"') || b_q(s, i + 1) > i + 1)
 		&& (i - 1 >= 0) && b_q(s, i) == i)
 		cpy = add_blank(cpy);
 	if (i < my_strlen(s))

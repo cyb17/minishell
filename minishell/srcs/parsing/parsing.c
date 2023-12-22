@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:12:48 by nap               #+#    #+#             */
-/*   Updated: 2023/12/19 16:56:26 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/22 18:10:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,8 @@ int	end_parse(t_all *all, t_list *envlist)
 		return (-1);
 	}
 	if (make_token_list(all->process, envlist, all->p) == false)
-		return (-1);
-	if (!all->process->list_tokens)
 	{
-		ft_error(ERROR_M7, all, 1);
+		ft_error(ERROR_M7, all, 0);
 		return (-1);
 	}
 	ft_token(all->process);

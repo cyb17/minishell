@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:14:40 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 13:32:42 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:39:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	execute_cmd(t_res *res, t_tokens *list_tokens)
 		if (exe_no_builtins(res, cmd) == -1)
 		{
 			garbage_collector_child(res);
-			exit(1);
+			exit(g_signal);
 		}
 	}
 	else
@@ -106,6 +106,7 @@ void	multi_prcs(t_res *res)
 		}
 		exe_prcs(res, tmp, i);
 		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		tmp = tmp->next;
 		i++;
 	}

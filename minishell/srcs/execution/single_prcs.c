@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 13:40:02 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:43:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	sub_child_prcs(int *fdin, int *fdout, t_res *res, t_tokens *cmd)
 	if (exe_no_builtins(res, cmd) == -1)
 	{
 		garbage_collector_child(res);
-		exit(1);
+		exit(g_signal);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:06:32 by nap               #+#    #+#             */
-/*   Updated: 2023/12/21 22:14:36 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:09:17 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERROR_M4 "error: create_process: malloc failed\n"
 # define ERROR_M5 "error: create_tokens: malloc failed\n"
 # define ERROR_M6 "error: make_token_list: malloc failed\n"
-# define ERROR_M7 "error: token_list: malloc failed\n"
+# define ERROR_M7 "error: empty token\n"
 # define ERROR_M8 "error: map_list: malloc failed\n"
 
 /* parsing.c */
