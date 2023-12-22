@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:41:15 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/21 19:59:36 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:41:01 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*cpychar3(char *s, int i, char *cpy)
 	if (*s && (i > 0) && i < my_strlen(s) && s[i - 1]
 		&& (s[i - 1] == '>' || s[i - 1] == '<')
 		&& (s[i] != '>' && s[i] != '<')
-		&& (i - 1 >= 0))
+		&& (i - 1 >= 0) && b_q(s, i) == i)
 		cpy = add_blank(cpy);
 	if (i < my_strlen(s))
 		cpy = cpychar(s, i, cpy);

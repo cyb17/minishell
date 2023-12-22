@@ -6,7 +6,7 @@
 /*   By: achevala <achevala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:16:43 by achevala          #+#    #+#             */
-/*   Updated: 2023/12/21 20:50:51 by achevala         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:38:47 by achevala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	*manage_words_p1(t_p *p, t_list **envlist)
 	p->i++;
 	while (p->i < (p->len1 - 1))
 	{
-		if (p->s3[p->i] != '$' || (p->s3[p->i - 1] == '\\'
-				&& p->s3[p->i] == '$'))
+		if (p->s3[p->i] != '$')
 		{
 			cpy = cpychar(p->s3, p->i, cpy);
 			p->i++;
@@ -62,8 +61,7 @@ char	*in_manage_p3(t_p *p, t_list **envlist, char **cpy, char **cpy2)
 	tmp = NULL;
 	while (p->i < p->len1)
 	{
-		if (p->s3[p->i] != '$' || (((b_q_exp(p->s3, p->i) > p->i)
-					|| ((p-> i - 1 >= 0) && p->s3[p->i - 1] == '\\'))
+		if (p->s3[p->i] != '$' || (((b_q_exp(p->s3, p->i) > p->i))
 				&& p->s3[p->i] == '$'))
 		{
 			(*cpy) = cpychar(p->s3, p->i, (*cpy));
