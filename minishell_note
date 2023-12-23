@@ -1,0 +1,214 @@
+
+===================================================================================================
+Bibliotheques necessaires :
+
+#include <readline/readline.h> // Pour utiliser la librairie readline
+#include <readline/history.h> // Pour utiliser la librairie readline
+#include <stdio.h>      // Pour printf
+#include <stdlib.h>     // Pour malloc, free, exit
+#include <string.h>     // Pour strerror
+#include <unistd.h>     // Pour access, write, close, fork, execve, dup, dup2, pipe, getcwd, chdir, isatty, ttyname
+#include <limits.h>		// Pour utiliser les constantes des limites des type variable
+#include <sys/types.h>  // Pour wait, waitpid, wait3, wait4, signal, stat, lstat, fstat, unlink, opendir, readdir, closedir
+#include <sys/wait.h>   // Pour wait, waitpid, wait3, wait4
+#include <sys/stat.h>   // Pour stat, lstat, fstat
+#include <fcntl.h>      // Pour open
+#include <signal.h>     // Pour signal, sigaction, sigemptyset, sigaddset, kill
+#include <termios.h>    // Pour tcsetattr, tcgetattr
+#include <curses.h>     // Pour tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+#include <dirent.h>     // Pour opendir, readdir, closedir
+#include <sys/ioctl.h>  // Pour ioctl
+#include <pwd.h>        // Pour getpwnam
+#include <errno.h>      // Pour errno
+===================================================================================================
+
+===================================================================================================
+
+Command	Description : (source: https://github.com/maiadegraaf/minishell/tree/main)
+
+--------------------------------------------------------------------------
+=>cd : with only a relative or absolute path
+
+Changes the working directory of the current shell execution environment and updates the environment variables PWD and OLDPWD. Without arguments it change the working directory to the home directory.
+
+il faut gerer le tiret '-', c'est equivaut a cd "$OLDPWD" && pwd
+
+Note :
+	1- s'il y a plus d'un arguments => bash: cd: too many arguments, $? = 1
+	2- . ou ././././ <=> dossier courant
+	3- ../ <=> dossier parent du dossier courant
+	4- / <=> dossier racine 
+
+Teste :
+	cd
+	cd -
+	cd /path/absolu
+	cd ./relativepath
+	cd ../../../relativepath
+	mkdir doc1 -> cd doc1 -> mkdir doc2 -> cd doc2 -> rm doc1 -> cd ../ => cd ne fonction plus
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+=>echo : with option -n
+
+Displays a line of text
+Optional flag -n: do not output the trailing newline
+
+note : exit status : 0 -> succes / >0 -> erreur
+
+Teste :
+	echo
+	echo hello 
+	echo hello world 
+	echo -n hello 
+	echo -n -n hello world
+	echo -nnnn -nnn hello 
+	echo - n hello world
+	echo -n-n hello world
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+=>env : with no options or arguments
+
+Displays the environment variable
+
+Note :	exit status: env : 0 -> succes / >0 -> erreur
+		erreur, si env a des arguments
+Teste :
+	env
+	env hello
+	env 7858*&^%
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+=>exit : with no options
+
+Terminates the shell.
+Accepts optional argument n, which sets the exit status to n.
+
+Note :
+	$? => exit code = exit_code % 256 (car le code ne peut qu'etre un nombre entre 0 - 255, limite d'un char)
+	Code de sortie souvent apparu :
+		0 : execution qui se termine normalement sans erreur -> ex: exit (sans argument)
+		1 : erreur generique sans preciser sa nature -> ex: exit 758 hgfj hgfj (plus d'un arg)
+		2 : syntax error -> ex: exit ghfj gfh fghj (pas arg numerique)
+		126 : le système d'exploitation n'a pas pu trouver l'exécutable spécifié ou n'a pas pu le lancer en 	raison de restrictions de sécurité
+		127 : command not found 
+		130 : termine en raison de l'interruption de l'utilisateur (ctrl+c)
+
+Teste :
+	exit
+	exit 1
+	exit 1567 6874 65478
+	exit -46
+	exit -75389 758
+	exit rfue hfjkd ghd
+	exit 847 fg g jfd
+	exit -9223372036854775808
+	exit 9223372036854775807
+	exit ghjf 785 58
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+=>export : with no options
+
+Accepts arguments name[=value].
+Adds name to the environment. Set's value of name to value.
+If no argument is given, displays list of exported variables.
+
+Note : 
+	export test -> ajoute test dans la liste d'export MAIS pas d'env
+	export test= ou teste=valeur -> ajoute test dans la liste d'export ET d'env
+	export test+=valeur ->  si teste exite : ajoute la nouvelle valeur a la fin de l'encienne valeur 
+							si teste n'existe pas : ajoute teste dans env ET export liste
+
+Teste :
+	export
+	export var
+	export var1 var2 var3
+	export var+=
+	export var=
+	export SHELL=valeur
+	export SHELL+=valeur 
+	export 67var _var
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+=>pwd : with no options
+
+Shows the current directory as an absolute path.
+
+Note :
+	pwd suivi de d'autres cmd ou mots, le chemin s'affiche quand meme ET pas msg d'erreur
+	ex: pwd pwd ls : le chemin s'affiche qu'une seule fois 
+	si on unset la var d'env PWD et on execute pwd, le chemin s'affiche quand meme
+
+Teste :
+	pwd
+	pwd pwd pwd
+	pwd pwd ls
+--------------------------------------------------------------------clearw---------
+
+-----------------------------------------------------------------------------
+=>unset : with no options
+
+Accepts argument name.
+Removes the variable name from the environment.
+
+Note :
+	si l'argument a supprimer n'existe pas unset ne signale pas d'erreur,
+	et se termine normalement.
+	Si l'argument est "name=", name ne sera pas supprimer et unset ne signale pas d'erreur.
+
+Teste :
+	unset 
+	unset var1 var2 var3
+	unset SHELL=
+----------------------------------------------------------------------------
+===================================================================================================
+
+===================================================================================================
+Pour ignorer les leaks causes par readline et add_history :
+
+creer un ficher de suppression(ex : ignoreleak.supp) avec le contenu
+
+{
+    readline ->(nom des leaks ignores)
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+
+executer avec valgrind --suppressions=ignoreleak.supp -s ./leProgramme
+===================================================================================================
+
+===================================================================================================
+Parsing :
+
+-traiter les quotes.
+-remplacer $(var) par sa valeur
+-verifier la syntaxe des variable d'env :
+	 elles ne peuvent commencer soit par des LETTRES soit le TIRET DU BAS,
+	 les caracteres ALPHANUMERIQUE sont autorises a utiliser.
+-$(var) : is var n'existe pas, une chaine vide sera envoye.
+-En Bash, le point d'exclamation est réservé pour les événements (history expansion)
+	et provoque l'interprétation de l'expression qui suit comme une référence à un 
+	événement de l'historique
+===================================================================================================
+
+===================================================================================================
+bash man : note
+
+-le code de retour de bash est celui de la derniere commande executee, il sera stocke dans $?.
+-bash attend la fin de toutes les commandes avant d'envoyer une valeur.
+-Chaque commande du pipeline est exécutée comme un processus indépendant (c'est-à-dire dans un sous-shell).
+-Les expansions sont appliquées à la ligne de commande après qu'elle ait été divisée en mots.
+-Les fonctions interne renvoient zéro (vrai) si elles réussissent et une valeur non nulle (faux)
+ si une erreur se produit durant leur exécution. Toutes les fonctions internes renvoient 2 en cas d'erreur de syntaxe.
+===================================================================================================
