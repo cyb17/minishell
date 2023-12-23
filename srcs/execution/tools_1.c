@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:17:31 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 19:12:00 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/23 18:09:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	open_fdin_fdout(int *fdin, int *fdout, t_process *prcs)
 			redirect_out(fdout, tokens->next->value, 'T');
 		else if (tokens->type == APPEN && tokens->next->type == OUTFILE)
 			redirect_out(fdout, tokens->next->value, 'A');
-		else if (tokens->type == HEREDOC)
+		else if (tokens->type == HEREDOC && tokens->next->type == LIMITER)
 			redirect_in(fdin, prcs->heredoc);
 		if ((*fdin == -1) || (*fdout == -1))
 			return (-1);

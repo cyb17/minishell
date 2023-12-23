@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:14:10 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 17:43:21 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/23 18:21:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	child_prcs(t_res *res, t_tokens *cmd)
 	else if (res->prcs->pid == 0)
 	{
 		signal(SIGINT, signal_handler_child);
+		signal(SIGQUIT, signal_handler_child);
 		sub_child_prcs(&fdin, &fdout, res, cmd);
 	}
 	signal(SIGINT, SIG_IGN);

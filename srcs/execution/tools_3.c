@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:11:25 by yachen            #+#    #+#             */
-/*   Updated: 2023/12/22 13:40:16 by yachen           ###   ########.fr       */
+/*   Updated: 2023/12/23 18:22:50 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	signal_handler_main(int signum)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		g_signal = 130;
 	}
@@ -39,9 +39,10 @@ void	signal_handler_child(int signum)
 	if (signum == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
-		g_signal = 130;
 		exit(g_signal);
 	}
+	if (signum == SIGQUIT)
+		exit(g_signal);
 }
 
 void	fixe_child_exit_code(int *status)
@@ -51,7 +52,7 @@ void	fixe_child_exit_code(int *status)
 	else if (WIFSIGNALED(*status))
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		g_signal = WTERMSIG(*status);
+		g_signal = 128 +  WTERMSIG(*status);
 	}
 }
 
