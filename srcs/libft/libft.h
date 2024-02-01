@@ -6,11 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 17:36:46 by yachen            #+#    #+#             */
-<<<<<<< HEAD:minishell00/libft/libft.h
-/*   Updated: 2023/10/23 16:17:10 by yachen           ###   ########.fr       */
-=======
-/*   Updated: 2023/12/19 15:12:29 by yachen           ###   ########.fr       */
->>>>>>> yachen:srcs/libft/libft.h
+/*   Updated: 2024/02/01 11:15:26 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
