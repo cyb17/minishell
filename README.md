@@ -24,6 +24,7 @@ output:
 ## Features Implemented
 
   **A command history feature**
+You can navigate with the up and down key.
 
   **Built-in Commands**
 
