@@ -4,9 +4,10 @@ An interesting project. The goal of this project is to create a simple shell tha
 
 ## How to use it
 
-  1- clone the repository and run make in your Terminal
-  2- run the executed program with : ./minishell
-  3- then you will get the prompt of minishell like usual shell
+```git clone this repository```
+```cd this repository```
+```make```
+```./minishell```
 
 ```
   ./minishell <commande-line>
