@@ -18,7 +18,7 @@ An interesting project. The goal of this project is to create a simple shell tha
 ```
 output:
 ```
-  minishell> <put your command-line here>
+  minishell> <write your command-line here>
 ```
 
 ## Features Implemented
