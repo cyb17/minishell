@@ -4,13 +4,21 @@ An interesting project. The goal of this project is to create a simple shell tha
 
 ## How to use it
 
-```git clone this repository```
-```cd this repository```
-```make```
-```./minishell```
-
 ```
-  ./minishell <commande-line>
+  git clone this repository
+```
+``` 
+  cd this repository
+```
+```
+  make
+```
+```
+  ./minishell
+```
+output:
+```
+  minishell> <put your command-line here>
 ```
 
 ## Features Implemented
