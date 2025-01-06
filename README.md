@@ -5,16 +5,10 @@ An interesting project. The goal of this project is to create a simple shell tha
 ## How to use it
 
 ```
-  git clone this repository
-```
-``` 
-  cd this repository
-```
-```
-  make
-```
-```
-  ./minishell
+  1. git clone this repository
+  2. cd this repository
+  3. make
+  4. ./minishell
 ```
 output:
 ```
