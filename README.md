@@ -25,7 +25,7 @@ output:
 
   **A command history feature**
 
-  **Built-in Commands**:
+  **Built-in Commands**
 
 ```
    echo:   Supports the -n option (prevents a newline at the end).
